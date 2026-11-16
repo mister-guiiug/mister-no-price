@@ -3,3 +3,5 @@ web-ext-artifacts/
 captures/
 # Laissé par `web-ext sign` dans le dossier source.
 .amo-upload-uuid
+# Clés d'API d'addons.mozilla.org, lues par npm run paquet.
+.env

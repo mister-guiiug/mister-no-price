@@ -113,8 +113,9 @@ la version et à l'identifiant du manifeste.
 La signature passe par le canal _unlisted_ d'addons.mozilla.org : Mozilla signe
 sans publier, en quelques minutes. Il faut des clés d'API
 ([page des clés](https://addons.mozilla.org/developers/addon/api/key/)) dans
-`WEB_EXT_API_KEY` et `WEB_EXT_API_SECRET` ; sans elles, le paquet sort sans
-`.xpi` et le dit. Mozilla ne signe qu'une fois un numéro de version.
+`WEB_EXT_API_KEY` et `WEB_EXT_API_SECRET`, dans l'environnement ou dans un
+fichier `.env` à la racine du dépôt (ignoré par git) ; sans elles, le paquet
+sort sans `.xpi` et le dit. Mozilla ne signe qu'une fois un numéro de version.
 
 **Par la CI** : pousser une étiquette `v<version>` (celle du manifeste) lance
 [`publication.yml`](.github/workflows/publication.yml), qui teste, construit le

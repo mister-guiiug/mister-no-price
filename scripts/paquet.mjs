@@ -11,7 +11,8 @@
  *   └── SHA256SUMS                      empreintes des deux extensions
  *
  * Signature : Firefox n'installe durablement qu'une extension signée. Avec
- * WEB_EXT_API_KEY et WEB_EXT_API_SECRET (clés d'API d'addons.mozilla.org), le
+ * WEB_EXT_API_KEY et WEB_EXT_API_SECRET (clés d'API d'addons.mozilla.org) —
+ * dans l'environnement, ou dans un fichier `.env` à la racine, que git ignore —, le
  * script la fait signer sur le canal « unlisted » : Mozilla signe sans publier,
  * en quelques minutes, sans relecture humaine. Sans les clés, le paquet sort
  * sans `.xpi`, et le dit. EXIGER_SIGNATURE=1 transforme ce manque en échec.
@@ -27,6 +28,14 @@ import webExt from "web-ext";
 
 const racine = path.resolve(import.meta.dirname, "..");
 const source = path.join(racine, "extension");
+
+// Les clés d'API, sur le poste : un `.env` ignoré par git. Une variable déjà
+// présente dans l'environnement (la CI) l'emporte sur le fichier.
+try {
+  process.loadEnvFile(path.join(racine, ".env"));
+} catch (erreur) {
+  if (erreur.code !== "ENOENT") throw erreur;
+}
 const lireJson = async (fichier) => JSON.parse(await readFile(fichier, "utf8"));
 
 const manifeste = await lireJson(path.join(source, "manifest.json"));
