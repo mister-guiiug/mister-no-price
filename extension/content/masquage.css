@@ -1,74 +1,11 @@
 /*
- * Sans prix — feuille injectée par le manifeste, avant que la page ne s'affiche.
+ * Sans prix — feuille fixe, injectée par le manifeste sur tous les sites.
  *
- * Elle échoue FERMÉE : le masquage vaut tant que <html> ne porte pas
- * data-sans-prix="off". Le script ne pose cet attribut qu'après avoir lu les
- * réglages ; d'ici là les prix restent couverts, ils ne clignotent jamais.
- *
- * Ne figurent ici que des sélecteurs qui ne désignent QUE des prix. Le rouge
- * `.a-color-price`, par exemple, sert aussi à « Plus que 2 ex. en stock » : il
- * est laissé au repérage dans le texte (masquage.js), qui ne couvre que le
- * montant.
- *
- * Les remises en pourcentage (« -21 % ») restent visibles : ce sont des
- * montants qu'on masque, pas les promotions.
+ * Elle ne porte que la peinture des montants repérés dans le texte. La feuille
+ * propre à chaque site (ses composants de prix, les prix éclatés) est tirée des
+ * règles (regles.js) par le moteur (moteur.js), et posée par masquage.js dès
+ * document_start.
  */
-
-:root:not([data-sans-prix="off"])
-  :is(
-    /* Composant prix d'Amazon (recherche, fiche, listes, panier) et ses morceaux */
-    .a-price,
-    .a-price-whole,
-    .a-price-fraction,
-    .a-price-decimal,
-    .a-price-symbol,
-    /* Prix barré : « Prix conseillé », « Prix le plus bas récent » */
-    .a-text-price,
-    /* Meilleures ventes, nouveautés : classe hachée, préfixe stable */
-    [class*="p13n-sc-price"],
-    /* Fiche produit, anciennes mises en page encore servies */
-    #priceblock_ourprice,
-    #priceblock_dealprice,
-    #priceblock_saleprice,
-    #priceblock_pospromoprice,
-    #price_inside_buybox,
-    #newBuyBoxPrice,
-    #kindle-price,
-    #sns-base-price,
-    #tp_price_block_total_price_ww,
-    /* Prix sous les variantes (taille, couleur, format) */
-    .twisterSwatchPrice,
-    /* Carrousel des vidéos de la fiche : « € » « 29 » « 99 » en trois morceaux */
-    .vse-price-component,
-    /* Panier */
-    .sc-price,
-    .sc-product-price,
-    [id^="sc-subtotal-amount"]
-  ) {
-  text-shadow: none !important;
-
-  /* Barre grise (réglage par défaut) : la place reste, le texte disparaît.
-     Le trait du prix barré a sa propre couleur : il faut l'éteindre aussi. */
-  :root:not([data-sans-prix-style="flou"]) & {
-    color: transparent !important;
-    text-decoration-color: transparent !important;
-    background: #d5d9d9 !important;
-    border-radius: 0.25em !important;
-
-    & * {
-      color: transparent !important;
-      text-decoration-color: transparent !important;
-      background: transparent !important;
-      border-color: transparent !important;
-      text-shadow: none !important;
-    }
-  }
-
-  /* Flou : la forme reste, les chiffres ne se lisent plus */
-  :root[data-sans-prix-style="flou"] & {
-    filter: blur(0.35em) !important;
-  }
-}
 
 /* Montants repérés dans le texte : posés par masquage.js, sans toucher au DOM */
 ::highlight(sans-prix) {

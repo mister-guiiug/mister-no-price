@@ -9,6 +9,15 @@
     element.textContent = t(element.dataset.i18n);
   }
 
+  // La liste des sites vient des règles : un site ajouté y apparaît sans retouche.
+  const sites = globalThis.SansPrixRegles.map((r) => r.nom).sort((a, b) =>
+    a.localeCompare(b, t("langue"), { sensitivity: "base" }),
+  );
+  document.getElementById("sites").textContent = t(
+    "popupSites",
+    new Intl.ListFormat(t("langue"), { type: "conjunction" }).format(sites),
+  );
+
   const actif = document.getElementById("actif");
   const styles = document.querySelectorAll('input[name="style"]');
 

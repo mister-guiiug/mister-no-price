@@ -50,5 +50,27 @@
     return montants;
   }
 
-  globalThis.SansPrixDetection = Object.freeze({ contientChiffre, trouverMontants });
+  /** Le texte, chaque montant remplacé (le titre de l'onglet, par exemple). */
+  function masquerMontants(texte, remplacement = "•••") {
+    return texte.replace(MONTANT, remplacement);
+  }
+
+  // Un morceau de prix éclaté : quelques chiffres, séparateurs ou symboles de
+  // devise, rien d'autre (« 34 », « €99 », « , », « € »). Les codes en lettres
+  // n'en font pas partie : « EUR » seul est un mot.
+  const FRAGMENT = /^[\d\s.,'’€$£¥￥₹₩₺₽₱-]{1,8}$/;
+  const SIGNE = /[\d€$£¥￥₹₩₺₽₱]/;
+
+  /** Vrai si le texte ressemble à un morceau de prix plutôt qu'à une phrase. */
+  function estFragment(texte) {
+    const t = texte.trim();
+    return FRAGMENT.test(t) && SIGNE.test(t);
+  }
+
+  globalThis.SansPrixDetection = Object.freeze({
+    contientChiffre,
+    trouverMontants,
+    masquerMontants,
+    estFragment,
+  });
 })();
