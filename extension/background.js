@@ -6,6 +6,9 @@
  *           l'a ajouté) : le popup propose de l'autoriser ;
  *   « off » — le masquage est suspendu.
  *
+ * Sous Firefox pour Android, ni raccourci ni barre d'outils : la pastille est
+ * reprise dans le menu des extensions.
+ *
  * Page d'événements (MV3 sous Firefox) : endormie la plupart du temps, réveillée
  * par les écouteurs déclarés ici, au premier niveau.
  */
@@ -28,7 +31,10 @@ async function afficherEtat({ actif }) {
   await browser.action.setTitle({ title: t(actif ? "titreActif" : "titrePause") });
 }
 
-browser.commands.onCommand.addListener(async (commande) => {
+// Firefox pour Android n'a pas de raccourcis clavier : l'API `commands` y est
+// absente, et l'appeler lèverait une erreur qui empêcherait tout ce qui suit
+// (pastille, suivi des réglages) de s'enregistrer.
+browser.commands?.onCommand.addListener(async (commande) => {
   if (commande !== "basculer") return;
   const { actif } = await lire();
   await ecrire({ actif: !actif });

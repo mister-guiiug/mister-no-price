@@ -69,5 +69,115 @@
   },
   "accesBouton": {
     "message": "Autoriser"
+  },
+  "popupEnvies": {
+    "message": "Liste d’envies"
+  },
+  "popupEnviesBouton": {
+    "message": "Bouton ♥ « Ma liste » sur les fiches produit"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Voir la liste ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Ma liste",
+    "description": "Bouton sur une fiche produit : ajouter l’article à la liste d’envies. Très court."
+  },
+  "envieDansLaListe": {
+    "message": "Dans ma liste",
+    "description": "Le même bouton, l’article déjà dans la liste."
+  },
+  "envieAjouterTitre": {
+    "message": "Ajouter à ma liste d’envies"
+  },
+  "envieRetirerTitre": {
+    "message": "Retirer de ma liste d’envies"
+  },
+  "envieAjoutee": {
+    "message": "Ajouté à ta liste d’envies"
+  },
+  "envieRetiree": {
+    "message": "Retiré de ta liste d’envies"
+  },
+  "listeTitre": {
+    "message": "Liste d’envies"
+  },
+  "listeExplication": {
+    "message": "Les articles marqués d’un ♥ sur les fiches produit. Les prix restent masqués tant qu’on ne demande pas à les voir."
+  },
+  "listeCompte1": {
+    "message": "$N$ article",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ articles",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Afficher les prix"
+  },
+  "listeMasquerPrix": {
+    "message": "Masquer les prix"
+  },
+  "listePartager": {
+    "message": "Partager la liste"
+  },
+  "listeVider": {
+    "message": "Tout effacer"
+  },
+  "listeViderConfirmer": {
+    "message": "Effacer toute la liste d’envies ?"
+  },
+  "listeVide": {
+    "message": "Rien pour l’instant. Sur une fiche produit, le bouton ♥ « Ma liste » ajoute l’article ici."
+  },
+  "listeRetirer": {
+    "message": "Retirer"
+  },
+  "listeRetirerArticle": {
+    "message": "Retirer « $TITRE$ »",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Casque audio"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Prix masqué"
+  },
+  "listePrixInconnu": {
+    "message": "Prix non relevé"
+  },
+  "listeTotal": {
+    "message": "Total : $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "131,98 €"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Liste copiée dans le presse-papiers."
+  },
+  "listeCopieImpossible": {
+    "message": "Impossible de copier la liste."
   }
 }
