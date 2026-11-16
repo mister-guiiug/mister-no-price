@@ -1,0 +1,100 @@
+# Le paquet de déploiement manuel, construit par la CI plutôt que sur un poste.
+#
+# Une étiquette `v1.2.3` poussée → tests, lint, paquet, puis un BROUILLON de
+# release GitHub qui porte le paquet entier (une archive) et chacun de ses
+# fichiers. Le brouillon n'est visible que des mainteneurs : le publier reste un
+# geste à la main, après relecture.
+#
+# Lancé à la main (Actions → Publication → Run workflow), il construit le
+# paquet et le dépose en artefact du run, sans release.
+#
+# Signature : avec les secrets AMO_API_KEY et AMO_API_SECRET (clés d'API
+# d'addons.mozilla.org, page « Gérer les clés d'API »), le paquet contient le
+# `.xpi` signé, seul installable durablement dans Firefox. Sans eux, il sort
+# sans `.xpi` et le run le signale. Mozilla ne signe qu'une fois une version :
+# relancer sur une version déjà signée échoue.
+name: Publication
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paquet:
+    name: Paquet de déploiement
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write # créer le brouillon de release
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - run: npm test
+
+      - run: npm run lint -- --warnings-as-errors
+
+      - name: Version du manifeste
+        id: version
+        run: echo "version=$(node -p "require('./extension/manifest.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: L'étiquette porte la version du manifeste
+        if: github.ref_type == 'tag'
+        env:
+          ETIQUETTE: ${{ github.ref_name }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if [ "$ETIQUETTE" != "v$VERSION" ]; then
+            echo "::error::Étiquette $ETIQUETTE, manifeste $VERSION : monter la version avant d'étiqueter."
+            exit 1
+          fi
+
+      # Les clés ne sont passées qu'à cette étape.
+      - name: Paquet, signé si les clés sont là
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+        run: |
+          if [ -z "$WEB_EXT_API_KEY" ]; then
+            echo "::warning::Secrets AMO_API_KEY / AMO_API_SECRET absents : paquet sans .xpi signé."
+          fi
+          npm run paquet
+
+      - name: Archive du paquet
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        working-directory: web-ext-artifacts
+        run: zip -r "mister-no-price-$VERSION-paquet.zip" "mister-no-price-$VERSION"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: mister-no-price-${{ steps.version.outputs.version }}
+          path: web-ext-artifacts/mister-no-price-${{ steps.version.outputs.version }}/
+          if-no-files-found: error
+
+      - name: Brouillon de release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ETIQUETTE: ${{ github.ref_name }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          dossier="web-ext-artifacts/mister-no-price-$VERSION"
+          gh release create "$ETIQUETTE" --draft --verify-tag \
+            --title "Sans prix $VERSION" \
+            --notes "Paquet de déploiement manuel : mode d'emploi dans INSTALLER.md (archive mister-no-price-$VERSION-paquet.zip)." \
+            "web-ext-artifacts/mister-no-price-$VERSION-paquet.zip" \
+            "$dossier"/*

@@ -94,6 +94,38 @@ USB et débogage USB activé :
 npx web-ext run --source-dir extension -t firefox-android --android-device <identifiant adb>
 ```
 
+### Déployer à la main : le paquet
+
+`npm run paquet` prépare, dans `web-ext-artifacts/mister-no-price-<version>/`,
+de quoi installer l'extension sur un poste sans rien savoir de ce dépôt :
+
+| Fichier                          | Rôle                                                                     |
+| -------------------------------- | ------------------------------------------------------------------------ |
+| `mister-no-price-<version>.xpi`  | l'extension signée par Mozilla — seulement avec des clés d'API (ci-dessous) |
+| `mister-no-price-<version>.zip`  | l'extension non signée                                                   |
+| `INSTALLER.md`                   | les façons d'installer, pas à pas, pour qui n'est pas développeur        |
+| `policies.json`                  | stratégie Firefox qui **impose** l'extension sur un ordinateur familial  |
+| `SHA256SUMS`                     | empreintes, pour `sha256sum -c`                                          |
+
+Le guide et la stratégie viennent de [`deploiement/`](deploiement/), remplis à
+la version et à l'identifiant du manifeste.
+
+La signature passe par le canal _unlisted_ d'addons.mozilla.org : Mozilla signe
+sans publier, en quelques minutes. Il faut des clés d'API
+([page des clés](https://addons.mozilla.org/developers/addon/api/key/)) dans
+`WEB_EXT_API_KEY` et `WEB_EXT_API_SECRET` ; sans elles, le paquet sort sans
+`.xpi` et le dit. Mozilla ne signe qu'une fois un numéro de version.
+
+**Par la CI** : pousser une étiquette `v<version>` (celle du manifeste) lance
+[`publication.yml`](.github/workflows/publication.yml), qui teste, construit le
+paquet et ouvre un **brouillon** de release GitHub où il est joint, en archive
+et fichier par fichier. Le publier reste un geste à la main. La signature y
+demande les secrets `AMO_API_KEY` et `AMO_API_SECRET` du dépôt.
+
+```bash
+git tag v1.2.1 && git push origin v1.2.1
+```
+
 ### Après une mise à jour : un « ! » sur l'icône
 
 Firefox accorde les accès d'une extension **à son installation**, pas ceux
@@ -290,7 +322,11 @@ npm run verifier:mise-a-jour  # installe la 1.0.0, met à jour, accorde les acc�
 ```
 
 ```bash
-npm run build     # paquet .zip dans web-ext-artifacts/
+npm run build     # l'extension seule, en .zip, dans web-ext-artifacts/
+```
+
+```bash
+npm run paquet    # le paquet de déploiement (voir « Déployer à la main »)
 ```
 
 La CI ([`ci.yml`](.github/workflows/ci.yml)) joue les tests, `web-ext lint`

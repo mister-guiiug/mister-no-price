@@ -2,7 +2,8 @@
 #
 # Trois gestes, ceux qu'on ferait avant de signer l'extension : le repérage des
 # montants (npm test), la validation du manifeste par l'outil de Mozilla
-# (web-ext lint, qui échoue sur un avertissement), et l'empaquetage.
+# (web-ext lint, qui échoue sur un avertissement), et le paquet de déploiement
+# (npm run paquet, sans signature : les clés ne servent qu'à publication.yml).
 #
 # Ce que la CI ne fait PAS : `npm run verifier`, qui visite le vrai site Amazon
 # dans un Firefox. Un relevé qui dépend d'un site tiers rougirait au gré de son
@@ -44,4 +45,4 @@ jobs:
 
       - run: npm run lint -- --warnings-as-errors
 
-      - run: npm run build
+      - run: npm run paquet

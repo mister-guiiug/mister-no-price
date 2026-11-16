@@ -1,3 +1,5 @@
 node_modules/
 web-ext-artifacts/
 captures/
+# Laissé par `web-ext sign` dans le dossier source.
+.amo-upload-uuid
