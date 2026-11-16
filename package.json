@@ -1,6 +1,6 @@
 {
   "name": "mister-no-price",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "Extension Firefox qui masque les prix sur Amazon.",
   "license": "MIT",
@@ -13,7 +13,8 @@
     "lint": "web-ext lint --source-dir extension",
     "build": "web-ext build --source-dir extension --artifacts-dir web-ext-artifacts --overwrite-dest",
     "test": "node --test",
-    "verifier": "node scripts/verifier.mjs"
+    "verifier": "node scripts/verifier.mjs",
+    "verifier:mise-a-jour": "node scripts/verifier-mise-a-jour.mjs"
   },
   "devDependencies": {
     "puppeteer-core": "^25.17.0",

@@ -54,5 +54,20 @@
         "example": "Amazon, Dealabs, Decathlon, Cdiscount"
       }
     }
+  },
+  "titreAcces": {
+    "message": "No Prices: some sites need your approval"
+  },
+  "accesManquant": {
+    "message": "No Prices isn’t allowed on $SITES$ yet. Without your approval, prices come back on every new page.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Allow"
   }
 }

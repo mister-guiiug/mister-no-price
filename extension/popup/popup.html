@@ -12,6 +12,11 @@
         <h1 data-i18n="extShortName"></h1>
       </header>
 
+      <section id="acces" class="acces" role="alert" hidden>
+        <p id="acces-texte"></p>
+        <button type="button" id="acces-bouton" data-i18n="accesBouton"></button>
+      </section>
+
       <label class="interrupteur">
         <span data-i18n="popupActif"></span>
         <input type="checkbox" id="actif" role="switch" />
@@ -38,6 +43,8 @@
     </main>
     <script src="../commun/reglages.js"></script>
     <script src="../regles.js"></script>
+    <script src="../content/moteur.js"></script>
+    <script src="../commun/acces.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
