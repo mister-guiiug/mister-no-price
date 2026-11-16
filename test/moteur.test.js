@@ -126,6 +126,13 @@ describe("le manifeste", () => {
     assert.deepEqual([...script.matches].sort(), [...attendus].sort());
   });
 
+  // Le popup demande les accès qu'une mise à jour a ajoutés : Firefox n'accepte
+  // de les demander que s'ils sont déclarés dans host_permissions.
+  it("déclare les mêmes motifs en host_permissions", () => {
+    const attendus = moteur.motifsDuManifeste(REGLES);
+    assert.deepEqual([...manifeste.host_permissions].sort(), [...attendus].sort());
+  });
+
   // Le domaine google.com entier ferait tourner l'extension dans Gmail ou Docs.
   it("ne déclare aucun motif sur tout un domaine de Google", () => {
     assert.ok(!script.matches.some((m) => /^\*:\/\/\*\.google\./.test(m)));

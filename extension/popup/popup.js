@@ -18,6 +18,28 @@
     new Intl.ListFormat(t("langue"), { type: "conjunction" }).format(sites),
   );
 
+  // Les sites qu'une mise à jour a ajoutés n'ont pas d'accès tant que
+  // l'utilisateur n'a pas dit oui : on le signale, et on le demande d'un clic.
+  const { accesManquants, demanderAcces } = globalThis.SansPrixAcces;
+  const listeDe = (noms) =>
+    new Intl.ListFormat(t("langue"), { type: "conjunction" }).format(
+      [...noms].sort((a, b) => a.localeCompare(b, t("langue"), { sensitivity: "base" })),
+    );
+  const encart = document.getElementById("acces");
+  let manquants = await accesManquants();
+  const montrerAcces = () => {
+    encart.hidden = manquants.noms.length === 0;
+    document.getElementById("acces-texte").textContent = t("accesManquant", listeDe(manquants.noms));
+  };
+  montrerAcces();
+  document.getElementById("acces-bouton").addEventListener("click", () => {
+    // Pas d'`await` avant la demande : Firefox exige qu'elle suive le clic.
+    demanderAcces(manquants.motifs).then(async () => {
+      manquants = await accesManquants();
+      montrerAcces();
+    }, console.error);
+  });
+
   const actif = document.getElementById("actif");
   const styles = document.querySelectorAll('input[name="style"]');
 

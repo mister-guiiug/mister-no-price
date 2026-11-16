@@ -54,5 +54,20 @@
         "example": "Amazon, Dealabs, Decathlon, Cdiscount"
       }
     }
+  },
+  "titreAcces": {
+    "message": "Sans prix : des sites attendent votre accord"
+  },
+  "accesManquant": {
+    "message": "Sans prix n’a pas encore le droit d’agir sur $SITES$. Sans cet accord, les prix réapparaissent à chaque changement de page.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs et Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Autoriser"
   }
 }

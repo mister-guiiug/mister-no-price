@@ -57,6 +57,18 @@ Firefox 140 ou plus récent.
 Firefox refuse d'installer durablement une extension non signée, sauf dans
 Developer Edition ou Nightly avec `xpinstall.signatures.required` à `false`.
 
+### Après une mise à jour : un « ! » sur l'icône
+
+Firefox accorde les accès d'une extension **à son installation**, pas ceux
+qu'une mise à jour ajoute. Une version qui gagne des sites n'y agit donc pas
+tant qu'on n'a pas dit oui. Un clic sur l'icône la lance pour la page ouverte,
+mais les prix réapparaissent à la page suivante.
+
+L'icône porte alors une pastille **« ! »**. Ouvrir le popup : un encart nomme
+les sites concernés ; **« Autoriser »** les accorde tous, une fois pour toutes.
+Le même réglage existe site par site dans le menu des extensions de Firefox
+(l'icône en forme de pièce de puzzle).
+
 ## Ce qui est masqué
 
 | Site                | Domaines couverts                     | Vérifié sur le vrai site                                        |
@@ -215,6 +227,10 @@ npm run lint      # validation du manifeste par web-ext (outil de Mozilla)
 
 ```bash
 npm run verifier  # les vrais sites, dans le Firefox du poste
+```
+
+```bash
+npm run verifier:mise-a-jour  # installe la 1.0.0, met à jour, accorde les accès
 ```
 
 ```bash
