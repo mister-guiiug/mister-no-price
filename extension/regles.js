@@ -5,8 +5,11 @@
  *   - `id`       : identifiant stable, en minuscules ;
  *   - `nom`      : ce qu'affiche le popup ;
  *   - `domaines` : les domaines couverts, sous-domaines compris (« amazon.fr »
- *                  couvre www.amazon.fr) — le manifeste doit les déclarer tous,
- *                  un test le vérifie ;
+ *                  couvre www.amazon.fr) ;
+ *   - `hotes`    : ou des hôtes exacts, quand le domaine entier serait trop
+ *                  large (« www.google.fr », sans mail.google.fr ni docs) ;
+ *                  le manifeste doit déclarer les uns et les autres, un test le
+ *                  vérifie ;
  *   - `masquer`  : les sélecteurs CSS des éléments qui ne contiennent QUE des
  *                  prix. Ils sont couverts avant le premier affichage.
  *
@@ -252,13 +255,41 @@
       domaines: ["rakuten.com"],
       masquer: [],
     },
+    {
+      id: "google",
+      nom: "Google",
+      // Des hôtes exacts, pas le domaine : *.google.com couvrirait aussi Gmail,
+      // Docs ou Drive. www.google.* porte la recherche et Google Images (udm=2).
+      hotes: [
+        "www.google.fr",
+        "www.google.com",
+        "www.google.be",
+        "www.google.ch",
+        "www.google.ca",
+        "www.google.co.uk",
+        "www.google.de",
+        "www.google.es",
+        "www.google.it",
+      ],
+      // Produits sponsorisés (recherche et Images : .pla-unit-container, tuiles
+      // « Sponsorisé ») et fiches Shopping : classes hachées, prix écrits en
+      // clair, que le repérage dans le texte couvre. Seuls les libellés
+      // d'accessibilité des prix sont stables ; ils évitent le clignotement.
+      masquer: [
+        '[aria-label^="Prix actuel"]',
+        '[aria-label^="Le prix actuel"]',
+        "[aria-label^=\"L'ancien prix\"]",
+        '[aria-label*="Avant :"]',
+      ],
+    },
   ];
 
   globalThis.SansPrixRegles = Object.freeze(
     REGLES.map((regle) =>
       Object.freeze({
         ...regle,
-        domaines: Object.freeze([...regle.domaines]),
+        domaines: Object.freeze([...(regle.domaines ?? [])]),
+        hotes: Object.freeze([...(regle.hotes ?? [])]),
         masquer: Object.freeze([...regle.masquer]),
       }),
     ),

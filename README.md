@@ -2,7 +2,8 @@
 
 Extension Firefox qui **masque les prix sur les grandes boutiques en ligne** —
 Amazon, Fnac, Cdiscount, Darty, Boulanger, LDLC, E.Leclerc, Carrefour, Auchan,
-eBay, AliExpress, Zalando… —, pour laisser un enfant parcourir des idées de
+eBay, AliExpress, Zalando… — et sur **Google** (produits sponsorisés de la
+recherche et de Google Images), pour laisser un enfant parcourir des idées de
 cadeaux sans lui donner la notion de prix.
 
 ## Pourquoi
@@ -77,10 +78,23 @@ Developer Edition ou Nightly avec `xpinstall.signatures.required` à `false`.
 | **Carrefour**       | carrefour.fr                          | ✘ anti-robot ; générique seul                                   |
 | **ManoMano**        | manomano.fr                           | ✘ anti-robot ; générique seul                                   |
 | **Rakuten**         | rakuten.com                           | — la place de marché française a fermé ; générique seul         |
+| **Google**          | www.google.fr, .com, .be, .ch, … (9)  | ◐ recherche et Images, voir ci-dessous                          |
 
 « ✔ » : `npm run verifier` a visité une liste et une fiche produit et n'y a
 trouvé aucun montant lisible. Les autres domaines d'Amazon et de Decathlon
 partagent le balisage du site vérifié, sans l'avoir été eux-mêmes.
+
+« ◐ » Google : la recherche et Google Images répondent au Firefox piloté par
+leur page anti-robot (`/sorry`). Les scripts de l'extension ont été rejoués sur
+les vraies pages dans un autre navigateur (Chromium), réglages simulés : aucun
+montant lisible, produits sponsorisés compris (« Avant : ▬ », « + ▬ de
+frais »). C'est le même code, sur le même balisage ; ce n'est pas Firefox.
+
+Sur Google, la règle porte sur des **hôtes exacts** (`www.google.fr`…) et non
+sur le domaine : `*.google.com` ferait tourner l'extension dans Gmail, Docs ou
+Drive. Elle masque les montants de **toute** la page de résultats, pas
+seulement du bloc sponsorisé : fiches Shopping, extraits, aperçu IA (« moins
+de ▬ »).
 
 « ✘ anti-robot » : ces sites répondent à un navigateur piloté par une
 vérification anti-robot, que le script ne contourne pas. Leur balisage n'a pas
@@ -147,12 +161,15 @@ application les efface (Decathlon le fait).
 
 ### Ajouter un site
 
-1. Écrire sa règle dans [`regles.js`](extension/regles.js). `masquer` ne retient
-   que des éléments qui ne contiennent **que** des prix ; le reste, le générique
-   s'en charge. Un sélecteur invalide est ignoré sans emporter les autres.
-2. Ajouter ses domaines aux `matches` du [manifeste](extension/manifest.json) —
+1. Écrire sa règle dans [`regles.js`](extension/regles.js) : des `domaines`
+   (sous-domaines compris) ou des `hotes` exacts, quand le domaine entier
+   serait trop large. `masquer` ne retient que des éléments qui ne contiennent
+   **que** des prix ; le reste, le générique s'en charge. Un sélecteur invalide
+   est ignoré sans emporter les autres.
+2. Ajouter ses motifs aux `matches` du [manifeste](extension/manifest.json) —
    `npm test` refuse un écart entre les deux listes.
-3. Ajouter une page de liste et un lien de fiche dans `PAGES` de
+3. Ajouter une page de liste et un lien de fiche (ou des adresses fixes,
+   `urls`) dans `PAGES` de
    [`scripts/verifier.mjs`](scripts/verifier.mjs), puis
    `SITES=<domaine> npm run verifier` jusqu'à n'avoir plus aucun montant
    lisible.
@@ -176,8 +193,8 @@ synchronisé. Le manifeste le déclare (`data_collection_permissions: none`).
   `npm run verifier` détecte.
 - Un nombre **sans devise** n'est jamais pris pour un prix : les bornes d'un
   curseur de filtre « Prix (en €) : 4 – 1549 » (LDLC) restent lisibles.
-- Quatre sites (Fnac, Darty, Carrefour, ManoMano) n'ont pas pu être vérifiés :
-  voir le tableau ci-dessus.
+- Quatre sites (Fnac, Darty, Carrefour, ManoMano) n'ont pas pu être vérifiés,
+  et Google seulement hors de Firefox : voir le tableau ci-dessus.
 - La feuille d'un site est posée dans un `<style>` ; une politique de sécurité
   (CSP) qui interdirait les styles en ligne la bloquerait. Aucun des sites
   vérifiés ne le fait ; le repérage dans le texte, lui, n'en dépend pas.
