@@ -48,13 +48,31 @@
   for (const choix of styles) choix.checked = choix.value === reglages.style;
 
   actif.addEventListener("change", () => ecrire({ actif: actif.checked }));
+
+  // La liste d'envies : le bouton ♥ des fiches, et la page de la liste.
+  const enviesBouton = document.getElementById("envies-bouton");
+  enviesBouton.checked = reglages.envies;
+  enviesBouton.addEventListener("change", () => ecrire({ envies: enviesBouton.checked }));
+  const ouvrir = document.getElementById("envies-ouvrir");
+  const compter = (liste) => {
+    ouvrir.textContent = t("popupEnviesOuvrir", String(liste.length));
+  };
+  const { lire: lireEnvies, suivre: suivreEnvies } = globalThis.SansPrixEnvies;
+  compter(await lireEnvies());
+  suivreEnvies(compter);
+  ouvrir.addEventListener("click", async () => {
+    await browser.tabs.create({ url: browser.runtime.getURL("liste/liste.html") });
+    window.close();
+  });
   for (const choix of styles) {
     choix.addEventListener("change", () => {
       if (choix.checked) ecrire({ style: choix.value });
     });
   }
 
-  // Le raccourci affiché est celui que l'utilisateur a pu redéfinir, pas celui du manifeste.
+  // Le raccourci affiché est celui que l'utilisateur a pu redéfinir, pas celui du
+  // manifeste. Firefox pour Android n'a pas de raccourcis : rien à afficher.
+  if (!browser.commands) return;
   const commandes = await browser.commands.getAll();
   const raccourci = commandes.find((c) => c.name === "basculer")?.shortcut;
   if (raccourci) document.getElementById("raccourci").textContent = t("popupRaccourci", raccourci);

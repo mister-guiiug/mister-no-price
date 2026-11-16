@@ -1,0 +1,233 @@
+:root {
+  --fond: #f8f9fa;
+  --carte: #ffffff;
+  --texte: #1f2937;
+  --discret: #6b7280;
+  --bord: #e5e7eb;
+  --accent: #7048e8;
+  --danger: #c92a2a;
+  --barre: #d5d9d9;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #1c1b22;
+    --carte: #2b2a33;
+    --texte: #f3f4f6;
+    --discret: #9ca3af;
+    --bord: #3f3f46;
+    --accent: #9775fa;
+    --danger: #ff8787;
+    --barre: #52525b;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font: 1rem/1.45 system-ui, sans-serif;
+}
+
+main {
+  display: grid;
+  gap: 1rem;
+  max-width: 48rem;
+  margin-inline: auto;
+  padding: 1.25rem 1rem 3rem;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.75rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+#compte {
+  margin: 0;
+  color: var(--discret);
+}
+
+.explication {
+  margin: 0;
+  color: var(--discret);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  background: var(--carte);
+  color: var(--texte);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[aria-pressed="true"],
+#prix:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+button.danger {
+  color: var(--danger);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#total {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+#message {
+  margin: 0;
+  color: var(--accent);
+}
+
+#message:empty,
+[hidden] {
+  display: none !important;
+}
+
+#articles {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article {
+  display: grid;
+  grid-template-columns: 5rem 1fr auto;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem;
+  border: 1px solid var(--bord);
+  border-radius: 0.75rem;
+  background: var(--carte);
+}
+
+.vignette {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  object-fit: contain;
+}
+
+.vignette-vide {
+  display: grid;
+  place-items: center;
+  background: var(--bord);
+  color: var(--accent);
+  font-size: 1.75rem;
+}
+
+.infos {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.titre {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.titre:hover {
+  text-decoration: underline;
+}
+
+.meta,
+.prix {
+  margin: 0;
+}
+
+.meta {
+  color: var(--discret);
+  font-size: 0.875rem;
+}
+
+.prix {
+  font-weight: 700;
+}
+
+/* La même barre que sur les boutiques : rien ne se lit dessous. */
+.prix.masque {
+  justify-self: start;
+  border-radius: 0.25em;
+  background: var(--barre);
+  color: transparent;
+  user-select: none;
+}
+
+.prix.inconnu {
+  color: var(--discret);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.retirer {
+  padding: 0 0.875rem;
+  font-weight: 400;
+}
+
+.vide {
+  margin: 2rem 0;
+  padding: 2rem 1rem;
+  border: 2px dashed var(--bord);
+  border-radius: 0.75rem;
+  color: var(--discret);
+  text-align: center;
+}
+
+@media (max-width: 30rem) {
+  .article {
+    grid-template-columns: 4rem 1fr;
+  }
+
+  .vignette {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .retirer {
+    grid-column: 2;
+    justify-self: start;
+  }
+}

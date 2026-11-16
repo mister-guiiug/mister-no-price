@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "default_locale": "fr",
   "author": "GuiiuG",
   "icons": {
@@ -180,10 +180,13 @@
       ],
       "js": [
         "commun/reglages.js",
+        "commun/envies.js",
         "regles.js",
         "content/detection.js",
         "content/moteur.js",
-        "content/masquage.js"
+        "content/produit.js",
+        "content/masquage.js",
+        "content/envies.js"
       ],
       "run_at": "document_start",
       "all_frames": true

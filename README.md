@@ -39,9 +39,29 @@ interrupteur dans le popup, ou <kbd>Alt</kbd>+<kbd>Maj</kbd>+<kbd>P</kbd>, les
 fait revenir dans tous les onglets à la fois ; une pastille « off » sur l'icône
 rappelle qu'ils sont visibles.
 
-<img src="docs/popup.png" alt="Le popup : interrupteur « Masquer les prix », choix entre barre grise et flou, liste des sites couverts" width="290">
+<img src="docs/popup.png" alt="Le popup : interrupteur « Masquer les prix », choix entre barre grise et flou, liste d’envies (bouton ♥ sur les fiches, Voir la liste), sites couverts" width="290">
 
 _Extension indépendante : ni éditée ni approuvée par les sites qu'elle couvre._
+
+## La liste d'envies
+
+Sur une fiche produit, un bouton **♥ Ma liste** permet à l'enfant de marquer ce
+qui lui plaît, sans jamais y voir de prix. Le parent retrouve la liste depuis le
+popup (**Voir la liste**) : image, titre, boutique, lien vers la fiche.
+
+Les prix y sont **masqués à l'ouverture**, comme sur les boutiques : l'enfant
+peut ouvrir la liste sans rien dévoiler. **Afficher les prix** les montre, avec
+le **total** par devise, le temps de la visite. **Partager la liste** passe par
+le partage du système sur Android, par le presse-papiers ailleurs, et reprend ce
+qui est à l'écran : sans les prix tant qu'ils sont masqués.
+
+<img src="docs/liste.png" alt="La liste d'envies : cinq articles (AliExpress, Rue du Commerce, Decathlon, Boulanger, Amazon), image, titre et boutique, prix sous une barre grise" width="560">
+
+L'extension reconnaît une fiche à ses données structurées — JSON-LD
+`Product`, microdonnées, Open Graph — que la plupart des boutiques publient pour
+les moteurs de recherche ; pour Amazon et Rue du Commerce, qui n'en publient
+pas, la règle du site indique où lire titre, prix et image (`fiche`). Le bouton
+se désactive dans le popup.
 
 ## Installer
 
@@ -57,6 +77,23 @@ Firefox 140 ou plus récent.
 Firefox refuse d'installer durablement une extension non signée, sauf dans
 Developer Edition ou Nightly avec `xpinstall.signatures.required` à `false`.
 
+### Sur Android
+
+Firefox pour Android 142 ou plus récent. Le masquage, le popup (menu **⋮ →
+Extensions → Sans prix**) et la liste d'envies y fonctionnent ; le popup s'y
+ouvre en plein écran, avec des cibles à la taille du doigt. Il n'y a pas de
+raccourci clavier : l'interrupteur du popup le remplace.
+
+Installer une extension qui n'est pas publiée sur addons.mozilla.org demande le
+`.xpi` **signé** et le menu de débogage : **Paramètres → À propos de Firefox**,
+toucher cinq fois le logo, puis **Paramètres → Installer une extension depuis un
+fichier**. Pour essayer depuis un poste de développement, téléphone branché en
+USB et débogage USB activé :
+
+```bash
+npx web-ext run --source-dir extension -t firefox-android --android-device <identifiant adb>
+```
+
 ### Après une mise à jour : un « ! » sur l'icône
 
 Firefox accorde les accès d'une extension **à son installation**, pas ceux
@@ -71,29 +108,31 @@ Le même réglage existe site par site dans le menu des extensions de Firefox
 
 ## Ce qui est masqué
 
-| Site                | Domaines couverts                     | Vérifié sur le vrai site                                        |
-| ------------------- | ------------------------------------- | --------------------------------------------------------------- |
-| **Amazon**          | 23 boutiques                          | ✔ amazon.fr, .com, .co.uk, .de, .es, .it                        |
-| **AliExpress**      | aliexpress.com                        | ✔                                                               |
-| **Auchan**          | auchan.fr                             | ✔                                                               |
-| **Boulanger**       | boulanger.com                         | ✔                                                               |
-| **Cdiscount**       | cdiscount.com                         | ✔                                                               |
-| **Dealabs**         | dealabs.com                           | ✔                                                               |
-| **Decathlon**       | 11 pays                               | ✔ decathlon.fr                                                  |
-| **E.Leclerc**       | e.leclerc, leclerc.fr                 | ✔                                                               |
-| **eBay**            | ebay.fr, ebay.com                     | ✔ les deux                                                      |
-| **LDLC**            | ldlc.com                              | ✔                                                               |
-| **Rue du Commerce** | rueducommerce.fr                      | ✔                                                               |
-| **Zalando**         | zalando.fr                            | ✔ (générique seul)                                              |
-| **Fnac**            | fnac.com                              | ✘ anti-robot ; règle tirée de la liste, vue une fois             |
-| **Darty**           | darty.com                             | ✘ anti-robot ; générique seul                                   |
-| **Carrefour**       | carrefour.fr                          | ✘ anti-robot ; générique seul                                   |
-| **ManoMano**        | manomano.fr                           | ✘ anti-robot ; générique seul                                   |
-| **Rakuten**         | rakuten.com                           | — la place de marché française a fermé ; générique seul         |
-| **Google**          | www.google.fr, .com, .be, .ch, … (9)  | ◐ recherche et Images, voir ci-dessous                          |
+| Site                | Domaines couverts                    | Prix masqués (bureau)                                   | Bouton ♥               | Site mobile         |
+| ------------------- | ------------------------------------ | ------------------------------------------------------- | ---------------------- | ------------------- |
+| **Amazon**          | 23 boutiques                         | ✔ amazon.fr, .com, .co.uk, .de, .es, .it                | ✔ les six              | ✔ amazon.fr, .com   |
+| **AliExpress**      | aliexpress.com                       | ✔                                                       | ✔                      | non vérifié (délai) |
+| **Auchan**          | auchan.fr                            | ✔                                                       | ✔                      | ✔                   |
+| **Boulanger**       | boulanger.com                        | ✔                                                       | ✔                      | ✔                   |
+| **Cdiscount**       | cdiscount.com                        | ✔                                                       | ✔                      | ✔                   |
+| **Dealabs**         | dealabs.com                          | ✔                                                       | — pas de fiche produit | ✔                   |
+| **Decathlon**       | 11 pays                              | ✔ decathlon.fr                                          | ✔                      | ✔                   |
+| **E.Leclerc**       | e.leclerc, leclerc.fr                | ✔                                                       | ✔                      | ✔                   |
+| **eBay**            | ebay.fr, ebay.com                    | ✔ les deux                                              | ✔ les deux             | ✔ ebay.fr           |
+| **LDLC**            | ldlc.com                             | ✔                                                       | ✔                      | ✔                   |
+| **Rue du Commerce** | rueducommerce.fr                     | ✔                                                       | ✔                      | ✔                   |
+| **Zalando**         | zalando.fr                           | ✔ (générique seul)                                      | ✔                      | ✔                   |
+| **Fnac**            | fnac.com                             | ✘ anti-robot ; règle tirée de la liste, vue une fois    | règle non vérifiée     | ✘ anti-robot        |
+| **Darty**           | darty.com                            | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
+| **Carrefour**       | carrefour.fr                         | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
+| **ManoMano**        | manomano.fr                          | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
+| **Rakuten**         | rakuten.com                          | — la place de marché française a fermé ; générique seul | —                      | —                   |
+| **Google**          | www.google.fr, .com, .be, .ch, … (9) | ◐ recherche et Images, voir ci-dessous                  | — pas de fiche produit | ✘ anti-robot        |
 
 « ✔ » : `npm run verifier` a visité une liste et une fiche produit et n'y a
-trouvé aucun montant lisible. Les autres domaines d'Amazon et de Decathlon
+trouvé aucun montant lisible ; « Bouton ♥ » : il a ajouté la fiche à la liste
+d'envies, qui l'affiche avec titre, image et prix ; « Site mobile » : les mêmes
+vérifications avec `MOBILE=1`, en se présentant comme Firefox pour Android. Les autres domaines d'Amazon et de Decathlon
 partagent le balisage du site vérifié, sans l'avoir été eux-mêmes.
 
 « ◐ » Google : la recherche et Google Images répondent au Firefox piloté par
@@ -181,17 +220,23 @@ application les efface (Decathlon le fait).
 2. Ajouter ses motifs aux `matches` du [manifeste](extension/manifest.json) —
    `npm test` refuse un écart entre les deux listes.
 3. Ajouter une page de liste et un lien de fiche (ou des adresses fixes,
-   `urls`) dans `PAGES` de
-   [`scripts/verifier.mjs`](scripts/verifier.mjs), puis
+   `urls`) dans `PAGES` de [`scripts/pages.mjs`](scripts/pages.mjs), puis
    `SITES=<domaine> npm run verifier` jusqu'à n'avoir plus aucun montant
-   lisible.
+   lisible, et un bouton ♥ sur la fiche. S'il manque, le site ne publie pas de
+   données structurées : donner à sa règle une `fiche` (sélecteurs du titre, du
+   prix, de l'image).
 
 ## Confidentialité
 
 L'extension ne collecte, n'envoie ni ne lit rien d'autre que les pages des sites
-qu'elle masque. Aucune requête réseau. Elle conserve deux réglages
-(`actif`, `style`) dans `storage.sync`, qui suivent le compte Firefox s'il est
-synchronisé. Le manifeste le déclare (`data_collection_permissions: none`).
+qu'elle masque. Aucune requête réseau de son fait. Elle conserve trois réglages
+(`actif`, `style`, `envies`) dans `storage.sync`, qui suivent le compte Firefox
+s'il est synchronisé, et la liste d'envies dans `storage.local`, sur l'appareil
+seulement. Le manifeste le déclare (`data_collection_permissions: none`).
+
+La page de la liste affiche les images des articles depuis les serveurs des
+boutiques, sans en-tête `Referer` : la boutique voit qu'une de ses images est
+chargée, comme lors de la visite de la fiche.
 
 ## Limites connues
 
@@ -207,6 +252,13 @@ synchronisé. Le manifeste le déclare (`data_collection_permissions: none`).
   curseur de filtre « Prix (en €) : 4 – 1549 » (LDLC) restent lisibles.
 - Quatre sites (Fnac, Darty, Carrefour, ManoMano) n'ont pas pu être vérifiés,
   et Google seulement hors de Firefox : voir le tableau ci-dessus.
+- Le bouton ♥ n'apparaît que sur une fiche reconnue : pas sur Dealabs, dont
+  les pages sont des discussions et non des produits, ni sur Google. Le prix
+  retenu est celui de la fiche au moment du clic, pour la variante affichée.
+- Firefox pour Android n'a été essayé qu'en se faisant passer pour lui
+  (`MOBILE=1`) : balisage mobile des boutiques, mise en page au doigt. Les API
+  propres au téléphone ne l'ont été que par les tests (`browser.commands`
+  absente).
 - La feuille d'un site est posée dans un `<style>` ; une politique de sécurité
   (CSP) qui interdirait les styles en ligne la bloquerait. Aucun des sites
   vérifiés ne le fait ; le repérage dans le texte, lui, n'en dépend pas.
@@ -230,6 +282,10 @@ npm run verifier  # les vrais sites, dans le Firefox du poste
 ```
 
 ```bash
+MOBILE=1 npm run verifier  # les mêmes, en se présentant comme Firefox pour Android
+```
+
+```bash
 npm run verifier:mise-a-jour  # installe la 1.0.0, met à jour, accorde les accès
 ```
 
@@ -247,8 +303,12 @@ dépend des vrais sites, se lance à la main.
 visite pour chaque site une liste puis une fiche produit. Il **relève chaque
 montant encore lisible** — ni sous une barre, ni flouté, ni hors écran, titre de
 l'onglet compris —, refuse au passage les bandeaux de cookies, puis bascule
-l'interrupteur et l'apparence depuis le popup et vérifie que la page suit.
-Captures dans `captures/`. Variables : `SITES` (`amazon.fr,cdiscount.com`…),
+l'interrupteur et l'apparence depuis le popup et vérifie que la page suit. Sur
+chaque fiche, il actionne le bouton ♥ ; à la fin, il ouvre la liste d'envies et
+vérifie que chaque article y est, prix masqués puis visibles à la demande.
+Captures dans `captures/` (`captures/mobile/` avec `MOBILE=1`, qui se présente
+comme Firefox pour Android : agent utilisateur, écran de téléphone, pointeur
+« coarse »). Variables : `SITES` (`amazon.fr,cdiscount.com`…),
 `FIREFOX` (chemin de l'exécutable), `VISIBLE=1` pour voir la fenêtre.
 
 Pour ouvrir le popup, le script passe par la fenêtre de Firefox elle-même
@@ -263,12 +323,17 @@ extension/
 ├── regles.js              une règle par site : domaines, sélecteurs
 ├── background.js          raccourci clavier, pastille « off » sur l'icône
 ├── commun/reglages.js     réglages partagés (storage.sync)
+├── commun/envies.js       la liste d'envies (storage.local)
+├── commun/acces.js        accès aux sites qu'une mise à jour a ajoutés
 ├── content/
 │   ├── moteur.js          choisir la règle, en tirer la feuille (fonctions pures)
 │   ├── detection.js       repérage des montants dans un texte
 │   ├── masquage.js        feuille, surlignage, prix éclatés, titre, réglages
-│   └── masquage.css       peinture des montants surlignés
-├── popup/                 interrupteur, apparence, sites couverts
+│   ├── masquage.css       peinture des montants surlignés
+│   ├── produit.js         reconnaître une fiche produit (fonctions pures)
+│   └── envies.js          le bouton ♥ « Ma liste »
+├── popup/                 interrupteur, apparence, liste d'envies, sites
+├── liste/                 la page de la liste d'envies
 ├── icons/icone.svg
 └── _locales/              fr (par défaut), en
 ```

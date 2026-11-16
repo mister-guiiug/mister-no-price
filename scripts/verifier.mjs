@@ -6,6 +6,7 @@
  *   SITES=amazon.fr,cdiscount.com npm run verifier
  *   VISIBLE=1 npm run verifier                    # avec la fenêtre
  *   FIREFOX="C:/…/firefox.exe" npm run verifier
+ *   MOBILE=1 npm run verifier                     # en Firefox pour Android
  *
  * Pour chaque site, une page de liste puis une fiche produit. Sur chacune, il
  * relève les montants encore LISIBLES — ni sous une barre, ni floutés, ni hors
@@ -13,72 +14,29 @@
  * balisage sans prévenir : c'est ce relevé qui le dira. Il essaie enfin le popup
  * (interrupteur, apparence) et laisse des captures dans captures/.
  *
+ * Sur chaque fiche, il attend le bouton ♥ « Ma liste » et l'actionne ; à la
+ * fin, il ouvre la page de la liste d'envies et vérifie que les articles y sont,
+ * prix masqués, puis visibles à la demande.
+ *
+ * MOBILE=1 se présente comme Firefox pour Android (agent utilisateur, écran de
+ * téléphone, pointeur « coarse ») : les boutiques servent alors leur site
+ * mobile, au balisage souvent différent. Ce n'est pas un téléphone — les API
+ * propres à Android ne sont pas en jeu —, mais c'est le balisage qu'il recevra.
+ *
  * Un site qui répond par une vérification anti-robot est noté « non vérifié » :
  * le script ne la contourne pas. VISIBLE=1 permet de la passer soi-même.
  */
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import puppeteer from "puppeteer-core";
+import { PAGES } from "./pages.mjs";
 
 const RACINE = resolve(import.meta.dirname, "..");
+const MOBILE = process.env.MOBILE === "1";
+const AGENT_ANDROID = "Mozilla/5.0 (Android 15; Mobile; rv:146.0) Gecko/146.0 Firefox/146.0";
 const EXTENSION = resolve(RACINE, "extension");
-const CAPTURES = resolve(RACINE, "captures");
+const CAPTURES = resolve(RACINE, MOBILE ? "captures/mobile" : "captures");
 
-/**
- * Les pages visitées : une liste, et le lien de la première fiche produit qu'on
- * y trouve. Pas dans regles.js : ce sont des données de test, pas l'extension.
- */
-const LIEN_AMAZON = '[data-component-type="s-search-result"] a[href*="/dp/"]';
-const PAGES = {
-  "amazon.fr": { liste: "https://www.amazon.fr/s?k=casque+audio", fiche: LIEN_AMAZON },
-  "amazon.com": { liste: "https://www.amazon.com/s?k=headphones", fiche: LIEN_AMAZON },
-  "amazon.it": { liste: "https://www.amazon.it/s?k=cuffie", fiche: LIEN_AMAZON },
-  "amazon.co.uk": { liste: "https://www.amazon.co.uk/s?k=headphones", fiche: LIEN_AMAZON },
-  "amazon.de": { liste: "https://www.amazon.de/s?k=kopfhorer", fiche: LIEN_AMAZON },
-  "amazon.es": { liste: "https://www.amazon.es/s?k=auriculares", fiche: LIEN_AMAZON },
-  "dealabs.com": { liste: "https://www.dealabs.com/", fiche: 'a[href*="/bons-plans/"]' },
-  "decathlon.fr": { liste: "https://www.decathlon.fr/search?Ntt=velo", fiche: 'a[href*="/p/"]' },
-  "cdiscount.com": {
-    liste: "https://www.cdiscount.com/search/10/casque+audio.html",
-    fiche: 'a[href*="/f-"]',
-  },
-  "fnac.com": {
-    liste: "https://www.fnac.com/SearchResult/ResultList.aspx?Search=casque+audio",
-    fiche: "a.Article-title",
-  },
-  "darty.com": {
-    liste: "https://www.darty.com/nav/recherche?text=casque+audio",
-    fiche: 'a[href*="/nav/achat/"]',
-  },
-  "boulanger.com": {
-    liste: "https://www.boulanger.com/resultats?tr=casque+audio",
-    fiche: 'a[href*="/ref/"]',
-  },
-  "ldlc.com": { liste: "https://www.ldlc.com/recherche/casque%20audio/", fiche: 'a[href*="/fiche/"]' },
-  "rueducommerce.fr": {
-    liste: "https://www.rueducommerce.fr/recherche/casque%20audio/",
-    fiche: "li.pdt-item a[href]",
-  },
-  "e.leclerc": { liste: "https://www.e.leclerc/recherche?q=casque+audio", fiche: 'a[href*="/fp/"]' },
-  "carrefour.fr": { liste: "https://www.carrefour.fr/s?q=casque+audio", fiche: 'a[href*="/p/"]' },
-  "auchan.fr": { liste: "https://www.auchan.fr/recherche?text=casque+audio", fiche: 'a[href*="/pr-"]' },
-  // rakuten.com : la place de marché française a fermé, rien à visiter.
-  "ebay.fr": { liste: "https://www.ebay.fr/sch/i.html?_nkw=casque+audio", fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])' },
-  "ebay.com": { liste: "https://www.ebay.com/sch/i.html?_nkw=headphones", fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])' },
-  "aliexpress.com": {
-    liste: "https://fr.aliexpress.com/w/wholesale-casque-audio.html",
-    fiche: 'a[href*="/item/"]',
-  },
-  "zalando.fr": { liste: "https://www.zalando.fr/catalogue/?q=baskets", fiche: 'article a[href$=".html"]' },
-  "manomano.fr": { liste: "https://www.manomano.fr/recherche/perceuse", fiche: 'a[href*="/p/"]' },
-  // Pas de fiche produit : la recherche (produits sponsorisés) et Google Images.
-  "google.fr": {
-    urls: {
-      recherche: "https://www.google.fr/search?q=casque+audio+bluetooth&hl=fr",
-      images: "https://www.google.fr/search?q=casque+audio+bluetooth&udm=2&hl=fr",
-    },
-  },
-};
 const SITES = process.env.SITES ? process.env.SITES.split(",") : Object.keys(PAGES);
 
 const ID_EXTENSION = JSON.parse(readFileSync(resolve(EXTENSION, "manifest.json"), "utf8"))
@@ -301,7 +259,7 @@ async function releverMontantsVisibles(page) {
  * adresse moz-extension:// ; on passe par la fenêtre de Firefox elle-même, ce
  * que MOZ_REMOTE_ALLOW_SYSTEM_ACCESS autorise sur ce profil jetable.
  */
-async function ouvrirPopup(navigateur) {
+async function ouvrirPageExtension(navigateur, chemin) {
   const dejaOuvertes = new Set(await navigateur.pages());
   const { result: arbre } = await navigateur.connection.send("browsingContext.getTree", {
     "moz:scope": "chrome",
@@ -312,13 +270,13 @@ async function ouvrirPopup(navigateur) {
     target: { context: fenetre.context },
     awaitPromise: false,
     expression: `gBrowser.selectedTab = gBrowser.addTab(
-      WebExtensionPolicy.getByID(${JSON.stringify(ID_EXTENSION)}).getURL("popup/popup.html"),
+      WebExtensionPolicy.getByID(${JSON.stringify(ID_EXTENSION)}).getURL(${JSON.stringify(chemin)}),
       { triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal() },
     ), true`,
   });
   // Une exception dans la fenêtre revient comme une RÉPONSE, pas comme une erreur.
   if (result.type === "exception") {
-    throw new Error(`Ouverture du popup refusée : ${result.exceptionDetails?.text}`);
+    throw new Error(`Ouverture de ${chemin} refusée : ${result.exceptionDetails?.text}`);
   }
   for (let essai = 0; essai < 60; essai += 1) {
     await attendre(250);
@@ -328,7 +286,30 @@ async function ouvrirPopup(navigateur) {
       return nouvelle;
     }
   }
-  throw new Error("Le popup ne s'est pas ouvert.");
+  throw new Error(`${chemin} ne s'est pas ouvert.`);
+}
+
+/**
+ * Le bouton ♥ de la fiche : attendu quelques secondes (les données structurées
+ * arrivent parfois tard), puis actionné. Rend null s'il n'est pas venu.
+ */
+async function essayerEnvie(page) {
+  for (let essai = 0; essai < 16; essai += 1) {
+    const etat = await page.evaluate(() => {
+      const bouton = document.querySelector("sans-prix-envie")?.shadowRoot?.querySelector("button");
+      return bouton ? bouton.getAttribute("aria-pressed") : null;
+    });
+    if (etat === "true") return true;
+    if (etat === "false") {
+      await page.evaluate(() =>
+        document.querySelector("sans-prix-envie").shadowRoot.querySelector("button").click(),
+      );
+      await attendre(800);
+      continue;
+    }
+    await attendre(500);
+  }
+  return false;
 }
 
 async function etatPage(page) {
@@ -345,6 +326,9 @@ async function etatPage(page) {
  * et la fiche qu'on y trouve, soit des adresses fixes (`urls`), pour un site
  * sans fiche produit comme un moteur de recherche.
  */
+/** Les sites dont la fiche a été ajoutée à la liste d'envies. */
+const envies = [];
+
 async function verifierSite(page, site) {
   const pages = PAGES[site];
   if (!pages) throw new Error(`Site inconnu : ${site} (connus : ${Object.keys(PAGES).join(", ")})`);
@@ -354,7 +338,10 @@ async function verifierSite(page, site) {
     aVisiter = Object.entries(pages.urls);
   } else {
     await preparer(page, pages.liste);
-    const lienFiche = await page.evaluate((s) => document.querySelector(s)?.href ?? null, pages.fiche);
+    const lienFiche = await page.evaluate(
+      (selecteurs) => selecteurs.map((s) => document.querySelector(s)?.href).find(Boolean) ?? null,
+      [pages.fiche].flat(),
+    );
     aVisiter = [
       ["liste", pages.liste],
       ["fiche", lienFiche],
@@ -384,6 +371,12 @@ async function verifierSite(page, site) {
     if (releve.restes.length > 25) console.log(`  … et ${releve.restes.length - 25} autres`);
     const ok = releve.feuille && releve.surlignage && releve.restes.length === 0;
     verdicts.push([nom, ok ? "✔" : "✘"]);
+    if (genre === "fiche" && pages.envies !== false) {
+      const envie = await essayerEnvie(page);
+      console.log(envie ? "  ♥ ajouté à la liste d'envies" : "  ✘ pas de bouton ♥ « Ma liste »");
+      verdicts.push([`${nom} ♥`, envie ? "✔" : "✘"]);
+      if (envie) envies.push(site);
+    }
   }
   return verdicts;
 }
@@ -393,9 +386,13 @@ const navigateur = await puppeteer.launch({
   browser: "firefox",
   executablePath: trouverFirefox(),
   headless: !process.env.VISIBLE,
-  defaultViewport: { width: 1366, height: 900 },
+  defaultViewport: MOBILE ? { width: 412, height: 915 } : { width: 1366, height: 900 },
   env: { ...process.env, MOZ_REMOTE_ALLOW_SYSTEM_ACCESS: "1" },
-  extraPrefsFirefox: { "intl.accept_languages": "fr-FR, fr" },
+  extraPrefsFirefox: {
+    "intl.accept_languages": "fr-FR, fr",
+    // Pointeur « coarse » : la mise en page au doigt du popup et de la liste.
+    ...(MOBILE ? { "general.useragent.override": AGENT_ANDROID, "ui.primaryPointerCapabilities": 1 } : {}),
+  },
 });
 
 const bilan = [];
@@ -423,7 +420,7 @@ try {
 
   // Le popup, ouvert comme une page : l'interrupteur et l'apparence agissent en
   // direct sur la dernière page visitée.
-  const popup = await ouvrirPopup(navigateur);
+  const popup = await ouvrirPageExtension(navigateur, "popup/popup.html");
   await (await popup.$("main")).screenshot({ path: resolve(CAPTURES, "popup.png") });
   console.log(`\npopup — « ${await popup.$eval("#sites", (e) => e.textContent)} »`);
   await page.bringToFront();
@@ -445,6 +442,36 @@ try {
   // Remet les réglages par défaut (le profil est jetable, mais autant finir propre).
   await popup.click("#actif");
   await popup.click('input[name="style"][value="barre"]');
+
+  // La liste d'envies : chaque fiche ajoutée y est, prix masqués à l'ouverture.
+  const liste = await ouvrirPageExtension(navigateur, "liste/liste.html");
+  const lireListe = () =>
+    liste.evaluate(() => ({
+      articles: [...document.querySelectorAll(".article")].map((li) => ({
+        titre: li.querySelector(".titre").textContent.slice(0, 50),
+        site: li.querySelector(".meta").textContent,
+        prix: li.querySelector(".prix").classList.contains("masque") ? "masqué" : li.querySelector(".prix").textContent,
+        image: Boolean(li.querySelector("img.vignette")),
+      })),
+      total: document.getElementById("total").hidden ? null : document.getElementById("total").textContent,
+    }));
+  const fermee = await lireListe();
+  await (await liste.$("main")).screenshot({ path: resolve(CAPTURES, "liste.png") });
+  await liste.click("#prix");
+  await attendre(300);
+  const ouverte = await lireListe();
+  await (await liste.$("main")).screenshot({ path: resolve(CAPTURES, "liste-prix.png") });
+  console.log(`\nliste d'envies — ${fermee.articles.length} article(s), ${ouverte.total ?? "pas de total"}`);
+  for (const [i, a] of ouverte.articles.entries()) {
+    console.log(`  ${a.prix.padEnd(12)} ${a.image ? "🖼" : " "} ${a.site.padEnd(22)} ${a.titre}`);
+    if (fermee.articles[i].prix !== "masqué") console.log("    ✘ prix lisible à l'ouverture");
+  }
+  const listeOk =
+    fermee.articles.length === envies.length &&
+    fermee.articles.every((a) => a.prix === "masqué") &&
+    fermee.total === null &&
+    ouverte.articles.every((a) => a.prix !== "masqué");
+  bilan.push(["liste d'envies", listeOk ? "✔" : "✘"]);
 
   console.log("\nBilan");
   for (const [nom, verdict] of bilan) console.log(`  ${verdict.padEnd(12)} ${nom}`);

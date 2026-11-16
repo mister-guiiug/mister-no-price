@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title data-i18n="listeTitre"></title>
+    <link rel="icon" href="../icons/icone.svg" />
+    <link rel="stylesheet" href="liste.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icons/icone.svg" alt="" width="32" height="32" />
+        <h1 data-i18n="listeTitre"></h1>
+        <p id="compte"></p>
+      </header>
+
+      <p class="explication" data-i18n="listeExplication"></p>
+
+      <div class="actions">
+        <button type="button" id="prix" aria-pressed="false" data-i18n="listeMontrerPrix"></button>
+        <button type="button" id="partager" data-i18n="listePartager"></button>
+        <button type="button" id="vider" class="danger" data-i18n="listeVider"></button>
+      </div>
+
+      <p id="total" hidden></p>
+      <p id="message" role="status"></p>
+
+      <ul id="articles"></ul>
+      <p id="vide" class="vide" hidden data-i18n="listeVide"></p>
+    </main>
+    <script src="../commun/envies.js"></script>
+    <script src="liste.js"></script>
+  </body>
+</html>

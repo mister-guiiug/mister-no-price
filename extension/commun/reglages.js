@@ -8,13 +8,15 @@
   "use strict";
 
   const STYLES = Object.freeze(["barre", "flou"]);
-  const DEFAUTS = Object.freeze({ actif: true, style: "barre" });
+  // `envies` : le bouton ♥ « Ma liste » sur les fiches produit.
+  const DEFAUTS = Object.freeze({ actif: true, style: "barre", envies: true });
 
   function normaliser(brut) {
     return {
       // Tout ce qui n'est pas explicitement `false` masque : en cas de doute, on cache.
       actif: brut.actif !== false,
       style: STYLES.includes(brut.style) ? brut.style : DEFAUTS.style,
+      envies: brut.envies !== false,
     };
   }
 
@@ -30,7 +32,7 @@
   function suivre(rappel) {
     browser.storage.onChanged.addListener((changements, zone) => {
       if (zone !== "sync") return;
-      if (!("actif" in changements) && !("style" in changements)) return;
+      if (!Object.keys(DEFAUTS).some((cle) => cle in changements)) return;
       lire().then(rappel, console.error);
     });
   }

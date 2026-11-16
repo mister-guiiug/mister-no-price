@@ -69,5 +69,115 @@
   },
   "accesBouton": {
     "message": "Allow"
+  },
+  "popupEnvies": {
+    "message": "Wish list"
+  },
+  "popupEnviesBouton": {
+    "message": "♥ “My list” button on product pages"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Open the list ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "My list",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "In my list",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Add to my wish list"
+  },
+  "envieRetirerTitre": {
+    "message": "Remove from my wish list"
+  },
+  "envieAjoutee": {
+    "message": "Added to your wish list"
+  },
+  "envieRetiree": {
+    "message": "Removed from your wish list"
+  },
+  "listeTitre": {
+    "message": "Wish list"
+  },
+  "listeExplication": {
+    "message": "Items marked with a ♥ on product pages. Prices stay hidden until you ask to see them."
+  },
+  "listeCompte1": {
+    "message": "$N$ item",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ items",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Show prices"
+  },
+  "listeMasquerPrix": {
+    "message": "Hide prices"
+  },
+  "listePartager": {
+    "message": "Share the list"
+  },
+  "listeVider": {
+    "message": "Clear all"
+  },
+  "listeViderConfirmer": {
+    "message": "Clear the whole wish list?"
+  },
+  "listeVide": {
+    "message": "Nothing yet. On a product page, the ♥ “My list” button adds the item here."
+  },
+  "listeRetirer": {
+    "message": "Remove"
+  },
+  "listeRetirerArticle": {
+    "message": "Remove “$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Price hidden"
+  },
+  "listePrixInconnu": {
+    "message": "Price not found"
+  },
+  "listeTotal": {
+    "message": "Total: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "List copied to the clipboard."
+  },
+  "listeCopieImpossible": {
+    "message": "Could not copy the list."
   }
 }

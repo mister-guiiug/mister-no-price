@@ -108,6 +108,16 @@ describe("les règles", () => {
 
   // Un sélecteur est recopié dans une feuille de style : une accolade y fermerait
   // la règle et ouvrirait la porte à n'importe quelle déclaration.
+  it("ont, s'il y en a, une fiche avec au moins le sélecteur du titre", () => {
+    for (const r of REGLES.filter((r) => r.fiche)) {
+      assert.ok(r.fiche.titre, r.id);
+      for (const [cle, s] of Object.entries(r.fiche)) {
+        assert.ok(["titre", "prix", "image"].includes(cle), `${r.id}.${cle}`);
+        assert.equal(typeof s, "string", `${r.id}.${cle}`);
+      }
+    }
+  });
+
   it("ont des sélecteurs sans accolade ni commentaire", () => {
     for (const s of REGLES.flatMap((r) => r.masquer)) {
       assert.doesNotMatch(s, /[{}]|\/\*/, s);
@@ -142,6 +152,13 @@ describe("le manifeste", () => {
     const ordre = (f) => script.js.indexOf(f);
     for (const f of ["commun/reglages.js", "regles.js", "content/detection.js", "content/moteur.js"]) {
       assert.ok(ordre(f) >= 0 && ordre(f) < ordre("content/masquage.js"), f);
+    }
+  });
+
+  it("charge la liste et l'extraction avant le bouton ♥", () => {
+    const ordre = (f) => script.js.indexOf(f);
+    for (const f of ["commun/reglages.js", "commun/envies.js", "regles.js", "content/moteur.js", "content/produit.js"]) {
+      assert.ok(ordre(f) >= 0 && ordre(f) < ordre("content/envies.js"), f);
     }
   });
 });

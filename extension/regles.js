@@ -11,7 +11,13 @@
  *                  le manifeste doit déclarer les uns et les autres, un test le
  *                  vérifie ;
  *   - `masquer`  : les sélecteurs CSS des éléments qui ne contiennent QUE des
- *                  prix. Ils sont couverts avant le premier affichage.
+ *                  prix. Ils sont couverts avant le premier affichage ;
+ *   - `fiche`    : facultatif, pour la liste d'envies — les sélecteurs du
+ *                  titre, du prix et de l'image d'une fiche produit, quand le
+ *                  site ne publie pas de données structurées (JSON-LD,
+ *                  microdonnées, Open Graph) que content/produit.js lit seul.
+ *                  Un sélecteur peut viser plusieurs gabarits (bureau,
+ *                  mobile) : le premier élément non vide l'emporte.
  *
  * Tout le reste est générique et vaut sur chaque site, règle ou non :
  *   - les montants écrits en clair (« dès 35 € ») sont repérés dans le texte ;
@@ -87,6 +93,13 @@
         ".sc-product-price",
         '[id^="sc-subtotal-amount"]',
       ],
+      // Aucune donnée structurée sur les fiches. #productTitle et #landingImage
+      // au bureau, #title et #main-image sur le site mobile.
+      fiche: {
+        titre: "#productTitle, #title",
+        prix: "#corePrice_feature_div .a-offscreen, .priceToPay .a-offscreen, .reinventPricePriceToPayMargin, #corePrice_mobile_feature_div .a-price",
+        image: "#landingImage, #main-image, #imgTagWrapperId img",
+      },
     },
     {
       id: "dealabs",
@@ -142,6 +155,12 @@
         ".f-faMpMoreOffers__price",
         ".f-xTimesPaymentsSummary__creditAmount",
       ],
+      // Non vérifié (vérification anti-robot) : le gabarit connu de la fiche.
+      fiche: {
+        titre: "h1.f-productHeader-Title, h1.f-productHeader__title",
+        prix: ".f-faPriceBox__price.userPrice, .f-faPriceBox .userPrice",
+        image: 'meta[property="og:image"]',
+      },
     },
     {
       id: "darty",
@@ -186,6 +205,12 @@
       domaines: ["rueducommerce.fr"],
       // Même groupe que LDLC, même balisage des prix.
       masquer: ["div.price", ".old-price", ".new-price", ".premium__price"],
+      // Ni JSON-LD ni og:type sur la fiche.
+      fiche: {
+        titre: "h1.product__title",
+        prix: ".product__price .new-price, .new-price",
+        image: 'meta[property="og:image"]',
+      },
     },
     {
       id: "leclerc",
@@ -291,6 +316,7 @@
         domaines: Object.freeze([...(regle.domaines ?? [])]),
         hotes: Object.freeze([...(regle.hotes ?? [])]),
         masquer: Object.freeze([...regle.masquer]),
+        fiche: regle.fiche ? Object.freeze({ ...regle.fiche }) : null,
       }),
     ),
   );
