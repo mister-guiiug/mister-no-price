@@ -1,27 +1,58 @@
 {
-  "langue": { "message": "fr" },
+  "langue": {
+    "message": "fr"
+  },
   "extName": {
-    "message": "Sans prix pour Amazon",
-    "description": "Nom de l'extension. « pour Amazon » : l'extension n'est ni éditée ni approuvée par Amazon."
+    "message": "Sans prix",
+    "description": "Nom de l’extension. Elle n’est ni éditée ni approuvée par les sites qu’elle couvre."
   },
-  "extShortName": { "message": "Sans prix" },
+  "extShortName": {
+    "message": "Sans prix"
+  },
   "extDescription": {
-    "message": "Masque les prix sur Amazon pour choisir un produit sans se laisser guider par son montant."
+    "message": "Masque les prix sur Amazon, Dealabs, Decathlon et Cdiscount, pour choisir sans se laisser guider par le montant."
   },
-  "titreActif": { "message": "Sans prix : prix masqués" },
-  "titrePause": { "message": "Sans prix : prix visibles" },
+  "titreActif": {
+    "message": "Sans prix : prix masqués"
+  },
+  "titrePause": {
+    "message": "Sans prix : prix visibles"
+  },
   "badgePause": {
     "message": "off",
     "description": "Pastille sur l'icône quand le masquage est suspendu. Trois ou quatre caractères au plus."
   },
-  "commandeBasculer": { "message": "Masquer ou afficher les prix" },
-  "popupActif": { "message": "Masquer les prix" },
-  "popupStyle": { "message": "Apparence" },
-  "styleBarre": { "message": "Barre grise" },
-  "styleFlou": { "message": "Flou" },
+  "commandeBasculer": {
+    "message": "Masquer ou afficher les prix"
+  },
+  "popupActif": {
+    "message": "Masquer les prix"
+  },
+  "popupStyle": {
+    "message": "Apparence"
+  },
+  "styleBarre": {
+    "message": "Barre grise"
+  },
+  "styleFlou": {
+    "message": "Flou"
+  },
   "popupRaccourci": {
     "message": "Raccourci : $RACCOURCI$",
-    "placeholders": { "raccourci": { "content": "$1", "example": "Alt+Maj+P" } }
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Maj+P"
+      }
+    }
   },
-  "popupSites": { "message": "Sur toutes les boutiques Amazon (.fr, .com, .de, .co.uk…)." }
+  "popupSites": {
+    "message": "Active sur : $SITES$.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Amazon, Dealabs, Decathlon, Cdiscount"
+      }
+    }
+  }
 }

@@ -8,7 +8,7 @@ import vm from "node:vm";
 const source = readFileSync(new URL("../extension/content/detection.js", import.meta.url), "utf8");
 const contexte = vm.createContext({});
 vm.runInContext(source, contexte);
-const { trouverMontants } = contexte.SansPrixDetection;
+const { trouverMontants, masquerMontants, estFragment } = contexte.SansPrixDetection;
 
 /** Les montants trouvés, sous forme de texte (tableau du domaine courant). */
 const montants = (texte) =>
@@ -73,4 +73,25 @@ describe("trouverMontants — n'avale pas le nombre d'à côté", () => {
   it("le prix entier, pas ses trois premiers chiffres", () => {
     assert.deepEqual(montants("$1234.56"), ["$1234.56"]);
   });
+});
+
+describe("masquerMontants — le titre de l'onglet", () => {
+  it("remplace chaque montant", () => {
+    assert.equal(
+      masquerMontants("DREAME X60 Pro Ultra 999€ chez Boulanger | Dealabs"),
+      "DREAME X60 Pro Ultra ••• chez Boulanger | Dealabs",
+    );
+  });
+  it("laisse un titre sans montant tel quel", () => {
+    assert.equal(masquerMontants("Casque audio - Cdiscount"), "Casque audio - Cdiscount");
+  });
+});
+
+describe("estFragment — morceau d'un prix éclaté", () => {
+  for (const texte of ["34", "€99", "€", " 99 ", "1 299"]) {
+    it(`${JSON.stringify(texte)} en est un`, () => assert.equal(estFragment(texte), true));
+  }
+  for (const texte of ["", " ", ",", "Prix", "EUR", "4,5 sur 5", "Quantité : 1", "123456789"]) {
+    it(`${JSON.stringify(texte)} n'en est pas un`, () => assert.equal(estFragment(texte), false));
+  }
 });

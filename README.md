@@ -1,14 +1,16 @@
-# Sans prix pour Amazon
+# Sans prix
 
-Extension Firefox qui **masque les prix sur Amazon**, pour laisser un enfant
-parcourir des idées de cadeaux sans lui donner la notion de prix.
+Extension Firefox qui **masque les prix sur Amazon, Dealabs, Decathlon et
+Cdiscount**, pour laisser un enfant parcourir des idées de cadeaux sans lui
+donner la notion de prix.
 
 ## Pourquoi
 
 À l'approche de Noël ou d'un anniversaire, le plus sûr moyen de savoir ce qui
-ferait plaisir à un enfant, c'est de le laisser parcourir Amazon et de le
-regarder faire : ce qu'il ouvre, ce sur quoi il s'attarde, ce qu'il montre du
-doigt. Mais les prix sont partout, et ils changent la conversation :
+ferait plaisir à un enfant, c'est de le laisser parcourir les boutiques en
+ligne et de le regarder faire : ce qu'il ouvre, ce sur quoi il s'attarde, ce
+qu'il montre du doigt. Mais les prix sont partout, et ils changent la
+conversation :
 
 - l'enfant **se censure** (« celui-là, c'est trop cher ») ou, à l'inverse, vise
   le plus cher en le croyant le meilleur ;
@@ -35,42 +37,49 @@ interrupteur dans le popup, ou <kbd>Alt</kbd>+<kbd>Maj</kbd>+<kbd>P</kbd>, les
 fait revenir dans tous les onglets à la fois ; une pastille « off » sur l'icône
 rappelle qu'ils sont visibles.
 
-<img src="docs/popup.png" alt="Le popup : interrupteur « Masquer les prix », choix entre barre grise et flou" width="290">
+<img src="docs/popup.png" alt="Le popup : interrupteur « Masquer les prix », choix entre barre grise et flou, liste des sites couverts" width="290">
 
-_Extension indépendante : ni éditée ni approuvée par Amazon._
+_Extension indépendante : ni éditée ni approuvée par les sites qu'elle couvre._
 
 ## Installer
 
 Firefox 140 ou plus récent.
 
-| Façon                                       | Durée                    | Ce qu'il faut                                                                                                                                             |
-| ------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Temporaire**                              | jusqu'au redémarrage     | `about:debugging#/runtime/this-firefox` → _Charger un module complémentaire temporaire…_ → choisir `extension/manifest.json`                              |
-| **Essai en un geste**                       | le temps de la session   | `npm install` puis `npm start` : ouvre Firefox sur amazon.fr, extension chargée, rechargée à chaque modification                                         |
-| **Permanente, pour soi**                    | définitive               | signer sans publier : clés d'API sur [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/), puis `npx web-ext sign --channel unlisted --source-dir extension` |
-| **Permanente, pour tout le monde**          | définitive               | publier sur addons.mozilla.org (`--channel listed`), après relecture par Mozilla                                                                         |
+| Façon                              | Durée                  | Ce qu'il faut                                                                                                                                                                      |
+| ---------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Temporaire**                     | jusqu'au redémarrage   | `about:debugging#/runtime/this-firefox` → _Charger un module complémentaire temporaire…_ → choisir `extension/manifest.json`                                                       |
+| **Essai en un geste**              | le temps de la session | `npm install` puis `npm start` : ouvre Firefox sur amazon.fr, extension chargée, rechargée à chaque modification                                                                  |
+| **Permanente, pour soi**           | définitive             | signer sans publier : clés d'API sur [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/), puis `npx web-ext sign --channel unlisted --source-dir extension` |
+| **Permanente, pour tout le monde** | définitive             | publier sur addons.mozilla.org (`--channel listed`), après relecture par Mozilla                                                                                                  |
 
 Firefox refuse d'installer durablement une extension non signée, sauf dans
 Developer Edition ou Nightly avec `xpinstall.signatures.required` à `false`.
 
 ## Ce qui est masqué
 
-- les prix des résultats de recherche, des fiches produit et des meilleures
-  ventes — ces trois pages sont vérifiées par `npm run verifier` ;
-- ceux des listes d'envies, du panier et des commandes, qui passent par les
-  mêmes composants et le même repérage — mais demandent d'être connecté : le
-  script ne les visite pas ;
-- les prix barrés (« Prix conseillé », « Prix le plus bas récent ») ;
-- les prix sous les variantes (couleur, taille, format) ;
-- tout montant écrit en clair : « 3 neufs à partir de 12,99 € », « Livraison
-  GRATUITE dès 35 € », « Payez en plusieurs fois dès 35 € », filtres « de 10 à
-  20 EUR »…
+| Site          | Domaines couverts                               | Vérifié sur le vrai site     |
+| ------------- | ----------------------------------------------- | ---------------------------- |
+| **Amazon**    | 23 boutiques (.fr, .com, .it, .de, .co.uk, …)   | amazon.fr, amazon.com, amazon.it |
+| **Dealabs**   | dealabs.com                                     | dealabs.com                  |
+| **Decathlon** | 11 pays (.fr, .be, .ch, .com, .de, .es, .it, …) | decathlon.fr                 |
+| **Cdiscount** | cdiscount.com                                   | cdiscount.com                |
 
-L'extension s'active sur les 23 boutiques Amazon (.fr, .com, .de, .co.uk, .it,
-.es, .ca, .co.jp, .in…) et reconnaît les euros, dollars, livres, yens, roupies,
-zlotys, couronnes, livres turques et codes ISO (`EUR 12,99`, `AED 49.00`). Seule
-amazon.fr a été vérifiée sur le vrai site ; les autres le sont par
-`BOUTIQUE=https://www.amazon.de npm run verifier`.
+« Vérifié » : `npm run verifier` a visité une liste et une fiche produit et n'y
+a trouvé aucun montant lisible. Les autres domaines partagent le balisage du
+site vérifié, sans l'avoir été eux-mêmes.
+
+Partout :
+
+- les composants de prix du site, prix barrés compris (« Prix conseillé »,
+  « Prix le plus bas sur 30 jours ») ;
+- tout montant écrit en clair : « 3 neufs à partir de 12,99 € », « Livraison
+  gratuite dès 35 € », « de 10 à 20 EUR », titres des bons plans Dealabs… ;
+- les prix **éclatés** en morceaux (« 34 » « €99 ») ;
+- le **titre de l'onglet** : « Robot X60 999€ chez Boulanger » devient « Robot
+  X60 ••• chez Boulanger », et retrouve son prix quand on suspend le masquage.
+
+Les montants sont reconnus en euros, dollars, livres, yens, roupies, zlotys,
+couronnes, livres turques et codes ISO (`EUR 12,99`, `AED 49.00`).
 
 **Restent visibles, volontairement** : les remises en pourcentage (« -50 % »),
 les notes, les nombres d'avis et les stocks. On masque des montants, pas les
@@ -78,42 +87,76 @@ promotions ; et un nombre sans devise n'est jamais pris pour un prix.
 
 ## Comment ça marche
 
-Deux couches, qui se complètent.
+Un **moteur de règles** : chaque site est décrit par une règle de quelques
+lignes ([`regles.js`](extension/regles.js)) ; tout le reste est générique.
 
-1. **Une feuille de style** ([`masquage.css`](extension/content/masquage.css)),
-   injectée avant que la page ne s'affiche. Elle couvre les composants de prix
-   d'Amazon (`.a-price`, `.a-text-price`…) — y compris les prix éclatés en
-   morceaux (« 29 » « , » « 99 » « € ») qu'aucune recherche dans le texte ne
-   verrait. Elle **échoue fermée** : le masquage vaut tant que la page ne porte
-   pas `data-sans-prix="off"`, que le script ne pose qu'après avoir lu les
-   réglages. Les prix ne clignotent jamais au chargement.
+```js
+{
+  id: "decathlon",
+  nom: "Decathlon",
+  domaines: ["decathlon.fr", "decathlon.be", /* … */],
+  masquer: [".vp-price-amount", ".vp-price-barred-amount", /* … */],
+}
+```
 
-2. **Un repérage dans le texte** ([`masquage.js`](extension/content/masquage.js)
-   et [`detection.js`](extension/content/detection.js)) pour les montants écrits
-   en clair. Ils sont recouverts par l'[API CSS Custom
+Sur une page, [`masquage.js`](extension/content/masquage.js) applique quatre
+mécanismes :
+
+1. **La feuille du site.** Le moteur ([`moteur.js`](extension/content/moteur.js))
+   tire des sélecteurs `masquer` une feuille de style, posée dès
+   `document_start` : les composants de prix connus sont couverts avant le
+   premier affichage. Elle **échoue fermée** : le masquage vaut tant que la page
+   ne porte pas `data-sans-prix="off"`, que le script ne pose qu'après avoir lu
+   les réglages.
+2. **Les montants dans le texte** ([`detection.js`](extension/content/detection.js)),
+   recouverts par l'[API CSS Custom
    Highlight](https://developer.mozilla.org/fr/docs/Web/API/CSS_Custom_Highlight_API) :
-   aucune balise ajoutée, aucun nœud découpé. Amazon rend une partie de ses pages
-   avec React, qui garde la main sur ses nœuds texte — les envelopper dans un
-   `<span>` casserait ses mises à jour. Un `MutationObserver` suit les
-   carrousels et le défilement infini.
+   aucune balise ajoutée, aucun nœud découpé. Ces sites rendent leurs pages
+   avec React ou Vue, qui gardent la main sur leurs nœuds texte — les envelopper
+   dans un `<span>` casserait leurs mises à jour.
+3. **Les prix éclatés.** Un nœud qui n'est qu'un morceau (« 34 », « €99 »)
+   fait remonter à l'ancêtre proche (trois niveaux, 30 caractères au plus) qui
+   forme un montant **et** apporte d'autres chiffres ; cet ancêtre reçoit un
+   attribut que la feuille couvre. Comparer les chiffres plutôt que le texte
+   laisse « Prix : 12,99 € » tranquille : le libellé n'ajoute aucun chiffre.
+4. **Le titre de l'onglet**, dont les montants sont remplacés, puis rendus.
+
+Un `MutationObserver` suit les carrousels, le défilement infini, les pages qui
+se réhydratent — et repose les attributs de réglage sur `<html>` quand une
+application les efface (Decathlon le fait).
+
+### Ajouter un site
+
+1. Écrire sa règle dans [`regles.js`](extension/regles.js). `masquer` ne retient
+   que des éléments qui ne contiennent **que** des prix ; le reste, le générique
+   s'en charge. Un sélecteur invalide est ignoré sans emporter les autres.
+2. Ajouter ses domaines aux `matches` du [manifeste](extension/manifest.json) —
+   `npm test` refuse un écart entre les deux listes.
+3. Ajouter une page de liste et un lien de fiche dans `PAGES` de
+   [`scripts/verifier.mjs`](scripts/verifier.mjs), puis
+   `SITES=<domaine> npm run verifier` jusqu'à n'avoir plus aucun montant
+   lisible.
 
 ## Confidentialité
 
-L'extension ne collecte, n'envoie ni ne lit rien d'autre que les pages Amazon
+L'extension ne collecte, n'envoie ni ne lit rien d'autre que les pages des sites
 qu'elle masque. Aucune requête réseau. Elle conserve deux réglages
 (`actif`, `style`) dans `storage.sync`, qui suivent le compte Firefox s'il est
 synchronisé. Le manifeste le déclare (`data_collection_permissions: none`).
 
 ## Limites connues
 
-- Un prix dessiné dans une **image** (bannière, visuel promotionnel) reste
+- Un prix dessiné dans une **image** (bannière, vignette d'un bon plan) reste
   visible.
-- Une publicité servie dans un cadre d'un **autre domaine** qu'Amazon
+- Une publicité servie dans un cadre d'un **autre domaine**
   (`amazon-adsystem.com`…) n'est pas couverte : l'extension ne demande l'accès
-  qu'aux boutiques.
-- Amazon change son balisage sans prévenir. Un nouveau composant de prix éclaté
-  en morceaux passera tant que la feuille ne le connaît pas — c'est ce que
+  qu'aux sites de ses règles.
+- Ces sites changent leur balisage sans prévenir. Un nouveau composant de prix
+  que ni la règle ni le générique ne reconnaissent passera — c'est ce que
   `npm run verifier` détecte.
+- La feuille d'un site est posée dans un `<style>` ; une politique de sécurité
+  (CSP) qui interdirait les styles en ligne la bloquerait. Aucun des quatre
+  sites ne le fait ; le repérage dans le texte, lui, n'en dépend pas.
 
 ## Développer
 
@@ -122,7 +165,7 @@ npm install
 ```
 
 ```bash
-npm test          # repérage des montants : ce qui est pris, ce qui est laissé
+npm test          # repérage des montants, moteur, règles, accord manifeste-règles
 ```
 
 ```bash
@@ -130,7 +173,7 @@ npm run lint      # validation du manifeste par web-ext (outil de Mozilla)
 ```
 
 ```bash
-npm run verifier  # le vrai site, dans le Firefox du poste
+npm run verifier  # les vrais sites, dans le Firefox du poste
 ```
 
 ```bash
@@ -141,32 +184,34 @@ La CI ([`ci.yml`](.github/workflows/ci.yml)) joue les tests, `web-ext lint`
 (qui y échoue sur un avertissement) et l'empaquetage, sur chaque PR et sur
 `main` ; une seconde garde refuse les signatures d'assistant dans les commits et
 les fichiers. Les deux sont exigées pour fusionner. `npm run verifier`, qui
-dépend du vrai site, se lance à la main.
+dépend des vrais sites, se lance à la main.
 
-`npm run verifier` lance Firefox sur un profil jetable, extension installée,
-ouvre une recherche, les meilleures ventes et une fiche produit, et **relève
-chaque montant encore lisible** — ni sous une barre, ni flouté, ni hors écran.
-Il bascule ensuite l'interrupteur et l'apparence depuis le popup et vérifie que
-la page suit. Captures dans `captures/`. Variables : `BOUTIQUE`
-(`https://www.amazon.de`…), `RECHERCHE`, `FIREFOX` (chemin de l'exécutable),
-`VISIBLE=1` pour voir la fenêtre.
+`npm run verifier` lance Firefox sur un profil jetable, extension installée, et
+visite pour chaque site une liste puis une fiche produit. Il **relève chaque
+montant encore lisible** — ni sous une barre, ni flouté, ni hors écran, titre de
+l'onglet compris —, refuse au passage les bandeaux de cookies, puis bascule
+l'interrupteur et l'apparence depuis le popup et vérifie que la page suit.
+Captures dans `captures/`. Variables : `SITES` (`amazon.fr,cdiscount.com`…),
+`FIREFOX` (chemin de l'exécutable), `VISIBLE=1` pour voir la fenêtre.
 
 Pour ouvrir le popup, le script passe par la fenêtre de Firefox elle-même
 (`MOZ_REMOTE_ALLOW_SYSTEM_ACCESS`, sur le seul profil jetable) : WebDriver BiDi
-refuse de naviguer vers une adresse `moz-extension://`. Si Amazon répond par une
-vérification anti-robot, le script s'arrête sans la contourner ; `VISIBLE=1`
-permet de la passer soi-même.
+refuse de naviguer vers une adresse `moz-extension://`. Un site qui répond par
+une vérification anti-robot est noté « non vérifié », sans contournement ;
+`VISIBLE=1` permet de la passer soi-même.
 
 ```
 extension/
 ├── manifest.json          MV3, Firefox 140+
+├── regles.js              une règle par site : domaines, sélecteurs
 ├── background.js          raccourci clavier, pastille « off » sur l'icône
 ├── commun/reglages.js     réglages partagés (storage.sync)
 ├── content/
-│   ├── masquage.css       la feuille : composants de prix, barre ou flou
+│   ├── moteur.js          choisir la règle, en tirer la feuille (fonctions pures)
 │   ├── detection.js       repérage des montants dans un texte
-│   └── masquage.js        surlignage des montants, suivi des réglages
-├── popup/                 interrupteur et apparence
+│   ├── masquage.js        feuille, surlignage, prix éclatés, titre, réglages
+│   └── masquage.css       peinture des montants surlignés
+├── popup/                 interrupteur, apparence, sites couverts
 ├── icons/icone.svg
 └── _locales/              fr (par défaut), en
 ```

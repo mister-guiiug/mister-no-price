@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "default_locale": "fr",
   "author": "GuiiuG",
   "icons": {
@@ -15,16 +15,23 @@
       "id": "sans-prix@mister-guiiug",
       "strict_min_version": "140.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": [
+          "none"
+        ]
       }
     },
     "gecko_android": {
       "strict_min_version": "142.0"
     }
   },
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "background": {
-    "scripts": ["commun/reglages.js", "background.js"]
+    "scripts": [
+      "commun/reglages.js",
+      "background.js"
+    ]
   },
   "action": {
     "default_title": "__MSG_titreActif__",
@@ -44,9 +51,9 @@
       "matches": [
         "*://*.amazon.fr/*",
         "*://*.amazon.com/*",
+        "*://*.amazon.it/*",
         "*://*.amazon.de/*",
         "*://*.amazon.co.uk/*",
-        "*://*.amazon.it/*",
         "*://*.amazon.es/*",
         "*://*.amazon.com.be/*",
         "*://*.amazon.nl/*",
@@ -64,10 +71,31 @@
         "*://*.amazon.ae/*",
         "*://*.amazon.sa/*",
         "*://*.amazon.eg/*",
-        "*://*.amazon.co.za/*"
+        "*://*.amazon.co.za/*",
+        "*://*.dealabs.com/*",
+        "*://*.decathlon.fr/*",
+        "*://*.decathlon.be/*",
+        "*://*.decathlon.ch/*",
+        "*://*.decathlon.com/*",
+        "*://*.decathlon.co.uk/*",
+        "*://*.decathlon.de/*",
+        "*://*.decathlon.es/*",
+        "*://*.decathlon.it/*",
+        "*://*.decathlon.nl/*",
+        "*://*.decathlon.pl/*",
+        "*://*.decathlon.pt/*",
+        "*://*.cdiscount.com/*"
       ],
-      "css": ["content/masquage.css"],
-      "js": ["commun/reglages.js", "content/detection.js", "content/masquage.js"],
+      "css": [
+        "content/masquage.css"
+      ],
+      "js": [
+        "commun/reglages.js",
+        "regles.js",
+        "content/detection.js",
+        "content/moteur.js",
+        "content/masquage.js"
+      ],
       "run_at": "document_start",
       "all_frames": true
     }

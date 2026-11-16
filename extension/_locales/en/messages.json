@@ -1,27 +1,58 @@
 {
-  "langue": { "message": "en" },
+  "langue": {
+    "message": "en"
+  },
   "extName": {
-    "message": "No Prices for Amazon",
-    "description": "Extension name. \"for Amazon\": the extension is neither published nor endorsed by Amazon."
+    "message": "No Prices",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
   },
-  "extShortName": { "message": "No Prices" },
+  "extShortName": {
+    "message": "No Prices"
+  },
   "extDescription": {
-    "message": "Hides prices on Amazon so you can pick a product without being steered by what it costs."
+    "message": "Hides prices on Amazon, Dealabs, Decathlon and Cdiscount, so you can choose without being steered by the amount."
   },
-  "titreActif": { "message": "No Prices: prices hidden" },
-  "titrePause": { "message": "No Prices: prices shown" },
+  "titreActif": {
+    "message": "No Prices: prices hidden"
+  },
+  "titrePause": {
+    "message": "No Prices: prices shown"
+  },
   "badgePause": {
     "message": "off",
     "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
   },
-  "commandeBasculer": { "message": "Hide or show prices" },
-  "popupActif": { "message": "Hide prices" },
-  "popupStyle": { "message": "Appearance" },
-  "styleBarre": { "message": "Grey bar" },
-  "styleFlou": { "message": "Blur" },
+  "commandeBasculer": {
+    "message": "Hide or show prices"
+  },
+  "popupActif": {
+    "message": "Hide prices"
+  },
+  "popupStyle": {
+    "message": "Appearance"
+  },
+  "styleBarre": {
+    "message": "Grey bar"
+  },
+  "styleFlou": {
+    "message": "Blur"
+  },
   "popupRaccourci": {
     "message": "Shortcut: $SHORTCUT$",
-    "placeholders": { "shortcut": { "content": "$1", "example": "Alt+Shift+P" } }
+    "placeholders": {
+      "shortcut": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
   },
-  "popupSites": { "message": "On every Amazon store (.com, .co.uk, .de, .fr…)." }
+  "popupSites": {
+    "message": "Active on: $SITES$.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Amazon, Dealabs, Decathlon, Cdiscount"
+      }
+    }
+  }
 }
