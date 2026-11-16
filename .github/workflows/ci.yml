@@ -1,0 +1,47 @@
+# La CI de l'extension, sur chaque PR et sur main.
+#
+# Trois gestes, ceux qu'on ferait avant de signer l'extension : le repérage des
+# montants (npm test), la validation du manifeste par l'outil de Mozilla
+# (web-ext lint, qui échoue sur un avertissement), et l'empaquetage.
+#
+# Ce que la CI ne fait PAS : `npm run verifier`, qui visite le vrai site Amazon
+# dans un Firefox. Un relevé qui dépend d'un site tiers rougirait au gré de son
+# balisage et de ses vérifications anti-robot ; il se lance à la main.
+#
+# Le nom du job est un contexte exigé par le ruleset (CHECKS de
+# scripts/apply-rulesets.mjs, dans dev-pwa-config) : le renommer gèlerait toutes
+# les PR du dépôt. Pas de matrice, pas d'apostrophe : un nom stable.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    name: Tests, lint et paquet
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: node --version && npm --version
+
+      - run: npm ci --no-audit --no-fund
+
+      - run: npm test
+
+      - run: npm run lint -- --warnings-as-errors
+
+      - run: npm run build
