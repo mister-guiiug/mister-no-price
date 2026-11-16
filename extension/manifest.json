@@ -84,7 +84,22 @@
         "*://*.decathlon.nl/*",
         "*://*.decathlon.pl/*",
         "*://*.decathlon.pt/*",
-        "*://*.cdiscount.com/*"
+        "*://*.cdiscount.com/*",
+        "*://*.fnac.com/*",
+        "*://*.darty.com/*",
+        "*://*.boulanger.com/*",
+        "*://*.ldlc.com/*",
+        "*://*.rueducommerce.fr/*",
+        "*://*.e.leclerc/*",
+        "*://*.leclerc.fr/*",
+        "*://*.carrefour.fr/*",
+        "*://*.ebay.fr/*",
+        "*://*.ebay.com/*",
+        "*://*.aliexpress.com/*",
+        "*://*.zalando.fr/*",
+        "*://*.auchan.fr/*",
+        "*://*.manomano.fr/*",
+        "*://*.rakuten.com/*"
       ],
       "css": [
         "content/masquage.css"

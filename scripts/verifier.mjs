@@ -33,12 +33,44 @@ const PAGES = {
   "amazon.fr": { liste: "https://www.amazon.fr/s?k=casque+audio", fiche: LIEN_AMAZON },
   "amazon.com": { liste: "https://www.amazon.com/s?k=headphones", fiche: LIEN_AMAZON },
   "amazon.it": { liste: "https://www.amazon.it/s?k=cuffie", fiche: LIEN_AMAZON },
+  "amazon.co.uk": { liste: "https://www.amazon.co.uk/s?k=headphones", fiche: LIEN_AMAZON },
+  "amazon.de": { liste: "https://www.amazon.de/s?k=kopfhorer", fiche: LIEN_AMAZON },
+  "amazon.es": { liste: "https://www.amazon.es/s?k=auriculares", fiche: LIEN_AMAZON },
   "dealabs.com": { liste: "https://www.dealabs.com/", fiche: 'a[href*="/bons-plans/"]' },
   "decathlon.fr": { liste: "https://www.decathlon.fr/search?Ntt=velo", fiche: 'a[href*="/p/"]' },
   "cdiscount.com": {
     liste: "https://www.cdiscount.com/search/10/casque+audio.html",
     fiche: 'a[href*="/f-"]',
   },
+  "fnac.com": {
+    liste: "https://www.fnac.com/SearchResult/ResultList.aspx?Search=casque+audio",
+    fiche: "a.Article-title",
+  },
+  "darty.com": {
+    liste: "https://www.darty.com/nav/recherche?text=casque+audio",
+    fiche: 'a[href*="/nav/achat/"]',
+  },
+  "boulanger.com": {
+    liste: "https://www.boulanger.com/resultats?tr=casque+audio",
+    fiche: 'a[href*="/ref/"]',
+  },
+  "ldlc.com": { liste: "https://www.ldlc.com/recherche/casque%20audio/", fiche: 'a[href*="/fiche/"]' },
+  "rueducommerce.fr": {
+    liste: "https://www.rueducommerce.fr/recherche/casque%20audio/",
+    fiche: "li.pdt-item a[href]",
+  },
+  "e.leclerc": { liste: "https://www.e.leclerc/recherche?q=casque+audio", fiche: 'a[href*="/fp/"]' },
+  "carrefour.fr": { liste: "https://www.carrefour.fr/s?q=casque+audio", fiche: 'a[href*="/p/"]' },
+  "auchan.fr": { liste: "https://www.auchan.fr/recherche?text=casque+audio", fiche: 'a[href*="/pr-"]' },
+  // rakuten.com : la place de marché française a fermé, rien à visiter.
+  "ebay.fr": { liste: "https://www.ebay.fr/sch/i.html?_nkw=casque+audio", fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])' },
+  "ebay.com": { liste: "https://www.ebay.com/sch/i.html?_nkw=headphones", fiche: 'a[href*="/itm/"]:not([href*="/itm/123456"])' },
+  "aliexpress.com": {
+    liste: "https://fr.aliexpress.com/w/wholesale-casque-audio.html",
+    fiche: 'a[href*="/item/"]',
+  },
+  "zalando.fr": { liste: "https://www.zalando.fr/catalogue/?q=baskets", fiche: 'article a[href$=".html"]' },
+  "manomano.fr": { liste: "https://www.manomano.fr/recherche/perceuse", fiche: 'a[href*="/p/"]' },
 };
 const SITES = process.env.SITES ? process.env.SITES.split(",") : Object.keys(PAGES);
 
@@ -66,15 +98,23 @@ const attendre = (ms) => new Promise((r) => setTimeout(r, ms));
 class Bloque extends Error {}
 
 async function preparer(page, url) {
-  await page.goto(url, { waitUntil: "load", timeout: 60_000 });
+  try {
+    await page.goto(url, { waitUntil: "load", timeout: 60_000 });
+  } catch (erreur) {
+    // Un site qui ne répond pas ne doit pas emporter la vérification des autres.
+    if (erreur.name === "TimeoutError") throw new Bloque(`délai dépassé sur ${url}`);
+    throw erreur;
+  }
   const robot = await page.evaluate(
     () =>
       Boolean(
         document.querySelector(
-          'form[action*="validateCaptcha"], #captchacharacters, iframe[src*="captcha-delivery"], #challenge-form',
+          'form[action*="validateCaptcha"], #captchacharacters, iframe[src*="captcha-delivery"], #challenge-form, iframe[src*="challenges.cloudflare"], #px-captcha',
         ),
       ) ||
-      /robot|captcha|just a moment|un instant/i.test(document.title) ||
+      /robot|captcha|just a moment|un instant|access denied|accès refusé|pardon our interruption/i.test(
+        document.title,
+      ) ||
       // L'interstitiel d'Amazon : un seul bouton « Continuer vos achats ».
       /continuer vos achats|continue shopping|continua con gli acquisti/i.test(
         document.body?.innerText.slice(0, 2000) ?? "",
@@ -98,7 +138,7 @@ async function preparer(page, url) {
 async function refuserCookies(page) {
   await page.evaluate(() => {
     const REFUS =
-      /^(tout\s+)?refuser( tout)?$|^continuer sans accepter$|^reject all$|^rifiuta( tutto)?$|^decline/i;
+      /^(tout\s+)?refuser( tout)?$|^continuer sans accepter$|^uniquement les essentiels$|^reject all$|^rifiuta( tutto)?$|^decline/i;
     const bouton =
       document.querySelector(
         "#sp-cc-rejectall-link, #didomi-notice-disagree-button, .didomi-continue-without-agreeing",
@@ -199,9 +239,29 @@ async function releverMontantsVisibles(page) {
       if (noeuds.some((t) => trouverMontants(t.data).length > 0 && !/^\s*[€$£]/.test(t.data))) {
         continue;
       }
+      // Un nœud dont les montants sont tous surlignés est déjà couvert : « $25.00 »
+      // commence par sa devise, mais le repérage dans le texte l'a pris.
+      const surligne = (t) => {
+        const montants = trouverMontants(t.data);
+        return (
+          montants.length > 0 &&
+          montants.every(({ debut, fin }) =>
+            plages.some((p) => p.startContainer === t && p.startOffset <= debut && p.endOffset >= fin),
+          )
+        );
+      };
+      // Un badge de remise « 10 » « % » en deux nœuds reste visible, volontairement.
+      const remise = (t) => {
+        for (let e = t.parentElement, n = 0; e && n < 2; e = e.parentElement, n += 1) {
+          if (/^\s*-?\s*\d+([.,]\d+)?\s*%\s*$/.test(e.textContent)) return true;
+        }
+        return false;
+      };
       const lisibles = noeuds.filter(
         (t) =>
           EST_MORCEAU.test(t.data) &&
+          !surligne(t) &&
+          !remise(t) &&
           lisible(t.parentElement) &&
           aLEcran(t.parentElement.getClientRects()),
       );
@@ -323,17 +383,24 @@ const bilan = [];
 let popupOk = false;
 try {
   await navigateur.installExtension(EXTENSION);
-  const page = await navigateur.newPage();
-
+  // Un onglet par site : une page restée coincée sur une vérification anti-robot
+  // ferait sinon dépasser le délai à tous les sites suivants. On garde le
+  // dernier onglet vérifié pour l'essai du popup.
+  let page = null;
   for (const site of SITES) {
+    const onglet = await navigateur.newPage();
     try {
-      bilan.push(...(await verifierSite(page, site)));
+      bilan.push(...(await verifierSite(onglet, site)));
+      await page?.close();
+      page = onglet;
     } catch (erreur) {
       if (!(erreur instanceof Bloque)) throw erreur;
       console.log(`\n${site} — NON VÉRIFIÉ : ${erreur.message} (non contournée)`);
       bilan.push([site, "non vérifié"]);
+      await onglet.close().catch(() => {});
     }
   }
+  page ??= await navigateur.newPage();
 
   // Le popup, ouvert comme une page : l'interrupteur et l'apparence agissent en
   // direct sur la dernière page visitée.

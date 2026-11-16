@@ -10,7 +10,9 @@
   }
 
   // La liste des sites vient des règles : un site ajouté y apparaît sans retouche.
-  const sites = globalThis.SansPrixRegles.map((r) => r.nom);
+  const sites = globalThis.SansPrixRegles.map((r) => r.nom).sort((a, b) =>
+    a.localeCompare(b, t("langue"), { sensitivity: "base" }),
+  );
   document.getElementById("sites").textContent = t(
     "popupSites",
     new Intl.ListFormat(t("langue"), { type: "conjunction" }).format(sites),

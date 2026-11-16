@@ -1,8 +1,9 @@
 # Sans prix
 
-Extension Firefox qui **masque les prix sur Amazon, Dealabs, Decathlon et
-Cdiscount**, pour laisser un enfant parcourir des idées de cadeaux sans lui
-donner la notion de prix.
+Extension Firefox qui **masque les prix sur les grandes boutiques en ligne** —
+Amazon, Fnac, Cdiscount, Darty, Boulanger, LDLC, E.Leclerc, Carrefour, Auchan,
+eBay, AliExpress, Zalando… —, pour laisser un enfant parcourir des idées de
+cadeaux sans lui donner la notion de prix.
 
 ## Pourquoi
 
@@ -57,16 +58,35 @@ Developer Edition ou Nightly avec `xpinstall.signatures.required` à `false`.
 
 ## Ce qui est masqué
 
-| Site          | Domaines couverts                               | Vérifié sur le vrai site     |
-| ------------- | ----------------------------------------------- | ---------------------------- |
-| **Amazon**    | 23 boutiques (.fr, .com, .it, .de, .co.uk, …)   | amazon.fr, amazon.com, amazon.it |
-| **Dealabs**   | dealabs.com                                     | dealabs.com                  |
-| **Decathlon** | 11 pays (.fr, .be, .ch, .com, .de, .es, .it, …) | decathlon.fr                 |
-| **Cdiscount** | cdiscount.com                                   | cdiscount.com                |
+| Site                | Domaines couverts                     | Vérifié sur le vrai site                                        |
+| ------------------- | ------------------------------------- | --------------------------------------------------------------- |
+| **Amazon**          | 23 boutiques                          | ✔ amazon.fr, .com, .co.uk, .de, .es, .it                        |
+| **AliExpress**      | aliexpress.com                        | ✔                                                               |
+| **Auchan**          | auchan.fr                             | ✔                                                               |
+| **Boulanger**       | boulanger.com                         | ✔                                                               |
+| **Cdiscount**       | cdiscount.com                         | ✔                                                               |
+| **Dealabs**         | dealabs.com                           | ✔                                                               |
+| **Decathlon**       | 11 pays                               | ✔ decathlon.fr                                                  |
+| **E.Leclerc**       | e.leclerc, leclerc.fr                 | ✔                                                               |
+| **eBay**            | ebay.fr, ebay.com                     | ✔ les deux                                                      |
+| **LDLC**            | ldlc.com                              | ✔                                                               |
+| **Rue du Commerce** | rueducommerce.fr                      | ✔                                                               |
+| **Zalando**         | zalando.fr                            | ✔ (générique seul)                                              |
+| **Fnac**            | fnac.com                              | ✘ anti-robot ; règle tirée de la liste, vue une fois             |
+| **Darty**           | darty.com                             | ✘ anti-robot ; générique seul                                   |
+| **Carrefour**       | carrefour.fr                          | ✘ anti-robot ; générique seul                                   |
+| **ManoMano**        | manomano.fr                           | ✘ anti-robot ; générique seul                                   |
+| **Rakuten**         | rakuten.com                           | — la place de marché française a fermé ; générique seul         |
 
-« Vérifié » : `npm run verifier` a visité une liste et une fiche produit et n'y
-a trouvé aucun montant lisible. Les autres domaines partagent le balisage du
-site vérifié, sans l'avoir été eux-mêmes.
+« ✔ » : `npm run verifier` a visité une liste et une fiche produit et n'y a
+trouvé aucun montant lisible. Les autres domaines d'Amazon et de Decathlon
+partagent le balisage du site vérifié, sans l'avoir été eux-mêmes.
+
+« ✘ anti-robot » : ces sites répondent à un navigateur piloté par une
+vérification anti-robot, que le script ne contourne pas. Leur balisage n'a pas
+pu être relevé ; l'extension y applique les mécanismes génériques ci-dessous,
+qui ne dépendent d'aucun sélecteur, mais leur résultat n'a pas été vu. Les
+vérifier demande de passer soi-même la vérification (`VISIBLE=1`).
 
 Partout :
 
@@ -154,9 +174,13 @@ synchronisé. Le manifeste le déclare (`data_collection_permissions: none`).
 - Ces sites changent leur balisage sans prévenir. Un nouveau composant de prix
   que ni la règle ni le générique ne reconnaissent passera — c'est ce que
   `npm run verifier` détecte.
+- Un nombre **sans devise** n'est jamais pris pour un prix : les bornes d'un
+  curseur de filtre « Prix (en €) : 4 – 1549 » (LDLC) restent lisibles.
+- Quatre sites (Fnac, Darty, Carrefour, ManoMano) n'ont pas pu être vérifiés :
+  voir le tableau ci-dessus.
 - La feuille d'un site est posée dans un `<style>` ; une politique de sécurité
-  (CSP) qui interdirait les styles en ligne la bloquerait. Aucun des quatre
-  sites ne le fait ; le repérage dans le texte, lui, n'en dépend pas.
+  (CSP) qui interdirait les styles en ligne la bloquerait. Aucun des sites
+  vérifiés ne le fait ; le repérage dans le texte, lui, n'en dépend pas.
 
 ## Développer
 

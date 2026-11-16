@@ -25,6 +25,13 @@ describe("trouverRegle", () => {
     ["www.decathlon.fr", "decathlon"],
     ["www.cdiscount.com", "cdiscount"],
     ["WWW.CDISCOUNT.COM.", "cdiscount"],
+    // Domaine de premier niveau d'enseigne, sous-domaines de langue ou de service.
+    ["www.e.leclerc", "leclerc"],
+    ["www.leclerc.fr", "leclerc"],
+    ["fr.aliexpress.com", "aliexpress"],
+    ["fr.shopping.rakuten.com", "rakuten"],
+    ["www.ebay.com", "ebay"],
+    ["www.rueducommerce.fr", "rueducommerce"],
     // Un domaine qui ne fait que ressembler n'est pas couvert.
     ["mon-amazon.fr", null],
     ["amazon.fr.exemple.com", null],
@@ -65,11 +72,14 @@ describe("les règles", () => {
     for (const id of ids) assert.match(id, /^[a-z0-9-]+$/);
   });
 
-  it("ont un nom, des domaines et des sélecteurs", () => {
+  // `masquer` peut être vide : le site ne compte alors que sur le générique
+  // (texte, prix éclatés, titre). C'est le cas d'un site dont le balisage n'a
+  // pas pu être relevé — mais la liste doit exister.
+  it("ont un nom, des domaines et une liste de sélecteurs", () => {
     for (const r of REGLES) {
       assert.ok(r.nom, r.id);
       assert.ok(r.domaines.length > 0, r.id);
-      assert.ok(r.masquer.length > 0, r.id);
+      assert.ok(Array.isArray(r.masquer), r.id);
     }
   });
 

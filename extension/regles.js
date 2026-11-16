@@ -126,6 +126,132 @@
       // Les gros prix « 34 » « €99 » sans classe stable : prix éclatés, génériques.
       masquer: [".price", ".SecondaryPrice-price"],
     },
+    {
+      id: "fnac",
+      nom: "Fnac",
+      domaines: ["fnac.com"],
+      // Relevés sur la liste ; la fiche répond par une vérification anti-robot
+      // à un navigateur piloté, elle compte sur le générique.
+      masquer: [
+        ".userPrice",
+        ".oldPrice",
+        ".blocPriceBorder .price",
+        ".f-faMpMoreOffers__price",
+        ".f-xTimesPaymentsSummary__creditAmount",
+      ],
+    },
+    {
+      id: "darty",
+      nom: "Darty",
+      domaines: ["darty.com"],
+      // Vérification anti-robot dès la première page : balisage non relevé.
+      masquer: [],
+    },
+    {
+      id: "boulanger",
+      nom: "Boulanger",
+      domaines: ["boulanger.com"],
+      masquer: [
+        ".price__amount",
+        ".price__crossed",
+        ".price__tax",
+        ".trends__price",
+        ".trends__strike",
+        ".collections__item-price",
+        ".add-to-cart-price",
+        ".installment-card__amount",
+        ".product-loyalty-simulation__amount",
+        ".card-service__price",
+      ],
+    },
+    {
+      id: "ldlc",
+      nom: "LDLC",
+      domaines: ["ldlc.com"],
+      masquer: [
+        "div.price",
+        ".old-price",
+        ".new-price",
+        ".price--infos .eco",
+        ".payment-option--price",
+        ".payment-option--deposit",
+      ],
+    },
+    {
+      id: "rueducommerce",
+      nom: "Rue du Commerce",
+      domaines: ["rueducommerce.fr"],
+      // Même groupe que LDLC, même balisage des prix.
+      masquer: ["div.price", ".old-price", ".new-price", ".premium__price"],
+    },
+    {
+      id: "leclerc",
+      nom: "E.Leclerc",
+      // leclerc.fr renvoie vers e.leclerc, le domaine de premier niveau de
+      // l'enseigne : les deux sont couverts.
+      domaines: ["e.leclerc", "leclerc.fr"],
+      // Classes hachées. Les prix « 39 » « € » « , » « 99 » des listes sont
+      // éclatés : le générique les reconnaît.
+      masquer: [".carousel-item__price"],
+    },
+    {
+      id: "carrefour",
+      nom: "Carrefour",
+      domaines: ["carrefour.fr"],
+      // Vérification anti-robot dès la première page : balisage non relevé.
+      masquer: [],
+    },
+    {
+      id: "ebay",
+      nom: "eBay",
+      domaines: ["ebay.fr", "ebay.com"],
+      // Les prix des listes sont écrits en clair dans des classes génériques
+      // (`su-styled-text primary bold`) : le repérage dans le texte suffit.
+      masquer: [".s-card__price", ".x-price-primary", ".x-price-approx__price"],
+    },
+    {
+      id: "aliexpress",
+      nom: "AliExpress",
+      domaines: ["aliexpress.com"],
+      // Classes hachées, préfixes stables.
+      masquer: [
+        '[class*="priceBottomItem"]',
+        '[class*="price-sale"]',
+        '[class*="price-default--current"]',
+        '[class*="price--lastOrigin"]',
+        '[class*="price--originalText"]',
+      ],
+    },
+    {
+      id: "zalando",
+      nom: "Zalando",
+      domaines: ["zalando.fr"],
+      // Classes entièrement hachées : rien de stable à nommer. Les prix sont
+      // écrits en clair, le repérage dans le texte les couvre.
+      masquer: [],
+    },
+    {
+      id: "auchan",
+      nom: "Auchan",
+      domaines: ["auchan.fr"],
+      masquer: [".product-price", ".product-thumbnail__more-offers .red-txt", ".cartAmount"],
+    },
+    {
+      id: "manomano",
+      nom: "ManoMano",
+      domaines: ["manomano.fr"],
+      // Vérification anti-robot dès la première page : balisage non relevé.
+      masquer: [],
+    },
+    {
+      id: "rakuten",
+      nom: "Rakuten",
+      // La place de marché française (fr.shopping.rakuten.com) a fermé : la page
+      // annonce sa fin d'activité. La règle reste pour les autres sites du
+      // domaine, sur le générique seul.
+      domaines: ["rakuten.com"],
+      masquer: [],
+    },
   ];
 
   globalThis.SansPrixRegles = Object.freeze(
