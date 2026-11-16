@@ -137,6 +137,12 @@ npm run verifier  # le vrai site, dans le Firefox du poste
 npm run build     # paquet .zip dans web-ext-artifacts/
 ```
 
+La CI ([`ci.yml`](.github/workflows/ci.yml)) joue les tests, `web-ext lint`
+(qui y échoue sur un avertissement) et l'empaquetage, sur chaque PR et sur
+`main` ; une seconde garde refuse les signatures d'assistant dans les commits et
+les fichiers. Les deux sont exigées pour fusionner. `npm run verifier`, qui
+dépend du vrai site, se lance à la main.
+
 `npm run verifier` lance Firefox sur un profil jetable, extension installée,
 ouvre une recherche, les meilleures ventes et une fiche produit, et **relève
 chaque montant encore lisible** — ni sous une barre, ni flouté, ni hors écran.
