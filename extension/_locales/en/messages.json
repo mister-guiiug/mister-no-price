@@ -1,0 +1,27 @@
+{
+  "langue": { "message": "en" },
+  "extName": {
+    "message": "No Prices for Amazon",
+    "description": "Extension name. \"for Amazon\": the extension is neither published nor endorsed by Amazon."
+  },
+  "extShortName": { "message": "No Prices" },
+  "extDescription": {
+    "message": "Hides prices on Amazon so you can pick a product without being steered by what it costs."
+  },
+  "titreActif": { "message": "No Prices: prices hidden" },
+  "titrePause": { "message": "No Prices: prices shown" },
+  "badgePause": {
+    "message": "off",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": { "message": "Hide or show prices" },
+  "popupActif": { "message": "Hide prices" },
+  "popupStyle": { "message": "Appearance" },
+  "styleBarre": { "message": "Grey bar" },
+  "styleFlou": { "message": "Blur" },
+  "popupRaccourci": {
+    "message": "Shortcut: $SHORTCUT$",
+    "placeholders": { "shortcut": { "content": "$1", "example": "Alt+Shift+P" } }
+  },
+  "popupSites": { "message": "On every Amazon store (.com, .co.uk, .de, .fr…)." }
+}

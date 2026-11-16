@@ -1,0 +1,27 @@
+{
+  "langue": { "message": "fr" },
+  "extName": {
+    "message": "Sans prix pour Amazon",
+    "description": "Nom de l'extension. « pour Amazon » : l'extension n'est ni éditée ni approuvée par Amazon."
+  },
+  "extShortName": { "message": "Sans prix" },
+  "extDescription": {
+    "message": "Masque les prix sur Amazon pour choisir un produit sans se laisser guider par son montant."
+  },
+  "titreActif": { "message": "Sans prix : prix masqués" },
+  "titrePause": { "message": "Sans prix : prix visibles" },
+  "badgePause": {
+    "message": "off",
+    "description": "Pastille sur l'icône quand le masquage est suspendu. Trois ou quatre caractères au plus."
+  },
+  "commandeBasculer": { "message": "Masquer ou afficher les prix" },
+  "popupActif": { "message": "Masquer les prix" },
+  "popupStyle": { "message": "Apparence" },
+  "styleBarre": { "message": "Barre grise" },
+  "styleFlou": { "message": "Flou" },
+  "popupRaccourci": {
+    "message": "Raccourci : $RACCOURCI$",
+    "placeholders": { "raccourci": { "content": "$1", "example": "Alt+Maj+P" } }
+  },
+  "popupSites": { "message": "Sur toutes les boutiques Amazon (.fr, .com, .de, .co.uk…)." }
+}

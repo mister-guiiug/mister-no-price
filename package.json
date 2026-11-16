@@ -1,0 +1,22 @@
+{
+  "name": "mister-sans-prix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Extension Firefox qui masque les prix sur Amazon.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "web-ext run --source-dir extension --start-url https://www.amazon.fr",
+    "lint": "web-ext lint --source-dir extension",
+    "build": "web-ext build --source-dir extension --artifacts-dir web-ext-artifacts --overwrite-dest",
+    "test": "node --test",
+    "verifier": "node scripts/verifier-amazon.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.17.0",
+    "web-ext": "^10.8.0"
+  }
+}

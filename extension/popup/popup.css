@@ -1,0 +1,163 @@
+:root {
+  --fond: #ffffff;
+  --texte: #1f2937;
+  --discret: #6b7280;
+  --bord: #e5e7eb;
+  --accent: #7048e8;
+  --rail: #d1d5db;
+  --barre: #d5d9d9;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #1c1b22;
+    --texte: #f3f4f6;
+    --discret: #9ca3af;
+    --bord: #3f3f46;
+    --accent: #9775fa;
+    --rail: #52525b;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 18rem;
+  background: var(--fond);
+  color: var(--texte);
+  font: 0.875rem/1.4 system-ui, sans-serif;
+}
+
+main {
+  display: grid;
+  gap: 0.875rem;
+  padding: 1rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.interrupteur {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.interrupteur input {
+  appearance: none;
+  flex: none;
+  position: relative;
+  width: 2.5rem;
+  height: 1.4rem;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--rail);
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.interrupteur input::after {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  left: 0.15rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  transition: transform 0.15s;
+}
+
+.interrupteur input:checked {
+  background: var(--accent);
+}
+
+.interrupteur input:checked::after {
+  transform: translateX(1.1rem);
+}
+
+fieldset {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--bord);
+  border-radius: 0.5rem;
+}
+
+legend {
+  padding: 0 0.25rem;
+  color: var(--discret);
+}
+
+.choix {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.choix input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.apercu {
+  flex: none;
+  width: 4.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.apercu-barre {
+  color: transparent;
+  background: var(--barre);
+  border-radius: 0.25em;
+}
+
+.apercu-flou {
+  filter: blur(0.3em);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+footer {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--discret);
+  font-size: 0.75rem;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer p:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interrupteur input,
+  .interrupteur input::after {
+    transition: none;
+  }
+}

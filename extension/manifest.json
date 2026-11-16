@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
+  "description": "__MSG_extDescription__",
+  "version": "1.0.0",
+  "default_locale": "fr",
+  "author": "GuiiuG",
+  "icons": {
+    "48": "icons/icone.svg",
+    "96": "icons/icone.svg"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sans-prix@mister-guiiug",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
+  "permissions": ["storage"],
+  "background": {
+    "scripts": ["commun/reglages.js", "background.js"]
+  },
+  "action": {
+    "default_title": "__MSG_titreActif__",
+    "default_popup": "popup/popup.html",
+    "default_icon": "icons/icone.svg"
+  },
+  "commands": {
+    "basculer": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "__MSG_commandeBasculer__"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.amazon.fr/*",
+        "*://*.amazon.com/*",
+        "*://*.amazon.de/*",
+        "*://*.amazon.co.uk/*",
+        "*://*.amazon.it/*",
+        "*://*.amazon.es/*",
+        "*://*.amazon.com.be/*",
+        "*://*.amazon.nl/*",
+        "*://*.amazon.ie/*",
+        "*://*.amazon.se/*",
+        "*://*.amazon.pl/*",
+        "*://*.amazon.com.tr/*",
+        "*://*.amazon.ca/*",
+        "*://*.amazon.com.mx/*",
+        "*://*.amazon.com.br/*",
+        "*://*.amazon.co.jp/*",
+        "*://*.amazon.in/*",
+        "*://*.amazon.com.au/*",
+        "*://*.amazon.sg/*",
+        "*://*.amazon.ae/*",
+        "*://*.amazon.sa/*",
+        "*://*.amazon.eg/*",
+        "*://*.amazon.co.za/*"
+      ],
+      "css": ["content/masquage.css"],
+      "js": ["commun/reglages.js", "content/detection.js", "content/masquage.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

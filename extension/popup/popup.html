@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icons/icone.svg" alt="" width="28" height="28" />
+        <h1 data-i18n="extShortName"></h1>
+      </header>
+
+      <label class="interrupteur">
+        <span data-i18n="popupActif"></span>
+        <input type="checkbox" id="actif" role="switch" />
+      </label>
+
+      <fieldset>
+        <legend data-i18n="popupStyle"></legend>
+        <label class="choix">
+          <input type="radio" name="style" value="barre" />
+          <span class="apercu apercu-barre" aria-hidden="true">12,99 €</span>
+          <span data-i18n="styleBarre"></span>
+        </label>
+        <label class="choix">
+          <input type="radio" name="style" value="flou" />
+          <span class="apercu apercu-flou" aria-hidden="true">12,99 €</span>
+          <span data-i18n="styleFlou"></span>
+        </label>
+      </fieldset>
+
+      <footer>
+        <p id="raccourci"></p>
+        <p data-i18n="popupSites"></p>
+      </footer>
+    </main>
+    <script src="../commun/reglages.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
