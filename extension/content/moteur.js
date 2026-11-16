@@ -10,12 +10,26 @@
   const ATTRIBUT_ECLATE = "data-sans-prix-eclate";
 
   /**
-   * La règle dont un domaine couvre `hote` (lui-même ou un sous-domaine), ou
-   * `null`. « amazon.fr » couvre www.amazon.fr, pas mon-amazon.fr.
+   * La règle qui couvre `hote`, ou `null` : par un de ses `hotes` exacts, ou
+   * par un de ses `domaines` (lui-même ou un sous-domaine). « amazon.fr »
+   * couvre www.amazon.fr, pas mon-amazon.fr ; « www.google.fr » ne couvre que
+   * lui-même, pas mail.google.fr.
    */
   function trouverRegle(hote, regles) {
     const h = hote.toLowerCase().replace(/\.$/, "");
-    return regles.find((r) => r.domaines.some((d) => h === d || h.endsWith(`.${d}`))) ?? null;
+    return (
+      regles.find(
+        (r) => r.hotes.includes(h) || r.domaines.some((d) => h === d || h.endsWith(`.${d}`)),
+      ) ?? null
+    );
+  }
+
+  /** Les motifs de correspondance que le manifeste doit déclarer pour ces règles. */
+  function motifsDuManifeste(regles) {
+    return regles.flatMap((r) => [
+      ...r.domaines.map((d) => `*://*.${d}/*`),
+      ...r.hotes.map((h) => `*://${h}/*`),
+    ]);
   }
 
   /**
@@ -58,5 +72,10 @@
 `;
   }
 
-  globalThis.SansPrixMoteur = Object.freeze({ ATTRIBUT_ECLATE, trouverRegle, construireFeuille });
+  globalThis.SansPrixMoteur = Object.freeze({
+    ATTRIBUT_ECLATE,
+    trouverRegle,
+    motifsDuManifeste,
+    construireFeuille,
+  });
 })();

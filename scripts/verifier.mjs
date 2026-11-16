@@ -71,6 +71,13 @@ const PAGES = {
   },
   "zalando.fr": { liste: "https://www.zalando.fr/catalogue/?q=baskets", fiche: 'article a[href$=".html"]' },
   "manomano.fr": { liste: "https://www.manomano.fr/recherche/perceuse", fiche: 'a[href*="/p/"]' },
+  // Pas de fiche produit : la recherche (produits sponsorisés) et Google Images.
+  "google.fr": {
+    urls: {
+      recherche: "https://www.google.fr/search?q=casque+audio+bluetooth&hl=fr",
+      images: "https://www.google.fr/search?q=casque+audio+bluetooth&udm=2&hl=fr",
+    },
+  },
 };
 const SITES = process.env.SITES ? process.env.SITES.split(",") : Object.keys(PAGES);
 
@@ -118,7 +125,9 @@ async function preparer(page, url) {
       // L'interstitiel d'Amazon : un seul bouton « Continuer vos achats ».
       /continuer vos achats|continue shopping|continua con gli acquisti/i.test(
         document.body?.innerText.slice(0, 2000) ?? "",
-      ),
+      ) ||
+      // La page /sorry de Google : « trafic inhabituel », avec un captcha.
+      location.pathname.startsWith("/sorry/"),
   );
   if (robot) throw new Bloque(`vérification anti-robot sur ${url}`);
 
@@ -331,25 +340,35 @@ async function etatPage(page) {
   }));
 }
 
-/** Visite la liste puis la fiche d'un site ; rend [nom, verdict] pour chaque page. */
+/**
+ * Visite les pages d'un site ; rend [nom, verdict] pour chacune. Soit une liste
+ * et la fiche qu'on y trouve, soit des adresses fixes (`urls`), pour un site
+ * sans fiche produit comme un moteur de recherche.
+ */
 async function verifierSite(page, site) {
   const pages = PAGES[site];
   if (!pages) throw new Error(`Site inconnu : ${site} (connus : ${Object.keys(PAGES).join(", ")})`);
   const verdicts = [];
-  await preparer(page, pages.liste);
-  const lienFiche = await page.evaluate((s) => document.querySelector(s)?.href ?? null, pages.fiche);
+  let aVisiter;
+  if (pages.urls) {
+    aVisiter = Object.entries(pages.urls);
+  } else {
+    await preparer(page, pages.liste);
+    const lienFiche = await page.evaluate((s) => document.querySelector(s)?.href ?? null, pages.fiche);
+    aVisiter = [
+      ["liste", pages.liste],
+      ["fiche", lienFiche],
+    ];
+  }
 
-  for (const [genre, url] of [
-    ["liste", pages.liste],
-    ["fiche", lienFiche],
-  ]) {
+  for (const [genre, url] of aVisiter) {
     const nom = `${site}-${genre}`;
     if (!url) {
       console.log(`\n${nom} — aucun lien de fiche trouvé (${pages.fiche})`);
       verdicts.push([nom, "✘"]);
       continue;
     }
-    if (genre === "fiche") await preparer(page, url);
+    if (pages.urls || genre === "fiche") await preparer(page, url);
     const releve = await releverMontantsVisibles(page);
     await page.screenshot({ path: resolve(CAPTURES, `${nom}.png`) });
     console.log(

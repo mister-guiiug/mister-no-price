@@ -32,6 +32,12 @@ describe("trouverRegle", () => {
     ["fr.shopping.rakuten.com", "rakuten"],
     ["www.ebay.com", "ebay"],
     ["www.rueducommerce.fr", "rueducommerce"],
+    // Google : la recherche et Images, jamais les autres services du domaine.
+    ["www.google.fr", "google"],
+    ["www.google.com", "google"],
+    ["mail.google.com", null],
+    ["docs.google.com", null],
+    ["google.fr", null],
     // Un domaine qui ne fait que ressembler n'est pas couvert.
     ["mon-amazon.fr", null],
     ["amazon.fr.exemple.com", null],
@@ -75,22 +81,28 @@ describe("les règles", () => {
   // `masquer` peut être vide : le site ne compte alors que sur le générique
   // (texte, prix éclatés, titre). C'est le cas d'un site dont le balisage n'a
   // pas pu être relevé — mais la liste doit exister.
-  it("ont un nom, des domaines et une liste de sélecteurs", () => {
+  it("ont un nom, des domaines ou des hôtes, et une liste de sélecteurs", () => {
     for (const r of REGLES) {
       assert.ok(r.nom, r.id);
-      assert.ok(r.domaines.length > 0, r.id);
+      assert.ok(r.domaines.length + r.hotes.length > 0, r.id);
       assert.ok(Array.isArray(r.masquer), r.id);
     }
   });
 
-  it("ne se disputent aucun domaine", () => {
-    const domaines = REGLES.flatMap((r) => r.domaines);
-    assert.equal(new Set(domaines).size, domaines.length);
+  it("ne se disputent aucun domaine ni aucun hôte", () => {
+    const tous = REGLES.flatMap((r) => [...r.domaines, ...r.hotes]);
+    assert.equal(new Set(tous).size, tous.length);
   });
 
   it("ont des domaines nus, sans schéma ni sous-domaine www", () => {
     for (const d of REGLES.flatMap((r) => r.domaines)) {
       assert.match(d, /^(?!www\.)[a-z0-9-]+(\.[a-z0-9-]+)+$/, d);
+    }
+  });
+
+  it("ont des hôtes exacts, sans schéma ni joker", () => {
+    for (const h of REGLES.flatMap((r) => r.hotes)) {
+      assert.match(h, /^[a-z0-9-]+(\.[a-z0-9-]+){2,}$/, h);
     }
   });
 
@@ -109,9 +121,14 @@ describe("le manifeste", () => {
 
   // Une règle sans motif dans le manifeste ne s'appliquerait jamais ; un motif
   // sans règle injecterait le script pour rien. Les deux listes vont ensemble.
-  it("déclare exactement les domaines des règles", () => {
-    const attendus = REGLES.flatMap((r) => r.domaines.map((d) => `*://*.${d}/*`));
+  it("déclare exactement les domaines et les hôtes des règles", () => {
+    const attendus = moteur.motifsDuManifeste(REGLES);
     assert.deepEqual([...script.matches].sort(), [...attendus].sort());
+  });
+
+  // Le domaine google.com entier ferait tourner l'extension dans Gmail ou Docs.
+  it("ne déclare aucun motif sur tout un domaine de Google", () => {
+    assert.ok(!script.matches.some((m) => /^\*:\/\/\*\.google\./.test(m)));
   });
 
   it("charge les règles et le moteur avant le script de masquage", () => {
