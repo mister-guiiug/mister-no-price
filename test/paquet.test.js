@@ -215,3 +215,39 @@ describe("l'envoi d'une capture", async () => {
     assert.deepEqual(JSON.parse(appels[1].corps), { caption: legende, position: 3 });
   });
 });
+
+describe("le débit limité d'addons.mozilla.org", async () => {
+  const { client, delaiDemande } = await import("../scripts/amo.mjs");
+  const json = (corps, status = 200) => ({
+    ok: status < 400, status, headers: new Headers({ "content-type": "application/json" }),
+    json: async () => corps, text: async () => JSON.stringify(corps),
+  });
+
+  it("lit le délai demandé", () => {
+    assert.equal(delaiDemande(new Headers({ "retry-after": "12" }), ""), 12_000);
+    assert.equal(delaiDemande(new Headers(), '{"detail":"Request was throttled. Expected available in 59 seconds."}'), 59_000);
+    assert.equal(delaiDemande(new Headers(), ""), 60_000);
+  });
+
+  it("attend puis reprend la requête sur un 429", async () => {
+    const attentes = [];
+    let n = 0;
+    const fetch = async () => (++n === 1 ? json({ detail: "Expected available in 3 seconds." }, 429) : json({ id: 5 }));
+    const amo = client({ cle: "k", secret: "s", fetch, dormir: async (ms) => attentes.push(ms) });
+    assert.deepEqual(await amo.modifierCapture("a@b", 5, { legende: { fr: "x" }, position: 1 }), { id: 5 });
+    assert.deepEqual(attentes, [4_000]);
+  });
+
+  it("retire la capture envoyée si sa légende échoue", async () => {
+    const methodes = [];
+    const fetch = async (url, { method }) => {
+      methodes.push(method);
+      if (method === "POST") return json({ id: 8 });
+      if (method === "PATCH") return json({ detail: "non" }, 400);
+      return { ok: true, status: 204, headers: new Headers(), text: async () => "" };
+    };
+    const amo = client({ cle: "k", secret: "s", fetch, dormir: async () => {} });
+    await assert.rejects(amo.ajouterCapture("a@b", { image: Buffer.from("x"), nom: "a.png", legende: { fr: "a" }, position: 1 }), /AMO 400/);
+    assert.deepEqual(methodes, ["POST", "PATCH", "DELETE"]);
+  });
+});
