@@ -1,0 +1,123 @@
+# La publication, automatique : chaque version nouvelle qui arrive sur main est
+# signée par Mozilla et publiée en release GitHub.
+#
+# Publier une version, c'est donc monter `version` dans extension/manifest.json
+# et package.json (les tests les gardent alignés), puis fusionner la PR. Ce
+# workflow, à chaque poussée sur main :
+#   1. lit la version du manifeste ; si la release v<version> existe déjà, il
+#      s'arrête là — une PR qui ne change pas de version ne publie rien ;
+#   2. teste, valide (web-ext lint), construit le paquet et le fait SIGNER
+#      (canal « unlisted » : Mozilla signe sans publier sur son catalogue) ;
+#   3. publie la release v<version> — étiquette posée sur le commit —, avec le
+#      .xpi signé, le paquet complet et `updates.json`.
+#
+# Les Firefox qui ont installé le .xpi lisent `update_url` (manifeste), qui
+# vise `releases/latest/download/updates.json` : la nouvelle version leur
+# arrive d'elle-même, à la vérification suivante (une fois par jour).
+#
+# Secrets : AMO_API_KEY et AMO_API_SECRET (clés d'API d'addons.mozilla.org),
+# passés à la seule étape qui signe. Sans eux, le workflow échoue plutôt que de
+# publier une release sans fichier installable.
+#
+# Mozilla ne signe qu'une fois une version. Si la signature passe et que la
+# release échoue ensuite, NE PAS relancer : le paquet signé est en artefact du
+# run ; créer la release à la main avec ses fichiers.
+name: Publication
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Deux fusions rapprochées ne signent pas la même version en même temps.
+concurrency:
+  group: publication
+  cancel-in-progress: false
+
+jobs:
+  publier:
+    name: Publier la version du manifeste
+    # Lancé à la main depuis une autre branche, il ne publierait pas main.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write # étiquette et release
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Version du manifeste, déjà publiée ?
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          version=$(node -p "require('./extension/manifest.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" > /dev/null 2>&1; then
+            echo "a-publier=non" >> "$GITHUB_OUTPUT"
+            echo "::notice::v$version est déjà publiée : rien à faire. Monter la version pour publier."
+          else
+            echo "a-publier=oui" >> "$GITHUB_OUTPUT"
+            echo "::notice::v$version n'est pas publiée : signature et release."
+          fi
+
+      - uses: actions/setup-node@v7
+        if: steps.version.outputs.a-publier == 'oui'
+        with:
+          node-version: 24
+          cache: npm
+
+      - if: steps.version.outputs.a-publier == 'oui'
+        run: npm ci --no-audit --no-fund
+
+      - if: steps.version.outputs.a-publier == 'oui'
+        run: npm test
+
+      - if: steps.version.outputs.a-publier == 'oui'
+        run: npm run lint -- --warnings-as-errors
+
+      # Les clés ne sont passées qu'à cette étape.
+      - name: Paquet signé
+        if: steps.version.outputs.a-publier == 'oui'
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+          EXIGER_SIGNATURE: "1"
+        run: npm run paquet
+
+      - name: Archive du paquet
+        if: steps.version.outputs.a-publier == 'oui'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        working-directory: web-ext-artifacts
+        run: zip -r "mister-no-price-$VERSION-paquet.zip" "mister-no-price-$VERSION"
+
+      # Avant la release : si elle échoue, le fichier signé reste récupérable.
+      - uses: actions/upload-artifact@v7
+        if: steps.version.outputs.a-publier == 'oui'
+        with:
+          name: mister-no-price-${{ steps.version.outputs.version }}
+          path: web-ext-artifacts/mister-no-price-${{ steps.version.outputs.version }}/
+          if-no-files-found: error
+
+      - name: Release
+        if: steps.version.outputs.a-publier == 'oui'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          dossier="web-ext-artifacts/mister-no-price-$VERSION"
+          test -f "$dossier/mister-no-price-$VERSION.xpi" && test -f "$dossier/updates.json"
+          gh release create "v$VERSION" --target "$GITHUB_SHA" --latest \
+            --title "Sans prix $VERSION" \
+            --notes "Installer : ouvrir mister-no-price-$VERSION.xpi dans Firefox (140 ou plus récent). Les installations existantes se mettent à jour seules. Mode d'emploi complet : INSTALLER.md, dans mister-no-price-$VERSION-paquet.zip." \
+            --generate-notes \
+            "web-ext-artifacts/mister-no-price-$VERSION-paquet.zip" \
+            "$dossier"/*
