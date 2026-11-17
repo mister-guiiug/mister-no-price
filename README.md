@@ -195,10 +195,10 @@ Petites annonces et occasion :
 
 | Site                     | Domaines couverts                  | Prix masqués (bureau)                    | Bouton ♥                   | Site mobile |
 | ------------------------ | ---------------------------------- | ---------------------------------------- | -------------------------- | ----------- |
-| **Catawiki**             | catawiki.com                       | ✔                                        | ✔                          | non vérifié |
+| **Catawiki**             | catawiki.com                       | ✔                                        | ✔                          | ✔           |
 | **Cash Express**         | cashexpress.fr                     | ✔                                        | ✔                          | ✔           |
 | **Craigslist**           | craigslist.org (toutes les villes) | ✔ (générique seul)                       | ✔                          | ✔           |
-| **Delcampe**             | delcampe.net                       | ✔                                        | ✔                          | non vérifié |
+| **Delcampe**             | delcampe.net                       | ✔                                        | ✔                          | ✔           |
 | **Easy Cash**            | easycash.fr                        | ✔                                        | ✔                          | ✔           |
 | **Facebook Marketplace** | facebook.com, `/marketplace` seul  | ✔ (générique seul), sans compte connecté | ✘ aucune donnée structurée | ◐ liste ✔   |
 | **Kleinanzeigen**        | kleinanzeigen.de                   | ✔ (générique seul)                       | ✔                          | ✔           |
@@ -209,9 +209,9 @@ Petites annonces et occasion :
 | **Wallapop**             | wallapop.com                       | ✔                                        | ✔                          | ✔           |
 | **Vivastreet**           | vivastreet.com                     | ✔ (générique seul)                       | ✘ pages vues sans fiche    | ✔           |
 | **Leboncoin**            | leboncoin.fr                       | ◐ liste ✔ ; fiche : anti-robot           | non vérifié                | ◐ liste ✔   |
-| **Discogs**              | discogs.com                        | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | non vérifié |
-| **Reverb**               | reverb.com                         | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | non vérifié |
-| **Vestiaire Collective** | vestiairecollective.com            | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | non vérifié |
+| **Discogs**              | discogs.com                        | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | ◐ liste ✔   |
+| **Reverb**               | reverb.com                         | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | ◐ liste ✔   |
+| **Vestiaire Collective** | vestiairecollective.com            | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | ◐ liste ✔   |
 | **Back Market**          | 10 pays                            | ✘ anti-robot ; générique seul            | ✘                          | ✘           |
 | **Chrono24**             | 10 pays                            | ✘ anti-robot ; générique seul            | ✘                          | ✘           |
 | **Milanuncios**          | milanuncios.com                    | ✘ visite interrompue ; générique seul    | ✘                          | ✘           |
