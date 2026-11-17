@@ -33,6 +33,16 @@ describe("trouverRegle", () => {
     ["fr.shopping.rakuten.com", null],
     ["www.ebay.com", "ebay"],
     ["www.rueducommerce.fr", "rueducommerce"],
+    // Petites annonces et occasion : sous-domaines de ville, de langue, mobile.
+    ["www.leboncoin.fr", "leboncoin"],
+    ["www.facebook.com", "facebook"],
+    ["m.facebook.com", "facebook"],
+    ["paris.craigslist.org", "craigslist"],
+    ["fr.wallapop.com", "wallapop"],
+    ["www.vinted.co.uk", "vinted"],
+    ["www.backmarket.fr", "backmarket"],
+    ["fr.vestiairecollective.com", "vestiairecollective"],
+    ["www.chrono24.fr", "chrono24"],
     // Google : la recherche et Images, jamais les autres services du domaine.
     ["www.google.fr", "google"],
     ["www.google.com", "google"],
@@ -47,6 +57,29 @@ describe("trouverRegle", () => {
   for (const [hote, attendu] of cas) {
     it(`${hote} → ${attendu}`, () => assert.equal(idDe(hote), attendu));
   }
+});
+
+describe("couvreChemin", () => {
+  const facebook = REGLES.find((r) => r.id === "facebook");
+  const cas = [
+    ["/marketplace", true],
+    ["/marketplace/", true],
+    ["/marketplace/item/123456/", true],
+    ["/marketplace/paris/search", true],
+    ["/", false],
+    ["/groups/123", false],
+    ["/marketplacex", false],
+    ["/messages/t/1", false],
+  ];
+  for (const [chemin, attendu] of cas) {
+    it(`facebook ${chemin} → ${attendu}`, () => assert.equal(moteur.couvreChemin(facebook, chemin), attendu));
+  }
+
+  it("couvre tout chemin d'une règle sans `chemins`", () => {
+    const amazon = REGLES.find((r) => r.id === "amazon");
+    assert.equal(amazon.chemins, null);
+    assert.equal(moteur.couvreChemin(amazon, "/gp/cart/view.html"), true);
+  });
 });
 
 describe("construireFeuille", () => {
@@ -116,6 +149,14 @@ describe("les règles", () => {
         assert.ok(["titre", "prix", "image"].includes(cle), `${r.id}.${cle}`);
         assert.equal(typeof s, "string", `${r.id}.${cle}`);
       }
+    }
+  });
+
+  // « /marketplace/ » ne couvrirait pas /marketplace ; « marketplace » rien du tout.
+  it("ont, s'il y en a, des chemins absolus sans barre finale", () => {
+    for (const r of REGLES.filter((r) => r.chemins)) {
+      assert.ok(r.chemins.length > 0, r.id);
+      for (const c of r.chemins) assert.match(c, /^(\/[\w.-]+)+$/, `${r.id} : ${c}`);
     }
   });
 

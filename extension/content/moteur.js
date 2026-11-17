@@ -24,6 +24,16 @@
     );
   }
 
+  /**
+   * La règle vaut-elle sur ce chemin ? Toujours, si elle n'a pas de `chemins` ;
+   * sinon sur chacun et sous chacun : « /marketplace » couvre /marketplace,
+   * /marketplace/ et /marketplace/item/1, pas /marketplacex ni /groups.
+   */
+  function couvreChemin(regle, chemin) {
+    if (!regle?.chemins) return true;
+    return regle.chemins.some((c) => chemin === c || chemin.startsWith(`${c}/`));
+  }
+
   /** Les motifs de correspondance que le manifeste doit déclarer pour ces règles. */
   function motifsDuManifeste(regles) {
     return regles.flatMap((r) => [
@@ -75,6 +85,7 @@
   globalThis.SansPrixMoteur = Object.freeze({
     ATTRIBUT_ECLATE,
     trouverRegle,
+    couvreChemin,
     motifsDuManifeste,
     construireFeuille,
   });

@@ -10,7 +10,7 @@
     "message": "Sans prix"
   },
   "extDescription": {
-    "message": "Masque les prix sur Amazon, Fnac, Cdiscount, Darty, eBay et d’autres boutiques, pour choisir sans se laisser guider par le montant."
+    "message": "Masque les prix des boutiques, des petites annonces et de l’occasion (Amazon, Leboncoin, Vinted…) pour choisir sans voir le montant."
   },
   "titreActif": {
     "message": "Sans prix : prix masqués"
@@ -43,15 +43,6 @@
       "raccourci": {
         "content": "$1",
         "example": "Alt+Maj+P"
-      }
-    }
-  },
-  "popupSites": {
-    "message": "Active sur : $SITES$.",
-    "placeholders": {
-      "sites": {
-        "content": "$1",
-        "example": "Amazon, Dealabs, Decathlon, Cdiscount"
       }
     }
   },
@@ -179,5 +170,27 @@
   },
   "listeCopieImpossible": {
     "message": "Impossible de copier la liste."
+  },
+  "popupSitesNombre": {
+    "message": "Active sur $NOMBRE$ sites",
+    "description": "Résumé replié de la liste des sites couverts.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "Sans prix n’a pas encore le droit d’agir sur $NOMBRE$ sites. Sans cet accord, les prix réapparaissent à chaque changement de page.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Voir lesquels"
   }
 }

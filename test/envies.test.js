@@ -86,6 +86,42 @@ describe("lireDevise", () => {
   }
 });
 
+describe("extraireProduit — données structurées", () => {
+  // Un document réduit à ses blocs JSON-LD : ni microdonnées, ni Open Graph,
+  // ni canonique.
+  const ctx = vm.createContext({ URL });
+  vm.runInContext(lire("content/produit.js"), ctx);
+  const document = (...blocs) => ({
+    URL: "https://www.exemple.fr/annonce/123?ref=liste",
+    querySelectorAll: (s) =>
+      s.includes("ld+json") ? blocs.map((b) => ({ textContent: JSON.stringify(b) })) : [],
+    querySelector: () => null,
+  });
+  const extraire = (...blocs) => ctx.SansPrixProduit.extraireProduit(document(...blocs));
+
+  it("lit un Product", () => {
+    const p = extraire({ "@type": "Product", name: "Vélo 20 pouces", offers: { price: "45", priceCurrency: "EUR" } });
+    assert.equal(p.titre, "Vélo 20 pouces");
+    assert.equal(p.prix, 45);
+    assert.equal(p.devise, "EUR");
+    assert.equal(p.url, "https://www.exemple.fr/annonce/123");
+  });
+
+  // ParuVendu : une voiture d'occasion est un `Vehicle`, sous-type de Product.
+  it("lit un Vehicle, sous-type de Product", () => {
+    const p = extraire(
+      { "@type": "BreadcrumbList", itemListElement: [] },
+      { "@type": "Vehicle", name: "FORD Fiesta ST", offers: { "@type": "Offer", price: "9480", priceCurrency: "EUR" } },
+    );
+    assert.equal(p.titre, "FORD Fiesta ST");
+    assert.equal(p.prix, 9480);
+  });
+
+  it("ne voit pas de fiche dans une page sans produit", () => {
+    assert.equal(extraire({ "@type": "BreadcrumbList", itemListElement: [] }, { "@type": "WebSite", name: "Annonces" }), null);
+  });
+});
+
 describe("la liste d'envies", () => {
   const nouvelle = () => {
     const navigateur = fauxNavigateur();

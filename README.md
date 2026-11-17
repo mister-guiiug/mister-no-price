@@ -2,9 +2,11 @@
 
 Extension Firefox qui **masque les prix sur les grandes boutiques en ligne** —
 Amazon, Fnac, Cdiscount, Darty, Boulanger, LDLC, E.Leclerc, Carrefour, Auchan,
-eBay, AliExpress, Zalando… — et sur **Google** (produits sponsorisés de la
-recherche et de Google Images), pour laisser un enfant parcourir des idées de
-cadeaux sans lui donner la notion de prix.
+eBay, AliExpress, Zalando… —, sur les **petites annonces** et l'**occasion** —
+Leboncoin, Vinted, Back Market, Facebook Marketplace, Kleinanzeigen, Subito,
+Discogs, Chrono24… — et sur **Google** (produits sponsorisés de la recherche et
+de Google Images), pour laisser un enfant parcourir des idées de cadeaux sans
+lui donner la notion de prix.
 
 ## Pourquoi
 
@@ -161,7 +163,9 @@ tant qu'on n'a pas dit oui. Un clic sur l'icône la lance pour la page ouverte,
 mais les prix réapparaissent à la page suivante.
 
 L'icône porte alors une pastille **« ! »**. Ouvrir le popup : un encart nomme
-les sites concernés ; **« Autoriser »** les accorde tous, une fois pour toutes.
+les sites concernés — ou en donne le nombre, avec « Voir lesquels », quand une
+version en ajoute beaucoup (la 1.4.0 en ajoute vingt) ; **« Autoriser »** les
+accorde tous, une fois pour toutes.
 Le même réglage existe site par site dans le menu des extensions de Firefox
 (l'icône en forme de pièce de puzzle).
 
@@ -187,11 +191,47 @@ Le même réglage existe site par site dans le menu des extensions de Firefox
 | **ManoMano**        | manomano.fr                          | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
 | **Google**          | www.google.fr, .com, .be, .ch, … (9) | ◐ recherche et Images, voir ci-dessous                  | — pas de fiche produit | ✘ anti-robot        |
 
+Petites annonces et occasion :
+
+| Site                     | Domaines couverts                  | Prix masqués (bureau)                    | Bouton ♥                   | Site mobile |
+| ------------------------ | ---------------------------------- | ---------------------------------------- | -------------------------- | ----------- |
+| **Catawiki**             | catawiki.com                       | ✔                                        | ✔                          | non vérifié |
+| **Cash Express**         | cashexpress.fr                     | ✔                                        | ✔                          | ✔           |
+| **Craigslist**           | craigslist.org (toutes les villes) | ✔ (générique seul)                       | ✔                          | ✔           |
+| **Delcampe**             | delcampe.net                       | ✔                                        | ✔                          | non vérifié |
+| **Easy Cash**            | easycash.fr                        | ✔                                        | ✔                          | ✔           |
+| **Facebook Marketplace** | facebook.com, `/marketplace` seul  | ✔ (générique seul), sans compte connecté | ✘ aucune donnée structurée | ◐ liste ✔   |
+| **Kleinanzeigen**        | kleinanzeigen.de                   | ✔ (générique seul)                       | ✔                          | ✔           |
+| **Marktplaats**          | marktplaats.nl                     | ✔                                        | ✔                          | ✔           |
+| **ParuVendu**            | paruvendu.fr                       | ✔ (générique seul)                       | ✔                          | ✔           |
+| **Subito**               | subito.it                          | ✔                                        | ✔                          | ✔           |
+| **Vinted**               | 12 pays                            | ✔ vinted.fr                              | ✔                          | ✔           |
+| **Wallapop**             | wallapop.com                       | ✔                                        | ✔                          | ✔           |
+| **Vivastreet**           | vivastreet.com                     | ✔ (générique seul)                       | ✘ pages vues sans fiche    | ✔           |
+| **Leboncoin**            | leboncoin.fr                       | ◐ liste ✔ ; fiche : anti-robot           | non vérifié                | ◐ liste ✔   |
+| **Discogs**              | discogs.com                        | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | non vérifié |
+| **Reverb**               | reverb.com                         | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | non vérifié |
+| **Vestiaire Collective** | vestiairecollective.com            | ◐ liste ✔ ; fiche : délai dépassé        | non vérifié                | non vérifié |
+| **Back Market**          | 10 pays                            | ✘ anti-robot ; générique seul            | ✘                          | ✘           |
+| **Chrono24**             | 10 pays                            | ✘ anti-robot ; générique seul            | ✘                          | ✘           |
+| **Milanuncios**          | milanuncios.com                    | ✘ visite interrompue ; générique seul    | ✘                          | ✘           |
+
+Rakuten n'y est pas : sa place de marché française a fermé le 30 septembre
+2026. Sur **Facebook**, la règle ne vaut que sous `/marketplace` : ailleurs —
+fil d'actualité, groupes, messages —, l'extension ne masque rien, même après
+une navigation qui change d'adresse sans recharger la page (vérifié dans
+Firefox : éteinte sur `/`, allumée sur `/marketplace/paris/`, éteinte de
+nouveau sur `/groups/…`).
+
 « ✔ » : `npm run verifier` a visité une liste et une fiche produit et n'y a
 trouvé aucun montant lisible ; « Bouton ♥ » : il a ajouté la fiche à la liste
 d'envies, qui l'affiche avec titre, image et prix ; « Site mobile » : les mêmes
 vérifications avec `MOBILE=1`, en se présentant comme Firefox pour Android. Les autres domaines d'Amazon et de Decathlon
 partagent le balisage du site vérifié, sans l'avoir été eux-mêmes.
+
+« ◐ liste ✔ » : la page de liste a été vérifiée, sans montant lisible ; la
+fiche a répondu par une vérification anti-robot ou n'a pas fini de charger en
+une minute.
 
 « ◐ » Google : la recherche et Google Images répondent au Firefox piloté par
 leur page anti-robot (`/sorry`). Les scripts de l'extension ont été rejoués sur
@@ -272,7 +312,9 @@ application les efface (Decathlon le fait).
 
 1. Écrire sa règle dans [`regles.js`](extension/regles.js) : des `domaines`
    (sous-domaines compris) ou des `hotes` exacts, quand le domaine entier
-   serait trop large. `masquer` ne retient que des éléments qui ne contiennent
+   serait trop large ; et, pour un site dont une seule partie vend, des
+   `chemins` (Facebook : `/marketplace`) hors desquels l'extension ne masque
+   rien. `masquer` ne retient que des éléments qui ne contiennent
    **que** des prix ; le reste, le générique s'en charge. Un sélecteur invalide
    est ignoré sans emporter les autres.
 2. Ajouter ses motifs aux `matches` du [manifeste](extension/manifest.json) —
@@ -308,10 +350,13 @@ chargée, comme lors de la visite de la fiche.
   `npm run verifier` détecte.
 - Un nombre **sans devise** n'est jamais pris pour un prix : les bornes d'un
   curseur de filtre « Prix (en €) : 4 – 1549 » (LDLC) restent lisibles.
-- Quatre sites (Fnac, Darty, Carrefour, ManoMano) n'ont pas pu être vérifiés,
-  et Google seulement hors de Firefox : voir le tableau ci-dessus.
+- Sept sites (Fnac, Darty, Carrefour, ManoMano, Back Market, Chrono24,
+  Milanuncios) n'ont pas pu être vérifiés, quatre autres seulement sur leur
+  page de liste, et Google seulement hors de Firefox : voir les tableaux
+  ci-dessus.
 - Le bouton ♥ n'apparaît que sur une fiche reconnue : pas sur Dealabs, dont
-  les pages sont des discussions et non des produits, ni sur Google. Le prix
+  les pages sont des discussions et non des produits, ni sur Google, ni sur
+  Facebook Marketplace, qui ne publie aucune donnée structurée. Le prix
   retenu est celui de la fiche au moment du clic, pour la variante affichée.
 - Firefox pour Android n'a été essayé qu'en se faisant passer pour lui
   (`MOBILE=1`) : balisage mobile des boutiques, mise en page au doigt. Les API
