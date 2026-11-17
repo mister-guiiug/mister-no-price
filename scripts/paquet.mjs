@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Le paquet de déploiement : tout ce qu'il faut pour installer l'extension sans
- * passer par addons.mozilla.org ni par ce dépôt.
+ * passer par addons.mozilla.org ni par ce dépôt — et, avec les clés d'API, la
+ * soumission de la version au catalogue d'addons.mozilla.org.
  *
  *   web-ext-artifacts/mister-no-prices-<version>/
  *   ├── mister-no-prices-<version>.zip   l'extension, non signée
@@ -15,21 +16,28 @@
  * Signature : Firefox n'installe durablement qu'une extension signée. Avec
  * WEB_EXT_API_KEY et WEB_EXT_API_SECRET (clés d'API d'addons.mozilla.org) —
  * dans l'environnement, ou dans un fichier `.env` à la racine, que git ignore —,
- * le script la fait signer sur le canal « unlisted » : Mozilla signe sans
- * publier, en quelques minutes, sans relecture humaine. Sans les clés, le
- * paquet sort sans `.xpi`, et le dit. EXIGER_SIGNATURE=1 transforme ce manque en
- * échec.
+ * le script SOUMET la version au catalogue public (canal « listed »), avec la
+ * fiche de `amo/fiche.json`. Mozilla ne la signe qu'une fois approuvée : le
+ * script attend ATTENTE_MINUTES (15 par défaut), puis, si la version est encore
+ * en relecture, s'arrête sans paquet — et le dit. Relancé plus tard, il la
+ * retrouve sur AMO au lieu de la soumettre à nouveau, et télécharge le fichier
+ * signé si elle est publiée. Sans les clés, le paquet sort sans `.xpi`, et le
+ * dit. EXIGER_SIGNATURE=1 transforme ce manque en échec.
  *
- * Mozilla ne signe qu'une fois un numéro de version : relancer la signature
- * d'une version déjà signée échoue. Monter la version d'abord (manifeste et
- * package.json, que les tests gardent alignés).
+ * Dans un workflow, il écrit `signe=oui|non` dans GITHUB_OUTPUT.
+ *
+ * Mozilla n'accepte qu'une fois un numéro de version, tous canaux confondus.
+ * Monter la version d'abord (manifeste et package.json, que les tests gardent
+ * alignés). NE PAS lancer ce script sur un poste où le `.env` porte les clés,
+ * sauf pour publier : il soumettrait la version.
  *
  * C'est ce script que joue publication.yml à chaque version nouvelle sur main.
  */
 import { createHash } from "node:crypto";
-import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
+import { appendFile, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import webExt from "web-ext";
+import { API, client, etatDe } from "./amo.mjs";
 import { manifesteDeMiseAJour, nomXpi } from "./mises-a-jour.mjs";
 
 const racine = path.resolve(import.meta.dirname, "..");
@@ -43,6 +51,11 @@ try {
   if (erreur.code !== "ENOENT") throw erreur;
 }
 const lireJson = async (fichier) => JSON.parse(await readFile(fichier, "utf8"));
+/** Une sortie du pas de workflow, si le script tourne dans un workflow. */
+const sortie = async (cle, valeur) => {
+  if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, `${cle}=${valeur}
+`);
+};
 
 const manifeste = await lireJson(path.join(source, "manifest.json"));
 const { version: versionPaquet } = await lireJson(path.join(racine, "package.json"));
@@ -74,26 +87,50 @@ await webExt.cmd.build(
 );
 const extensions = [`${nom}.zip`];
 
-// 2. La même, signée, si les clés sont là.
+// 2. La même, signée par Mozilla une fois publiée sur son catalogue, si les
+//    clés sont là. Déjà soumise (un passage précédent) : on ne la soumet pas
+//    à nouveau, on regarde où en est sa relecture.
 const { WEB_EXT_API_KEY: apiKey, WEB_EXT_API_SECRET: apiSecret } = process.env;
 if (apiKey && apiSecret) {
-  const telechargement = path.join(dossier, ".signature");
-  const { downloadedFiles } = await webExt.cmd.sign(
-    {
-      sourceDir: source,
-      artifactsDir: telechargement,
-      apiKey,
-      apiSecret,
-      channel: "unlisted",
-      amoBaseUrl: "https://addons.mozilla.org/api/v5/",
-    },
-    { shouldExitProgram: false },
-  );
-  if (downloadedFiles?.length !== 1) {
-    throw new Error(`Mozilla devait rendre un fichier signé, pas ${downloadedFiles?.length ?? 0}`);
+  const amo = client({ cle: apiKey, secret: apiSecret });
+  let enLigne = await amo.version(id, version);
+  if (enLigne) {
+    console.log(`${version} est déjà sur addons.mozilla.org (canal ${enLigne.channel}) : pas de nouvelle soumission.`);
+  } else {
+    const telechargement = path.join(dossier, ".signature");
+    await webExt.cmd.sign(
+      {
+        sourceDir: source,
+        artifactsDir: telechargement,
+        apiKey,
+        apiSecret,
+        channel: "listed",
+        amoBaseUrl: API,
+        amoMetadata: path.join(racine, "amo", "fiche.json"),
+        // L'attente est faite ci-dessous, avec un délai qui ne fait pas échouer.
+        approvalTimeout: 0,
+      },
+      { shouldExitProgram: false },
+    );
+    await rm(telechargement, { recursive: true, force: true });
   }
-  await rename(path.resolve(telechargement, path.basename(downloadedFiles[0])), path.join(dossier, nomXpi(version)));
-  await rm(telechargement, { recursive: true, force: true });
+  const minutes = Number(process.env.ATTENTE_MINUTES ?? 15);
+  enLigne = await amo.attendre(id, version, { delai: minutes * 60_000 });
+  if (!enLigne) throw new Error(`${version} introuvable sur addons.mozilla.org après la soumission`);
+  if (enLigne.channel !== "listed") {
+    throw new Error(`${version} a été signée hors catalogue (canal ${enLigne.channel}) : monter la version pour la publier`);
+  }
+  const etat = etatDe(enLigne);
+  if (etat === "refusee") {
+    throw new Error(`${version} a été refusée par addons.mozilla.org : lire le motif dans le tableau de bord du développeur`);
+  }
+  if (etat === "en-relecture") {
+    console.log(`::notice::${version} est soumise à addons.mozilla.org et attend sa relecture : pas de paquet ni de release pour l'instant. Le prochain passage reprendra.`);
+    await sortie("signe", "non");
+    await rm(dossier, { recursive: true, force: true });
+    process.exit(0);
+  }
+  await amo.telecharger(enLigne, path.join(dossier, nomXpi(version)));
   extensions.push(nomXpi(version));
 } else if (process.env.EXIGER_SIGNATURE) {
   throw new Error("EXIGER_SIGNATURE : WEB_EXT_API_KEY et WEB_EXT_API_SECRET manquent");
@@ -126,3 +163,4 @@ await writeFile(path.join(dossier, "SHA256SUMS"), empreintes.join(""));
 
 console.log(`\nPaquet ${nom} : ${path.relative(racine, dossier)}`);
 for (const fichier of [...extensions, ...annexes, "SHA256SUMS"]) console.log(`  ${fichier}`);
+await sortie("signe", extensions.includes(nomXpi(version)) ? "oui" : "non");

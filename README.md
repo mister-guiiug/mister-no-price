@@ -129,19 +129,23 @@ Firefox 140 ou plus récent.
 
 | Façon                   | Durée                                 | Ce qu'il faut                                                                                                                |
 | ----------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Depuis addons.mozilla.org** | définitive, mises à jour automatiques | [page de l'extension](https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/) → _Ajouter à Firefox_ |
 | **Depuis les releases** | définitive, mises à jour automatiques | ouvrir le `.xpi` de la [dernière release](https://github.com/mister-guiiug/mister-no-prices/releases/latest) dans Firefox     |
 | **Temporaire**          | jusqu'au redémarrage                  | `about:debugging#/runtime/this-firefox` → _Charger un module complémentaire temporaire…_ → choisir `extension/manifest.json` |
 | **Essai en un geste**   | le temps de la session                | `npm install` puis `npm start` : ouvre Firefox sur amazon.fr, extension chargée, rechargée à chaque modification             |
 
-Chaque release porte le `.xpi` **signé par Mozilla** (canal _unlisted_ : signé,
-mais pas publié sur le catalogue d'addons.mozilla.org). Firefox refuse
-d'installer durablement une extension non signée, sauf dans Developer Edition
-ou Nightly avec `xpinstall.signatures.required` à `false`.
+Depuis la 1.8.0, l'extension est **publiée sur le catalogue
+d'addons.mozilla.org**. Chaque release porte le même `.xpi`, signé par Mozilla
+une fois la version approuvée. Firefox refuse d'installer durablement une
+extension non signée, sauf dans Developer Edition ou Nightly avec
+`xpinstall.signatures.required` à `false`.
 
-Une fois installée, l'extension **se met à jour seule** : son manifeste déclare
-un `update_url` qui vise le `updates.json` de la dernière release, que Firefox
-consulte une fois par jour (ou à la demande : `about:addons` → roue dentée →
-_Rechercher des mises à jour_).
+Une fois installée, d'où qu'elle vienne, l'extension **se met à jour seule**
+depuis addons.mozilla.org, que Firefox consulte une fois par jour (ou à la
+demande : `about:addons` → roue dentée → _Rechercher des mises à jour_). Les
+copies installées depuis les releases jusqu'à la 1.7.0 déclaraient un
+`update_url` vers le `updates.json` de la dernière release : c'est par lui
+qu'elles passent à la version du catalogue, puis au catalogue.
 
 ### Sur Android
 
@@ -150,11 +154,12 @@ Extensions → Sans prix**) et la liste d'envies y fonctionnent ; le popup s'y
 ouvre en plein écran, avec des cibles à la taille du doigt. Il n'y a pas de
 raccourci clavier : l'interrupteur du popup le remplace.
 
-Installer une extension qui n'est pas publiée sur addons.mozilla.org demande le
-`.xpi` **signé** et le menu de débogage : **Paramètres → À propos de Firefox**,
-toucher cinq fois le logo, puis **Paramètres → Installer une extension depuis un
-fichier**. Pour essayer depuis un poste de développement, téléphone branché en
-USB et débogage USB activé :
+Le plus simple : ouvrir la [page de l'extension](https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/) dans Firefox pour
+Android → _Ajouter à Firefox_. Un `.xpi` de release s'installe aussi, par le
+menu de débogage : **Paramètres → À propos de Firefox**, toucher cinq fois le
+logo, puis **Paramètres → Installer une extension depuis un fichier**. Pour
+essayer depuis un poste de développement, téléphone branché en USB et débogage
+USB activé :
 
 ```bash
 npx web-ext run --source-dir extension -t firefox-android --android-device <identifiant adb>
@@ -176,12 +181,14 @@ de quoi installer l'extension sur un poste sans rien savoir de ce dépôt :
 Le guide et la stratégie viennent de [`deploiement/`](deploiement/), remplis à
 la version et à l'identifiant du manifeste.
 
-La signature passe par le canal _unlisted_ d'addons.mozilla.org : Mozilla signe
-sans publier, en quelques minutes. Il faut des clés d'API
+Avec des clés d'API
 ([page des clés](https://addons.mozilla.org/developers/addon/api/key/)) dans
-`WEB_EXT_API_KEY` et `WEB_EXT_API_SECRET`, dans l'environnement ou dans un
-fichier `.env` à la racine du dépôt (ignoré par git) ; sans elles, le paquet
-sort sans `.xpi` et le dit. Mozilla ne signe qu'une fois un numéro de version.
+`WEB_EXT_API_KEY` et `WEB_EXT_API_SECRET` — dans l'environnement ou dans un
+fichier `.env` à la racine du dépôt, ignoré par git —, le paquet **soumet la
+version au catalogue** d'addons.mozilla.org et ne prend le `.xpi` qu'une fois
+la version approuvée : c'est le geste de publication, pas un essai. Sans elles,
+le paquet sort sans `.xpi` et le dit. Mozilla n'accepte qu'une fois un numéro
+de version, tous canaux confondus.
 
 ### Publier une version
 
@@ -189,17 +196,27 @@ La publication est **automatique** : monter `version` dans
 [`manifest.json`](extension/manifest.json) et `package.json` (les tests les
 gardent alignés), fusionner la PR — c'est tout.
 [`publication.yml`](.github/workflows/publication.yml), à chaque poussée sur
-`main`, regarde si la release `v<version>` existe ; sinon il teste, construit le
-paquet, le fait **signer** par Mozilla, puis publie la release, étiquette posée
-sur le commit, avec le `.xpi`, le paquet complet et `updates.json`. Les
-installations existantes la reçoivent d'elles-mêmes. Une PR qui ne change pas
-de version ne publie rien.
+`main` et toutes les trois heures, regarde si la release `v<version>` existe ;
+sinon il teste, puis **soumet** la version au catalogue d'addons.mozilla.org,
+avec la fiche de [`amo/fiche.json`](amo/fiche.json) (description, catégorie,
+licence). Mozilla la relit — souvent en quelques minutes, parfois en quelques
+jours — puis la signe et la publie. Tant qu'elle est en relecture, le passage
+s'arrête en vert, sans release ; le passage planifié suivant la retrouve sur
+AMO, sans la soumettre une seconde fois. Une fois la version publiée, la
+release suit, étiquette posée sur le commit, avec le `.xpi`, le paquet complet
+et `updates.json`. Les installations existantes la reçoivent d'elles-mêmes.
+Une PR qui ne change pas de version ne publie rien.
+
+Le nom, le résumé et l'icône de la fiche viennent du manifeste et de ses
+quinze langues ; la description, de `amo/fiche.json`, en français et en
+anglais. Les captures d'écran s'ajoutent à la main, sur le tableau de bord du
+développeur.
 
 La signature demande les secrets `AMO_API_KEY` et `AMO_API_SECRET` du dépôt ;
 sans eux, le workflow échoue plutôt que de publier une release sans fichier
-installable. Mozilla ne signe qu'**une fois** un numéro de version : si la
-release échoue après la signature, ne pas relancer — le paquet signé est en
-artefact du run.
+installable. Mozilla n'accepte qu'**une fois** un numéro de version : si la
+release échoue après la signature, relancer le workflow — il retrouve la
+version sur AMO et retélécharge le fichier signé, sans rien soumettre.
 
 L'identifiant `mister-no-price@mister-guiiug` est figé par la première
 signature : le changer ferait de la version suivante une autre extension, sans
