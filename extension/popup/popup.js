@@ -13,10 +13,14 @@
   const langue = t("langue");
 
   document.documentElement.lang = langue;
+  // Sens de lecture de la langue (« rtl » en arabe), que fournit Firefox.
+  document.documentElement.dir = browser.i18n.getMessage("@@bidi_dir") || "ltr";
   for (const element of document.querySelectorAll("[data-i18n]")) {
     element.textContent = t(element.dataset.i18n);
   }
 
+  /** Une valeur technique (révision, raccourci) gardée de gauche à droite dans une phrase. */
+  const isoler = (valeur) => `\u2068${valeur}\u2069`;
   const parNom = (a, b) => a.localeCompare(b, langue, { sensitivity: "base" });
   const listeDe = (noms) => new Intl.ListFormat(langue, { type: "conjunction" }).format([...noms].sort(parNom));
 
@@ -131,7 +135,9 @@
   // Le catalogue des règles : relu chaque jour sur le dépôt, ou jamais.
   const caseCatalogue = $("catalogue");
   caseCatalogue.addEventListener("change", () => ecrire({ catalogueDistant: caseCatalogue.checked }));
-  $("catalogue-revision").textContent = t("popupCatalogueRevision", catalogue.revision);
+  // Isolée (FSI … PDI) : dans une phrase en arabe, « 2026-11-17.1 » se lirait
+  // sinon « 17.1-11-2026 ».
+  $("catalogue-revision").textContent = t("popupCatalogueRevision", isoler(catalogue.revision));
 
   // --- Le code parent ----------------------------------------------------------------
 
@@ -216,5 +222,5 @@
   if (!browser.commands) return;
   const commandes = await browser.commands.getAll();
   const raccourci = commandes.find((c) => c.name === "basculer")?.shortcut;
-  if (raccourci) $("raccourci").textContent = t("popupRaccourci", raccourci);
+  if (raccourci) $("raccourci").textContent = t("popupRaccourci", isoler(raccourci));
 })();

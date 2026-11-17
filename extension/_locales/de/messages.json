@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "de"
+  },
+  "extName": {
+    "message": "Ohne Preise",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Ohne Preise"
+  },
+  "extDescription": {
+    "message": "Blendet Preise in Shops, Kleinanzeigen und Second-Hand-Seiten aus (Amazon, eBay, Vinted…): Du wählst, ohne den Betrag zu sehen."
+  },
+  "titreActif": {
+    "message": "Ohne Preise: Preise ausgeblendet"
+  },
+  "titrePause": {
+    "message": "Ohne Preise: Preise sichtbar"
+  },
+  "badgePause": {
+    "message": "aus",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Preise aus- oder einblenden"
+  },
+  "popupActif": {
+    "message": "Preise ausblenden"
+  },
+  "popupStyle": {
+    "message": "Darstellung"
+  },
+  "styleBarre": {
+    "message": "Grauer Balken"
+  },
+  "styleFlou": {
+    "message": "Unscharf"
+  },
+  "popupRaccourci": {
+    "message": "Tastenkürzel: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Ohne Preise: Einige Seiten brauchen deine Zustimmung"
+  },
+  "accesManquant": {
+    "message": "Ohne Preise darf auf $SITES$ noch nicht aktiv werden. Ohne deine Zustimmung erscheinen die Preise auf jeder neuen Seite wieder.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Erlauben"
+  },
+  "popupEnvies": {
+    "message": "Wunschliste"
+  },
+  "popupEnviesBouton": {
+    "message": "♥-Schaltfläche „Meine Liste“ auf Produktseiten"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Liste öffnen ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Meine Liste",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "In meiner Liste",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Zu meiner Wunschliste hinzufügen"
+  },
+  "envieRetirerTitre": {
+    "message": "Von meiner Wunschliste entfernen"
+  },
+  "envieAjoutee": {
+    "message": "Zu deiner Wunschliste hinzugefügt"
+  },
+  "envieRetiree": {
+    "message": "Von deiner Wunschliste entfernt"
+  },
+  "listeTitre": {
+    "message": "Wunschliste"
+  },
+  "listeExplication": {
+    "message": "Artikel, die du auf Produktseiten mit ♥ markiert hast. Die Preise bleiben ausgeblendet, bis du sie sehen willst."
+  },
+  "listeCompte1": {
+    "message": "$N$ Artikel",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ Artikel",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Preise zeigen"
+  },
+  "listeMasquerPrix": {
+    "message": "Preise ausblenden"
+  },
+  "listePartager": {
+    "message": "Liste teilen"
+  },
+  "listeVider": {
+    "message": "Alle löschen"
+  },
+  "listeViderConfirmer": {
+    "message": "Die ganze Wunschliste löschen?"
+  },
+  "listeVide": {
+    "message": "Noch nichts da. Auf einer Produktseite fügt die Schaltfläche ♥ „Meine Liste“ den Artikel hier hinzu."
+  },
+  "listeRetirer": {
+    "message": "Entfernen"
+  },
+  "listeRetirerArticle": {
+    "message": "„$TITRE$“ entfernen",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Preis ausgeblendet"
+  },
+  "listePrixInconnu": {
+    "message": "Preis nicht gefunden"
+  },
+  "listeTotal": {
+    "message": "Summe: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Liste in die Zwischenablage kopiert."
+  },
+  "listeCopieImpossible": {
+    "message": "Die Liste konnte nicht kopiert werden."
+  },
+  "popupSitesNombre": {
+    "message": "Aktiv auf $NOMBRE$ Seiten",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "Ohne Preise darf auf $NOMBRE$ Seiten noch nicht aktiv werden. Ohne deine Zustimmung erscheinen die Preise auf jeder neuen Seite wieder.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Welche zeigen"
+  },
+  "titrePauseJusqua": {
+    "message": "Ohne Preise: pausiert bis $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pause:"
+  },
+  "pause5": {
+    "message": "5 Min."
+  },
+  "pause15": {
+    "message": "15 Min."
+  },
+  "pause60": {
+    "message": "1 Std."
+  },
+  "pauseReprendre": {
+    "message": "Fortsetzen"
+  },
+  "pauseJusqua": {
+    "message": "Pausiert bis $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "Auf $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Geschenkpapier"
+  },
+  "popupCompteur": {
+    "message": "Anzahl ausgeblendeter Preise am Symbol"
+  },
+  "popupSitesAide": {
+    "message": "Entferne den Haken bei einer Seite, um ihre Preise zu sehen."
+  },
+  "codeTitre": {
+    "message": "Eltern-Code"
+  },
+  "codeAide": {
+    "message": "Wird für alles verlangt, was Preise zeigt: Ausblenden abschalten, pausieren, auf einer Seite abschalten, Preise in der Wunschliste zeigen."
+  },
+  "codeEtatDefini": {
+    "message": "· festgelegt"
+  },
+  "codeEtatAucun": {
+    "message": "· keiner"
+  },
+  "codeChanger": {
+    "message": "Code ändern"
+  },
+  "codeRetirer": {
+    "message": "Code entfernen"
+  },
+  "codeDemande": {
+    "message": "Eltern-Code"
+  },
+  "codeAnnuler": {
+    "message": "Abbrechen"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "Das ist nicht der richtige Code."
+  },
+  "codeNouveau": {
+    "message": "Neuer Code (4 bis 8 Ziffern)"
+  },
+  "codeConfirmer": {
+    "message": "Noch einmal derselbe"
+  },
+  "codeDefinir": {
+    "message": "Code festlegen"
+  },
+  "codeForme": {
+    "message": "Der Code hat 4 bis 8 Ziffern."
+  },
+  "codeDifferents": {
+    "message": "Die beiden Codes stimmen nicht überein."
+  },
+  "codeDejaDefini": {
+    "message": "Ein Eltern-Code schützt die Einstellungen bereits. Ändern oder entfernen kannst du ihn im Pop-up der Erweiterung."
+  },
+  "listeImprimer": {
+    "message": "Drucken"
+  },
+  "listeFiltre": {
+    "message": "Für:"
+  },
+  "listeFiltreTous": {
+    "message": "alle"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "ohne Namen"
+  },
+  "listePour": {
+    "message": "Für"
+  },
+  "listePourExemple": {
+    "message": "Vorname"
+  },
+  "listePourImprime": {
+    "message": "Für $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "„$TITRE$“ nach oben",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "„$TITRE$“ nach unten",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Willkommen bei Ohne Preise"
+  },
+  "nouveautesTitre": {
+    "message": "Ohne Preise $VERSION$: Was ist neu",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Zu erlaubende Seiten: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox erlaubt die Seiten, die ein Update hinzufügt, nicht automatisch. Ohne deine Zustimmung erscheinen die Preise dort auf jeder neuen Seite wieder."
+  },
+  "nouveautesAccesOk": {
+    "message": "Alle Seiten sind erlaubt: nichts zu tun."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Was ist neu"
+  },
+  "nouveautesPoints": {
+    "message": "Eine Pause von 5 Minuten, 15 Minuten oder einer Stunde, die von selbst endet.|Ein Eltern-Code, verlangt für alles, was Preise zeigt.|Seiten einzeln: Entferne den Haken bei einer Seite, um ihre Preise zu sehen.|Geschenkpapier, eine Darstellung für Kinder; der graue Balken ist jetzt auch auf dunklen Seiten sichtbar.|Die Wunschliste: ein Vorname pro Artikel, deine eigene Reihenfolge, ein Filter pro Kind, Drucken.|Die Anzahl ausgeblendeter Preise am Symbol, Seite für Seite.|20 Kleinanzeigen- und Second-Hand-Seiten: Leboncoin, Vinted, Back Market, Facebook Marketplace…|Die Liste der Seiten wird täglich aktualisiert, ohne neue Version (Einstellung im Pop-up)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Ein Code mit 4 bis 8 Ziffern, verlangt für alles, was Preise zeigt. Zum erneuten Ausblenden wird er nie verlangt."
+  },
+  "nouveautesReglages": {
+    "message": "Weitere Einstellungen – Pause, Darstellung, Seiten einzeln – findest du im Pop-up: dem Symbol von Ohne Preise in der Symbolleiste."
+  },
+  "popupCatalogue": {
+    "message": "Liste der Seiten täglich aktualisieren"
+  },
+  "popupCatalogueRevision": {
+    "message": "Liste der Seiten: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

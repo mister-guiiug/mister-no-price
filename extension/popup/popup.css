@@ -75,7 +75,7 @@ h1 {
   content: "";
   position: absolute;
   top: 0.15rem;
-  left: 0.15rem;
+  inset-inline-start: 0.15rem;
   width: 1.1rem;
   height: 1.1rem;
   border-radius: 50%;
@@ -90,6 +90,11 @@ h1 {
 
 .interrupteur input:checked::after {
   transform: translateX(1.1rem);
+}
+
+/* En arabe, le curseur part de la droite et glisse vers la gauche. */
+.interrupteur input:checked:dir(rtl)::after {
+  transform: translateX(-1.1rem);
 }
 
 fieldset {

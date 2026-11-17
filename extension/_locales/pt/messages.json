@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "pt"
+  },
+  "extName": {
+    "message": "Sem preços",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Sem preços"
+  },
+  "extDescription": {
+    "message": "Esconde os preços em lojas, classificados e sites de usados (Amazon, eBay, Vinted…) para escolher sem ver o valor."
+  },
+  "titreActif": {
+    "message": "Sem preços: preços escondidos"
+  },
+  "titrePause": {
+    "message": "Sem preços: preços visíveis"
+  },
+  "badgePause": {
+    "message": "off",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Esconder ou mostrar os preços"
+  },
+  "popupActif": {
+    "message": "Esconder os preços"
+  },
+  "popupStyle": {
+    "message": "Aparência"
+  },
+  "styleBarre": {
+    "message": "Barra cinza"
+  },
+  "styleFlou": {
+    "message": "Desfoque"
+  },
+  "popupRaccourci": {
+    "message": "Atalho: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Sem preços: alguns sites precisam da sua autorização"
+  },
+  "accesManquant": {
+    "message": "O Sem preços ainda não tem permissão em $SITES$. Sem a sua autorização, os preços voltam a aparecer a cada nova página.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Permitir"
+  },
+  "popupEnvies": {
+    "message": "Lista de desejos"
+  },
+  "popupEnviesBouton": {
+    "message": "Botão ♥ “Minha lista” nas páginas de produto"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Abrir a lista ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Minha lista",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "Na minha lista",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Adicionar à minha lista de desejos"
+  },
+  "envieRetirerTitre": {
+    "message": "Remover da minha lista de desejos"
+  },
+  "envieAjoutee": {
+    "message": "Adicionado à sua lista de desejos"
+  },
+  "envieRetiree": {
+    "message": "Removido da sua lista de desejos"
+  },
+  "listeTitre": {
+    "message": "Lista de desejos"
+  },
+  "listeExplication": {
+    "message": "Os artigos marcados com um ♥ nas páginas de produto. Os preços ficam escondidos até você pedir para vê-los."
+  },
+  "listeCompte1": {
+    "message": "$N$ artigo",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ artigos",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Mostrar os preços"
+  },
+  "listeMasquerPrix": {
+    "message": "Esconder os preços"
+  },
+  "listePartager": {
+    "message": "Compartilhar a lista"
+  },
+  "listeVider": {
+    "message": "Apagar tudo"
+  },
+  "listeViderConfirmer": {
+    "message": "Apagar toda a lista de desejos?"
+  },
+  "listeVide": {
+    "message": "Nada por enquanto. Numa página de produto, o botão ♥ “Minha lista” adiciona o artigo aqui."
+  },
+  "listeRetirer": {
+    "message": "Remover"
+  },
+  "listeRetirerArticle": {
+    "message": "Remover “$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Preço escondido"
+  },
+  "listePrixInconnu": {
+    "message": "Preço não encontrado"
+  },
+  "listeTotal": {
+    "message": "Total: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Lista copiada para a área de transferência."
+  },
+  "listeCopieImpossible": {
+    "message": "Não foi possível copiar a lista."
+  },
+  "popupSitesNombre": {
+    "message": "Ativo em $NOMBRE$ sites",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "O Sem preços ainda não tem permissão em $NOMBRE$ sites. Sem a sua autorização, os preços voltam a aparecer a cada nova página.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Ver quais"
+  },
+  "titrePauseJusqua": {
+    "message": "Sem preços: em pausa até $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pausa:"
+  },
+  "pause5": {
+    "message": "5 min"
+  },
+  "pause15": {
+    "message": "15 min"
+  },
+  "pause60": {
+    "message": "1 h"
+  },
+  "pauseReprendre": {
+    "message": "Retomar"
+  },
+  "pauseJusqua": {
+    "message": "Em pausa até $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "Em $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Papel de embrulho"
+  },
+  "popupCompteur": {
+    "message": "Número de preços escondidos no ícone"
+  },
+  "popupSitesAide": {
+    "message": "Desmarque um site para ver os preços dele."
+  },
+  "codeTitre": {
+    "message": "Código parental"
+  },
+  "codeAide": {
+    "message": "Pedido para tudo o que revela os preços: desligar o ocultamento, pausá-lo, desligá-lo num site, mostrar os preços da lista de desejos."
+  },
+  "codeEtatDefini": {
+    "message": "· definido"
+  },
+  "codeEtatAucun": {
+    "message": "· nenhum"
+  },
+  "codeChanger": {
+    "message": "Alterar o código"
+  },
+  "codeRetirer": {
+    "message": "Remover o código"
+  },
+  "codeDemande": {
+    "message": "Código parental"
+  },
+  "codeAnnuler": {
+    "message": "Cancelar"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "Esse não é o código certo."
+  },
+  "codeNouveau": {
+    "message": "Novo código (4 a 8 dígitos)"
+  },
+  "codeConfirmer": {
+    "message": "O mesmo, mais uma vez"
+  },
+  "codeDefinir": {
+    "message": "Definir o código"
+  },
+  "codeForme": {
+    "message": "O código tem de 4 a 8 dígitos."
+  },
+  "codeDifferents": {
+    "message": "Os dois códigos não coincidem."
+  },
+  "codeDejaDefini": {
+    "message": "Um código parental já protege as configurações. Para alterá-lo ou removê-lo: a janela pop-up da extensão."
+  },
+  "listeImprimer": {
+    "message": "Imprimir"
+  },
+  "listeFiltre": {
+    "message": "Para:"
+  },
+  "listeFiltreTous": {
+    "message": "todos"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "sem nome"
+  },
+  "listePour": {
+    "message": "Para"
+  },
+  "listePourExemple": {
+    "message": "nome"
+  },
+  "listePourImprime": {
+    "message": "Para $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "Subir “$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "Descer “$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Boas-vindas ao Sem preços"
+  },
+  "nouveautesTitre": {
+    "message": "Sem preços $VERSION$: novidades",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Sites a autorizar: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "O Firefox não concede automaticamente os sites que uma atualização adiciona. Sem a sua autorização, os preços voltam a aparecer neles a cada nova página."
+  },
+  "nouveautesAccesOk": {
+    "message": "Todos os sites estão autorizados: nada a fazer."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Novidades"
+  },
+  "nouveautesPoints": {
+    "message": "Uma pausa de 5 minutos, 15 minutos ou uma hora, que termina sozinha.|Um código parental, pedido para tudo o que revela os preços.|Os sites um a um: desmarque um site para ver os preços dele.|Papel de embrulho, uma aparência para crianças; a barra cinza agora também aparece nos sites escuros.|A lista de desejos: um nome por artigo, a sua própria ordem, um filtro por criança, impressão.|O número de preços escondidos no ícone, página a página.|20 sites de classificados e de usados: Leboncoin, Vinted, Back Market, Facebook Marketplace…|A lista de sites é atualizada todos os dias, sem nova versão (configuração na janela pop-up)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Um código de 4 a 8 dígitos, pedido para tudo o que revela os preços. Voltar a ativar o ocultamento nunca o pede."
+  },
+  "nouveautesReglages": {
+    "message": "As outras configurações — pausa, aparência, sites um a um — estão na janela pop-up: o ícone do Sem preços na barra de ferramentas."
+  },
+  "popupCatalogue": {
+    "message": "Atualizar a lista de sites todos os dias"
+  },
+  "popupCatalogueRevision": {
+    "message": "Lista de sites: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

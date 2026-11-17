@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "ru"
+  },
+  "extName": {
+    "message": "Без цен",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Без цен"
+  },
+  "extDescription": {
+    "message": "Скрывает цены в магазинах, на сайтах объявлений и б/у товаров (Amazon, eBay, Vinted…), чтобы выбирать, не видя суммы."
+  },
+  "titreActif": {
+    "message": "Без цен: цены скрыты"
+  },
+  "titrePause": {
+    "message": "Без цен: цены видны"
+  },
+  "badgePause": {
+    "message": "выкл",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Скрыть или показать цены"
+  },
+  "popupActif": {
+    "message": "Скрывать цены"
+  },
+  "popupStyle": {
+    "message": "Вид"
+  },
+  "styleBarre": {
+    "message": "Серая полоса"
+  },
+  "styleFlou": {
+    "message": "Размытие"
+  },
+  "popupRaccourci": {
+    "message": "Сочетание клавиш: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Без цен: некоторым сайтам нужно ваше разрешение"
+  },
+  "accesManquant": {
+    "message": "У «Без цен» пока нет доступа к $SITES$. Без вашего разрешения цены возвращаются на каждой новой странице.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Разрешить"
+  },
+  "popupEnvies": {
+    "message": "Список желаний"
+  },
+  "popupEnviesBouton": {
+    "message": "Кнопка ♥ «Мой список» на страницах товаров"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Открыть список ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Мой список",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "В моём списке",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Добавить в мой список желаний"
+  },
+  "envieRetirerTitre": {
+    "message": "Убрать из моего списка желаний"
+  },
+  "envieAjoutee": {
+    "message": "Добавлено в ваш список желаний"
+  },
+  "envieRetiree": {
+    "message": "Убрано из вашего списка желаний"
+  },
+  "listeTitre": {
+    "message": "Список желаний"
+  },
+  "listeExplication": {
+    "message": "Товары, отмеченные ♥ на их страницах. Цены остаются скрытыми, пока вы не попросите их показать."
+  },
+  "listeCompte1": {
+    "message": "Товаров: $N$",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "Товаров: $N$",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Показать цены"
+  },
+  "listeMasquerPrix": {
+    "message": "Скрыть цены"
+  },
+  "listePartager": {
+    "message": "Поделиться списком"
+  },
+  "listeVider": {
+    "message": "Очистить всё"
+  },
+  "listeViderConfirmer": {
+    "message": "Очистить весь список желаний?"
+  },
+  "listeVide": {
+    "message": "Пока пусто. На странице товара кнопка ♥ «Мой список» добавляет его сюда."
+  },
+  "listeRetirer": {
+    "message": "Убрать"
+  },
+  "listeRetirerArticle": {
+    "message": "Убрать «$TITRE$»",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Цена скрыта"
+  },
+  "listePrixInconnu": {
+    "message": "Цена не найдена"
+  },
+  "listeTotal": {
+    "message": "Итого: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Список скопирован в буфер обмена."
+  },
+  "listeCopieImpossible": {
+    "message": "Не удалось скопировать список."
+  },
+  "popupSitesNombre": {
+    "message": "Работает на сайтах: $NOMBRE$",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "У «Без цен» пока нет доступа к части сайтов ($NOMBRE$). Без вашего разрешения цены возвращаются на каждой новой странице.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Показать какие"
+  },
+  "titrePauseJusqua": {
+    "message": "Без цен: пауза до $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Пауза:"
+  },
+  "pause5": {
+    "message": "5 мин"
+  },
+  "pause15": {
+    "message": "15 мин"
+  },
+  "pause60": {
+    "message": "1 ч"
+  },
+  "pauseReprendre": {
+    "message": "Продолжить"
+  },
+  "pauseJusqua": {
+    "message": "Пауза до $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "На сайте $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Подарочная упаковка"
+  },
+  "popupCompteur": {
+    "message": "Число скрытых цен на значке"
+  },
+  "popupSitesAide": {
+    "message": "Снимите отметку с сайта, чтобы видеть на нём цены."
+  },
+  "codeTitre": {
+    "message": "Родительский код"
+  },
+  "codeAide": {
+    "message": "Запрашивается для всего, что раскрывает цены: отключения скрытия, паузы, отключения на сайте, показа цен в списке желаний."
+  },
+  "codeEtatDefini": {
+    "message": "· задан"
+  },
+  "codeEtatAucun": {
+    "message": "· нет"
+  },
+  "codeChanger": {
+    "message": "Изменить код"
+  },
+  "codeRetirer": {
+    "message": "Удалить код"
+  },
+  "codeDemande": {
+    "message": "Родительский код"
+  },
+  "codeAnnuler": {
+    "message": "Отмена"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "Неверный код."
+  },
+  "codeNouveau": {
+    "message": "Новый код (от 4 до 8 цифр)"
+  },
+  "codeConfirmer": {
+    "message": "Повторите код"
+  },
+  "codeDefinir": {
+    "message": "Задать код"
+  },
+  "codeForme": {
+    "message": "Код состоит из 4–8 цифр."
+  },
+  "codeDifferents": {
+    "message": "Коды не совпадают."
+  },
+  "codeDejaDefini": {
+    "message": "Настройки уже защищены родительским кодом. Изменить или удалить его можно во всплывающем окне расширения."
+  },
+  "listeImprimer": {
+    "message": "Печать"
+  },
+  "listeFiltre": {
+    "message": "Для кого:"
+  },
+  "listeFiltreTous": {
+    "message": "все"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "без имени"
+  },
+  "listePour": {
+    "message": "Для кого"
+  },
+  "listePourExemple": {
+    "message": "имя"
+  },
+  "listePourImprime": {
+    "message": "Для: $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "Переместить «$TITRE$» выше",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "Переместить «$TITRE$» ниже",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Добро пожаловать в «Без цен»"
+  },
+  "nouveautesTitre": {
+    "message": "Без цен $VERSION$: что нового",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Сайты, которым нужно разрешение: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox не даёт автоматически доступ к сайтам, добавленным обновлением. Без вашего разрешения цены там возвращаются на каждой новой странице."
+  },
+  "nouveautesAccesOk": {
+    "message": "Все сайты разрешены: ничего делать не нужно."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Что нового"
+  },
+  "nouveautesPoints": {
+    "message": "Пауза на 5 минут, 15 минут или час, которая снимается сама.|Родительский код, который запрашивается для всего, что раскрывает цены.|Сайты по отдельности: снимите отметку с сайта, чтобы видеть на нём цены.|Подарочная упаковка — вид для детей; серая полоса теперь видна и на тёмных сайтах.|Список желаний: имя для каждого товара, свой порядок, фильтр по ребёнку, печать.|Число скрытых цен на значке, для каждой страницы.|20 сайтов объявлений и б/у товаров: Leboncoin, Vinted, Back Market, Facebook Marketplace…|Список сайтов обновляется каждый день без выпуска новой версии (настройка во всплывающем окне)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Код из 4–8 цифр, который запрашивается для всего, что раскрывает цены. Чтобы снова включить скрытие, он не нужен."
+  },
+  "nouveautesReglages": {
+    "message": "Остальные настройки — пауза, вид, сайты по отдельности — во всплывающем окне: значок «Без цен» на панели инструментов."
+  },
+  "popupCatalogue": {
+    "message": "Обновлять список сайтов каждый день"
+  },
+  "popupCatalogueRevision": {
+    "message": "Список сайтов: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

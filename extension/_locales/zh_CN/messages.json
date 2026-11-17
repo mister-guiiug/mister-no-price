@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "zh-CN"
+  },
+  "extName": {
+    "message": "隐藏价格",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "隐藏价格"
+  },
+  "extDescription": {
+    "message": "在网店、分类广告和二手网站（Amazon、eBay、Vinted…）上隐藏价格，让你挑选时看不到金额。"
+  },
+  "titreActif": {
+    "message": "隐藏价格：价格已隐藏"
+  },
+  "titrePause": {
+    "message": "隐藏价格：价格已显示"
+  },
+  "badgePause": {
+    "message": "关",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "隐藏或显示价格"
+  },
+  "popupActif": {
+    "message": "隐藏价格"
+  },
+  "popupStyle": {
+    "message": "外观"
+  },
+  "styleBarre": {
+    "message": "灰色条"
+  },
+  "styleFlou": {
+    "message": "模糊"
+  },
+  "popupRaccourci": {
+    "message": "快捷键：$RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "隐藏价格：部分网站需要你的授权"
+  },
+  "accesManquant": {
+    "message": "“隐藏价格”尚未获准在 $SITES$ 上运行。未经你的授权，每打开一个新页面，价格都会重新出现。",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "允许"
+  },
+  "popupEnvies": {
+    "message": "心愿单"
+  },
+  "popupEnviesBouton": {
+    "message": "商品页上的 ♥“我的清单”按钮"
+  },
+  "popupEnviesOuvrir": {
+    "message": "打开清单（$N$）",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "我的清单",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "已在清单中",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "加入我的心愿单"
+  },
+  "envieRetirerTitre": {
+    "message": "从我的心愿单中移除"
+  },
+  "envieAjoutee": {
+    "message": "已加入你的心愿单"
+  },
+  "envieRetiree": {
+    "message": "已从你的心愿单中移除"
+  },
+  "listeTitre": {
+    "message": "心愿单"
+  },
+  "listeExplication": {
+    "message": "在商品页上用 ♥ 标记的商品。价格会一直隐藏，直到你要求查看。"
+  },
+  "listeCompte1": {
+    "message": "$N$ 件商品",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ 件商品",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "显示价格"
+  },
+  "listeMasquerPrix": {
+    "message": "隐藏价格"
+  },
+  "listePartager": {
+    "message": "分享清单"
+  },
+  "listeVider": {
+    "message": "全部清除"
+  },
+  "listeViderConfirmer": {
+    "message": "要清空整个心愿单吗？"
+  },
+  "listeVide": {
+    "message": "暂无内容。在商品页上点击 ♥“我的清单”按钮，即可将商品添加到这里。"
+  },
+  "listeRetirer": {
+    "message": "移除"
+  },
+  "listeRetirerArticle": {
+    "message": "移除“$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "价格已隐藏"
+  },
+  "listePrixInconnu": {
+    "message": "未找到价格"
+  },
+  "listeTotal": {
+    "message": "合计：$SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "清单已复制到剪贴板。"
+  },
+  "listeCopieImpossible": {
+    "message": "无法复制清单。"
+  },
+  "popupSitesNombre": {
+    "message": "已在 $NOMBRE$ 个网站上启用",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "“隐藏价格”尚未获准在 $NOMBRE$ 个网站上运行。未经你的授权，每打开一个新页面，价格都会重新出现。",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "查看是哪些"
+  },
+  "titrePauseJusqua": {
+    "message": "隐藏价格：暂停至 $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "暂停："
+  },
+  "pause5": {
+    "message": "5 分钟"
+  },
+  "pause15": {
+    "message": "15 分钟"
+  },
+  "pause60": {
+    "message": "1 小时"
+  },
+  "pauseReprendre": {
+    "message": "恢复"
+  },
+  "pauseJusqua": {
+    "message": "暂停至 $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "在 $SITE$ 上",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "礼品包装"
+  },
+  "popupCompteur": {
+    "message": "在图标上显示已隐藏价格的数量"
+  },
+  "popupSitesAide": {
+    "message": "取消勾选某个网站，即可看到它的价格。"
+  },
+  "codeTitre": {
+    "message": "家长密码"
+  },
+  "codeAide": {
+    "message": "凡是会显示价格的操作都需要输入：关闭隐藏、暂停隐藏、在某个网站上关闭隐藏、在心愿单中显示价格。"
+  },
+  "codeEtatDefini": {
+    "message": "· 已设置"
+  },
+  "codeEtatAucun": {
+    "message": "· 未设置"
+  },
+  "codeChanger": {
+    "message": "更改密码"
+  },
+  "codeRetirer": {
+    "message": "移除密码"
+  },
+  "codeDemande": {
+    "message": "家长密码"
+  },
+  "codeAnnuler": {
+    "message": "取消"
+  },
+  "codeValider": {
+    "message": "确定"
+  },
+  "codeFaux": {
+    "message": "密码不正确。"
+  },
+  "codeNouveau": {
+    "message": "新密码（4 到 8 位数字）"
+  },
+  "codeConfirmer": {
+    "message": "再输入一次"
+  },
+  "codeDefinir": {
+    "message": "设置密码"
+  },
+  "codeForme": {
+    "message": "密码为 4 到 8 位数字。"
+  },
+  "codeDifferents": {
+    "message": "两次输入的密码不一致。"
+  },
+  "codeDejaDefini": {
+    "message": "设置已受家长密码保护。如需更改或移除，请打开扩展的弹出窗口。"
+  },
+  "listeImprimer": {
+    "message": "打印"
+  },
+  "listeFiltre": {
+    "message": "送给："
+  },
+  "listeFiltreTous": {
+    "message": "所有人"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "未填名字"
+  },
+  "listePour": {
+    "message": "送给"
+  },
+  "listePourExemple": {
+    "message": "名字"
+  },
+  "listePourImprime": {
+    "message": "送给 $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "上移“$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "下移“$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "欢迎使用“隐藏价格”"
+  },
+  "nouveautesTitre": {
+    "message": "隐藏价格 $VERSION$：新功能",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "待授权的网站：$NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox 不会自动授权更新新增的网站。未经你的授权，每打开一个新页面，这些网站上的价格都会重新出现。"
+  },
+  "nouveautesAccesOk": {
+    "message": "所有网站均已授权：无需任何操作。"
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "新功能"
+  },
+  "nouveautesPoints": {
+    "message": "可暂停 5 分钟、15 分钟或 1 小时，到时自动恢复。|家长密码：凡是会显示价格的操作都需要输入。|逐个管理网站：取消勾选某个网站，即可看到它的价格。|礼品包装：适合孩子的外观；灰色条现在在深色网站上也清晰可见。|心愿单：每件商品可填一个名字，可自定顺序，可按孩子筛选，还可打印。|图标上显示已隐藏价格的数量，逐页统计。|20 个分类广告和二手网站：Leboncoin、Vinted、Back Market、Facebook Marketplace…|网站列表每天更新，无需发布新版本（可在弹出窗口中设置）。"
+  },
+  "nouveautesCodeTexte": {
+    "message": "4 到 8 位数字的密码，凡是会显示价格的操作都需要输入。重新开启隐藏则从不需要输入。"
+  },
+  "nouveautesReglages": {
+    "message": "其他设置——暂停、外观、逐个管理网站——都在弹出窗口中：点击工具栏上的“隐藏价格”图标即可打开。"
+  },
+  "popupCatalogue": {
+    "message": "每天更新网站列表"
+  },
+  "popupCatalogueRevision": {
+    "message": "网站列表：$REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

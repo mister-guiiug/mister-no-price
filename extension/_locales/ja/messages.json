@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "ja"
+  },
+  "extName": {
+    "message": "価格非表示",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "価格非表示"
+  },
+  "extDescription": {
+    "message": "ショップ、個人売買、中古品サイト（Amazon、eBay、Vinted…）の価格を隠し、金額を見ずに選べるようにします。"
+  },
+  "titreActif": {
+    "message": "価格非表示：価格を隠しています"
+  },
+  "titrePause": {
+    "message": "価格非表示：価格を表示しています"
+  },
+  "badgePause": {
+    "message": "オフ",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "価格を隠す／表示する"
+  },
+  "popupActif": {
+    "message": "価格を隠す"
+  },
+  "popupStyle": {
+    "message": "表示スタイル"
+  },
+  "styleBarre": {
+    "message": "グレーのバー"
+  },
+  "styleFlou": {
+    "message": "ぼかし"
+  },
+  "popupRaccourci": {
+    "message": "ショートカット：$RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "価格非表示：一部のサイトで許可が必要です"
+  },
+  "accesManquant": {
+    "message": "「価格非表示」は $SITES$ でまだ許可されていません。許可しないと、新しいページを開くたびに価格が表示されます。",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "許可する"
+  },
+  "popupEnvies": {
+    "message": "ほしい物リスト"
+  },
+  "popupEnviesBouton": {
+    "message": "商品ページの ♥「マイリスト」ボタン"
+  },
+  "popupEnviesOuvrir": {
+    "message": "リストを開く（$N$）",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "マイリスト",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "追加済み",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "ほしい物リストに追加"
+  },
+  "envieRetirerTitre": {
+    "message": "ほしい物リストから削除"
+  },
+  "envieAjoutee": {
+    "message": "ほしい物リストに追加しました"
+  },
+  "envieRetiree": {
+    "message": "ほしい物リストから削除しました"
+  },
+  "listeTitre": {
+    "message": "ほしい物リスト"
+  },
+  "listeExplication": {
+    "message": "商品ページで ♥ を付けた商品です。表示を求めるまで、価格は隠れたままです。"
+  },
+  "listeCompte1": {
+    "message": "$N$ 件",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ 件",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "価格を表示"
+  },
+  "listeMasquerPrix": {
+    "message": "価格を隠す"
+  },
+  "listePartager": {
+    "message": "リストを共有"
+  },
+  "listeVider": {
+    "message": "すべて削除"
+  },
+  "listeViderConfirmer": {
+    "message": "ほしい物リストをすべて削除しますか？"
+  },
+  "listeVide": {
+    "message": "まだ何もありません。商品ページの ♥「マイリスト」ボタンで、ここに商品を追加できます。"
+  },
+  "listeRetirer": {
+    "message": "削除"
+  },
+  "listeRetirerArticle": {
+    "message": "「$TITRE$」を削除",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "価格は非表示"
+  },
+  "listePrixInconnu": {
+    "message": "価格が見つかりません"
+  },
+  "listeTotal": {
+    "message": "合計：$SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "リストをクリップボードにコピーしました。"
+  },
+  "listeCopieImpossible": {
+    "message": "リストをコピーできませんでした。"
+  },
+  "popupSitesNombre": {
+    "message": "$NOMBRE$ サイトで有効",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "「価格非表示」は $NOMBRE$ サイトでまだ許可されていません。許可しないと、新しいページを開くたびに価格が表示されます。",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "サイトを見る"
+  },
+  "titrePauseJusqua": {
+    "message": "価格非表示：$HEURE$ まで一時停止中",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "一時停止："
+  },
+  "pause5": {
+    "message": "5分"
+  },
+  "pause15": {
+    "message": "15分"
+  },
+  "pause60": {
+    "message": "1時間"
+  },
+  "pauseReprendre": {
+    "message": "再開"
+  },
+  "pauseJusqua": {
+    "message": "$HEURE$ まで一時停止中",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "$SITE$ で",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "ギフトラッピング"
+  },
+  "popupCompteur": {
+    "message": "隠した価格の数をアイコンに表示"
+  },
+  "popupSitesAide": {
+    "message": "チェックを外したサイトでは価格が表示されます。"
+  },
+  "codeTitre": {
+    "message": "保護者コード"
+  },
+  "codeAide": {
+    "message": "価格が見えるようになる操作のすべてで求められます：非表示の解除、一時停止、サイトごとのオフ、ほしい物リストでの価格表示。"
+  },
+  "codeEtatDefini": {
+    "message": "· 設定済み"
+  },
+  "codeEtatAucun": {
+    "message": "· 未設定"
+  },
+  "codeChanger": {
+    "message": "コードを変更"
+  },
+  "codeRetirer": {
+    "message": "コードを削除"
+  },
+  "codeDemande": {
+    "message": "保護者コード"
+  },
+  "codeAnnuler": {
+    "message": "キャンセル"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "コードが正しくありません。"
+  },
+  "codeNouveau": {
+    "message": "新しいコード（4〜8桁の数字）"
+  },
+  "codeConfirmer": {
+    "message": "もう一度入力してください"
+  },
+  "codeDefinir": {
+    "message": "コードを設定"
+  },
+  "codeForme": {
+    "message": "コードは4〜8桁の数字です。"
+  },
+  "codeDifferents": {
+    "message": "2つのコードが一致しません。"
+  },
+  "codeDejaDefini": {
+    "message": "設定はすでに保護者コードで保護されています。変更・削除するには、拡張機能のポップアップを開いてください。"
+  },
+  "listeImprimer": {
+    "message": "印刷"
+  },
+  "listeFiltre": {
+    "message": "贈る相手："
+  },
+  "listeFiltreTous": {
+    "message": "全員"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "名前なし"
+  },
+  "listePour": {
+    "message": "贈る相手"
+  },
+  "listePourExemple": {
+    "message": "名前"
+  },
+  "listePourImprime": {
+    "message": "$PRENOM$ さんへ",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "「$TITRE$」を上へ移動",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "「$TITRE$」を下へ移動",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "「価格非表示」へようこそ"
+  },
+  "nouveautesTitre": {
+    "message": "価格非表示 $VERSION$ の新機能",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "許可が必要なサイト：$NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox は、アップデートで追加されたサイトを自動では許可しません。許可しないと、それらのサイトでは新しいページを開くたびに価格が表示されます。"
+  },
+  "nouveautesAccesOk": {
+    "message": "すべてのサイトが許可されています。操作は必要ありません。"
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "新機能"
+  },
+  "nouveautesPoints": {
+    "message": "5分・15分・1時間の一時停止。時間が来ると自動で解除されます。|保護者コード。価格が見えるようになる操作のすべてで求められます。|サイトごとの設定：チェックを外したサイトでは価格が表示されます。|ギフトラッピング：子ども向けの見た目です。グレーのバーも暗い色のサイトで見えるようになりました。|ほしい物リスト：商品ごとの名前、好きな並び順、子どもごとの絞り込み、印刷に対応しました。|隠した価格の数を、ページごとにアイコンに表示します。|個人売買・中古品サイト 20 件：Leboncoin、Vinted、Back Market、Facebook Marketplace…|サイトの一覧は、新しいバージョンを待たずに毎日更新されます（ポップアップで設定）。"
+  },
+  "nouveautesCodeTexte": {
+    "message": "4〜8桁の数字のコードで、価格が見えるようになる操作のすべてで求められます。非表示を再びオンにするときは求められません。"
+  },
+  "nouveautesReglages": {
+    "message": "そのほかの設定（一時停止、表示スタイル、サイトごとの設定）はポップアップにあります。ツールバーの「価格非表示」アイコンから開けます。"
+  },
+  "popupCatalogue": {
+    "message": "サイトの一覧を毎日更新"
+  },
+  "popupCatalogueRevision": {
+    "message": "サイトの一覧：$REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

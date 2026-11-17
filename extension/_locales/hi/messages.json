@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "hi"
+  },
+  "extName": {
+    "message": "बिना कीमत",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "बिना कीमत"
+  },
+  "extDescription": {
+    "message": "दुकानों, क्लासिफ़ाइड और सेकंड-हैंड साइटों (Amazon, eBay, Vinted…) पर कीमतें छिपाता है, ताकि आप रकम देखे बिना चुन सकें।"
+  },
+  "titreActif": {
+    "message": "बिना कीमत: कीमतें छिपी हैं"
+  },
+  "titrePause": {
+    "message": "बिना कीमत: कीमतें दिख रही हैं"
+  },
+  "badgePause": {
+    "message": "बंद",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "कीमतें छिपाएँ या दिखाएँ"
+  },
+  "popupActif": {
+    "message": "कीमतें छिपाएँ"
+  },
+  "popupStyle": {
+    "message": "रूप"
+  },
+  "styleBarre": {
+    "message": "स्लेटी पट्टी"
+  },
+  "styleFlou": {
+    "message": "धुंधला"
+  },
+  "popupRaccourci": {
+    "message": "शॉर्टकट: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "बिना कीमत: कुछ साइटों को आपकी अनुमति चाहिए"
+  },
+  "accesManquant": {
+    "message": "बिना कीमत को अभी $SITES$ पर अनुमति नहीं मिली है। आपकी अनुमति के बिना, हर नए पेज पर कीमतें फिर दिखने लगती हैं।",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "अनुमति दें"
+  },
+  "popupEnvies": {
+    "message": "विशलिस्ट"
+  },
+  "popupEnviesBouton": {
+    "message": "प्रोडक्ट पेजों पर ♥ “मेरी सूची” बटन"
+  },
+  "popupEnviesOuvrir": {
+    "message": "सूची खोलें ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "मेरी सूची",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "मेरी सूची में",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "मेरी विशलिस्ट में जोड़ें"
+  },
+  "envieRetirerTitre": {
+    "message": "मेरी विशलिस्ट से हटाएँ"
+  },
+  "envieAjoutee": {
+    "message": "आपकी विशलिस्ट में जोड़ा गया"
+  },
+  "envieRetiree": {
+    "message": "आपकी विशलिस्ट से हटाया गया"
+  },
+  "listeTitre": {
+    "message": "विशलिस्ट"
+  },
+  "listeExplication": {
+    "message": "प्रोडक्ट पेजों पर ♥ से चुनी गई चीज़ें। जब तक आप देखना न चाहें, कीमतें छिपी रहती हैं।"
+  },
+  "listeCompte1": {
+    "message": "$N$ चीज़",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ चीज़ें",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "कीमतें दिखाएँ"
+  },
+  "listeMasquerPrix": {
+    "message": "कीमतें छिपाएँ"
+  },
+  "listePartager": {
+    "message": "सूची शेयर करें"
+  },
+  "listeVider": {
+    "message": "सब मिटाएँ"
+  },
+  "listeViderConfirmer": {
+    "message": "पूरी विशलिस्ट मिटाएँ?"
+  },
+  "listeVide": {
+    "message": "अभी कुछ नहीं। किसी प्रोडक्ट पेज पर ♥ “मेरी सूची” बटन दबाने से चीज़ यहाँ जुड़ जाती है।"
+  },
+  "listeRetirer": {
+    "message": "हटाएँ"
+  },
+  "listeRetirerArticle": {
+    "message": "“$TITRE$” हटाएँ",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "कीमत छिपी है"
+  },
+  "listePrixInconnu": {
+    "message": "कीमत नहीं मिली"
+  },
+  "listeTotal": {
+    "message": "कुल: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "सूची क्लिपबोर्ड पर कॉपी हो गई।"
+  },
+  "listeCopieImpossible": {
+    "message": "सूची कॉपी नहीं हो सकी।"
+  },
+  "popupSitesNombre": {
+    "message": "$NOMBRE$ साइटों पर चालू",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "बिना कीमत को अभी $NOMBRE$ साइटों पर अनुमति नहीं मिली है। आपकी अनुमति के बिना, हर नए पेज पर कीमतें फिर दिखने लगती हैं।",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "कौन-सी, देखें"
+  },
+  "titrePauseJusqua": {
+    "message": "बिना कीमत: $HEURE$ तक रुका है",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "रोकें:"
+  },
+  "pause5": {
+    "message": "5 मिनट"
+  },
+  "pause15": {
+    "message": "15 मिनट"
+  },
+  "pause60": {
+    "message": "1 घंटा"
+  },
+  "pauseReprendre": {
+    "message": "फिर शुरू करें"
+  },
+  "pauseJusqua": {
+    "message": "$HEURE$ तक रुका है",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "$SITE$ पर",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "गिफ़्ट रैप"
+  },
+  "popupCompteur": {
+    "message": "आइकन पर छिपी कीमतों की गिनती"
+  },
+  "popupSitesAide": {
+    "message": "किसी साइट की कीमतें देखने के लिए उसका टिक हटाएँ।"
+  },
+  "codeTitre": {
+    "message": "पैरेंट कोड"
+  },
+  "codeAide": {
+    "message": "कीमतें दिखाने वाले हर काम के लिए पूछा जाता है: छिपाना बंद करना, उसे रोकना, किसी साइट पर बंद करना, विशलिस्ट में कीमतें दिखाना।"
+  },
+  "codeEtatDefini": {
+    "message": "· सेट है"
+  },
+  "codeEtatAucun": {
+    "message": "· कोई नहीं"
+  },
+  "codeChanger": {
+    "message": "कोड बदलें"
+  },
+  "codeRetirer": {
+    "message": "कोड हटाएँ"
+  },
+  "codeDemande": {
+    "message": "पैरेंट कोड"
+  },
+  "codeAnnuler": {
+    "message": "रद्द करें"
+  },
+  "codeValider": {
+    "message": "ठीक है"
+  },
+  "codeFaux": {
+    "message": "यह सही कोड नहीं है।"
+  },
+  "codeNouveau": {
+    "message": "नया कोड (4 से 8 अंक)"
+  },
+  "codeConfirmer": {
+    "message": "वही कोड, एक बार और"
+  },
+  "codeDefinir": {
+    "message": "कोड सेट करें"
+  },
+  "codeForme": {
+    "message": "कोड में 4 से 8 अंक होते हैं।"
+  },
+  "codeDifferents": {
+    "message": "दोनों कोड मेल नहीं खाते।"
+  },
+  "codeDejaDefini": {
+    "message": "सेटिंग्स पहले से एक पैरेंट कोड से सुरक्षित हैं। इसे बदलने या हटाने के लिए: एक्सटेंशन का पॉपअप।"
+  },
+  "listeImprimer": {
+    "message": "प्रिंट करें"
+  },
+  "listeFiltre": {
+    "message": "किसके लिए:"
+  },
+  "listeFiltreTous": {
+    "message": "सभी"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "बिना नाम"
+  },
+  "listePour": {
+    "message": "किसके लिए"
+  },
+  "listePourExemple": {
+    "message": "नाम"
+  },
+  "listePourImprime": {
+    "message": "$PRENOM$ के लिए",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "“$TITRE$” ऊपर ले जाएँ",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "“$TITRE$” नीचे ले जाएँ",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "बिना कीमत में आपका स्वागत है"
+  },
+  "nouveautesTitre": {
+    "message": "बिना कीमत $VERSION$: नया क्या है",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "जिन साइटों को अनुमति देनी है: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "अपडेट से जुड़ी नई साइटों को Firefox अपने-आप अनुमति नहीं देता। आपकी अनुमति के बिना, वहाँ हर नए पेज पर कीमतें फिर दिखने लगती हैं।"
+  },
+  "nouveautesAccesOk": {
+    "message": "सभी साइटों को अनुमति है: कुछ करने की ज़रूरत नहीं।"
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "नया क्या है"
+  },
+  "nouveautesPoints": {
+    "message": "5 मिनट, 15 मिनट या एक घंटे का ब्रेक, जो अपने-आप खत्म हो जाता है।|एक पैरेंट कोड, जो कीमतें दिखाने वाले हर काम के लिए पूछा जाता है।|साइटें एक-एक करके: किसी साइट की कीमतें देखने के लिए उसका टिक हटाएँ।|गिफ़्ट रैप, बच्चों के लिए एक रूप; स्लेटी पट्टी अब गहरे रंग की साइटों पर भी दिखती है।|विशलिस्ट: हर चीज़ के लिए एक नाम, अपना क्रम, हर बच्चे के लिए फ़िल्टर, प्रिंटिंग।|आइकन पर छिपी कीमतों की गिनती, हर पेज के लिए।|क्लासिफ़ाइड और सेकंड-हैंड की 20 साइटें: Leboncoin, Vinted, Back Market, Facebook Marketplace…|साइटों की सूची हर दिन अपडेट होती है, नए वर्ज़न के बिना (सेटिंग पॉपअप में)।"
+  },
+  "nouveautesCodeTexte": {
+    "message": "4 से 8 अंकों का कोड, जो कीमतें दिखाने वाले हर काम के लिए पूछा जाता है। छिपाना फिर से चालू करने पर यह कभी नहीं पूछा जाता।"
+  },
+  "nouveautesReglages": {
+    "message": "बाकी सेटिंग्स — ब्रेक, रूप, साइटें एक-एक करके — पॉपअप में हैं: टूलबार में बिना कीमत का आइकन।"
+  },
+  "popupCatalogue": {
+    "message": "साइटों की सूची हर दिन अपडेट करें"
+  },
+  "popupCatalogueRevision": {
+    "message": "साइटों की सूची: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "it"
+  },
+  "extName": {
+    "message": "Senza prezzi",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Senza prezzi"
+  },
+  "extDescription": {
+    "message": "Nasconde i prezzi su negozi, annunci e siti dell’usato (Amazon, eBay, Vinted…) per scegliere senza vedere l’importo."
+  },
+  "titreActif": {
+    "message": "Senza prezzi: prezzi nascosti"
+  },
+  "titrePause": {
+    "message": "Senza prezzi: prezzi visibili"
+  },
+  "badgePause": {
+    "message": "off",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Nascondi o mostra i prezzi"
+  },
+  "popupActif": {
+    "message": "Nascondi i prezzi"
+  },
+  "popupStyle": {
+    "message": "Aspetto"
+  },
+  "styleBarre": {
+    "message": "Barra grigia"
+  },
+  "styleFlou": {
+    "message": "Sfocatura"
+  },
+  "popupRaccourci": {
+    "message": "Scorciatoia: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Senza prezzi: alcuni siti attendono la tua autorizzazione"
+  },
+  "accesManquant": {
+    "message": "Senza prezzi non ha ancora il permesso su $SITES$. Senza la tua autorizzazione, i prezzi ricompaiono a ogni nuova pagina.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Consenti"
+  },
+  "popupEnvies": {
+    "message": "Lista dei desideri"
+  },
+  "popupEnviesBouton": {
+    "message": "Pulsante ♥ «La mia lista» nelle schede prodotto"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Apri la lista ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "La mia lista",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "Nella mia lista",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Aggiungi alla mia lista dei desideri"
+  },
+  "envieRetirerTitre": {
+    "message": "Rimuovi dalla mia lista dei desideri"
+  },
+  "envieAjoutee": {
+    "message": "Aggiunto alla tua lista dei desideri"
+  },
+  "envieRetiree": {
+    "message": "Rimosso dalla tua lista dei desideri"
+  },
+  "listeTitre": {
+    "message": "Lista dei desideri"
+  },
+  "listeExplication": {
+    "message": "Gli articoli segnati con un ♥ nelle schede prodotto. I prezzi restano nascosti finché non chiedi di vederli."
+  },
+  "listeCompte1": {
+    "message": "$N$ articolo",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ articoli",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Mostra i prezzi"
+  },
+  "listeMasquerPrix": {
+    "message": "Nascondi i prezzi"
+  },
+  "listePartager": {
+    "message": "Condividi la lista"
+  },
+  "listeVider": {
+    "message": "Cancella tutto"
+  },
+  "listeViderConfirmer": {
+    "message": "Cancellare tutta la lista dei desideri?"
+  },
+  "listeVide": {
+    "message": "Ancora niente. In una scheda prodotto, il pulsante ♥ «La mia lista» aggiunge l’articolo qui."
+  },
+  "listeRetirer": {
+    "message": "Rimuovi"
+  },
+  "listeRetirerArticle": {
+    "message": "Rimuovi «$TITRE$»",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Prezzo nascosto"
+  },
+  "listePrixInconnu": {
+    "message": "Prezzo non trovato"
+  },
+  "listeTotal": {
+    "message": "Totale: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Lista copiata negli appunti."
+  },
+  "listeCopieImpossible": {
+    "message": "Impossibile copiare la lista."
+  },
+  "popupSitesNombre": {
+    "message": "Attivo su $NOMBRE$ siti",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "Senza prezzi non ha ancora il permesso su $NOMBRE$ siti. Senza la tua autorizzazione, i prezzi ricompaiono a ogni nuova pagina.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Vedi quali"
+  },
+  "titrePauseJusqua": {
+    "message": "Senza prezzi: in pausa fino alle $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pausa:"
+  },
+  "pause5": {
+    "message": "5 min"
+  },
+  "pause15": {
+    "message": "15 min"
+  },
+  "pause60": {
+    "message": "1 h"
+  },
+  "pauseReprendre": {
+    "message": "Riprendi"
+  },
+  "pauseJusqua": {
+    "message": "In pausa fino alle $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "Su $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Carta regalo"
+  },
+  "popupCompteur": {
+    "message": "Numero di prezzi nascosti sull’icona"
+  },
+  "popupSitesAide": {
+    "message": "Togli la spunta a un sito per vederne i prezzi."
+  },
+  "codeTitre": {
+    "message": "Codice genitori"
+  },
+  "codeAide": {
+    "message": "Richiesto per tutto ciò che svela i prezzi: disattivare l’occultamento, metterlo in pausa, spegnerlo su un sito, mostrare i prezzi della lista dei desideri."
+  },
+  "codeEtatDefini": {
+    "message": "· impostato"
+  },
+  "codeEtatAucun": {
+    "message": "· nessuno"
+  },
+  "codeChanger": {
+    "message": "Cambia il codice"
+  },
+  "codeRetirer": {
+    "message": "Rimuovi il codice"
+  },
+  "codeDemande": {
+    "message": "Codice genitori"
+  },
+  "codeAnnuler": {
+    "message": "Annulla"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "Non è il codice giusto."
+  },
+  "codeNouveau": {
+    "message": "Nuovo codice (da 4 a 8 cifre)"
+  },
+  "codeConfirmer": {
+    "message": "Lo stesso, ancora una volta"
+  },
+  "codeDefinir": {
+    "message": "Imposta il codice"
+  },
+  "codeForme": {
+    "message": "Il codice ha da 4 a 8 cifre."
+  },
+  "codeDifferents": {
+    "message": "I due codici non coincidono."
+  },
+  "codeDejaDefini": {
+    "message": "Un codice genitori protegge già le impostazioni. Per cambiarlo o rimuoverlo: il popup dell’estensione."
+  },
+  "listeImprimer": {
+    "message": "Stampa"
+  },
+  "listeFiltre": {
+    "message": "Per:"
+  },
+  "listeFiltreTous": {
+    "message": "tutti"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "senza nome"
+  },
+  "listePour": {
+    "message": "Per"
+  },
+  "listePourExemple": {
+    "message": "nome"
+  },
+  "listePourImprime": {
+    "message": "Per $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "Sposta su «$TITRE$»",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "Sposta giù «$TITRE$»",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Benvenuto in Senza prezzi"
+  },
+  "nouveautesTitre": {
+    "message": "Senza prezzi $VERSION$: novità",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Siti da autorizzare: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox non concede in automatico i siti aggiunti da un aggiornamento. Senza la tua autorizzazione, lì i prezzi ricompaiono a ogni nuova pagina."
+  },
+  "nouveautesAccesOk": {
+    "message": "Tutti i siti sono autorizzati: non c’è niente da fare."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Novità"
+  },
+  "nouveautesPoints": {
+    "message": "Una pausa di 5 minuti, 15 minuti o un’ora, che finisce da sola.|Un codice genitori, richiesto per tutto ciò che svela i prezzi.|I siti uno per uno: togli la spunta a un sito per vederne i prezzi.|Carta regalo, un aspetto pensato per i bambini; la barra grigia ora si vede anche sui siti scuri.|La lista dei desideri: un nome per articolo, il tuo ordine, un filtro per bambino, la stampa.|Il numero di prezzi nascosti sull’icona, pagina per pagina.|20 siti di annunci e dell’usato: Leboncoin, Vinted, Back Market, Facebook Marketplace…|L’elenco dei siti si aggiorna ogni giorno, senza una nuova versione (impostazione nel popup)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Un codice da 4 a 8 cifre, richiesto per tutto ciò che svela i prezzi. Riattivare l’occultamento non lo chiede mai."
+  },
+  "nouveautesReglages": {
+    "message": "Le altre impostazioni — pausa, aspetto, siti uno per uno — sono nel popup: l’icona di Senza prezzi nella barra degli strumenti."
+  },
+  "popupCatalogue": {
+    "message": "Aggiorna l’elenco dei siti ogni giorno"
+  },
+  "popupCatalogueRevision": {
+    "message": "Elenco dei siti: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

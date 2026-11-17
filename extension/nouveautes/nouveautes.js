@@ -16,6 +16,8 @@
   const $ = (id) => document.getElementById(id);
   const langue = t("langue");
   document.documentElement.lang = langue;
+  // Sens de lecture de la langue (« rtl » en arabe), que fournit Firefox.
+  document.documentElement.dir = browser.i18n.getMessage("@@bidi_dir") || "ltr";
   for (const element of document.querySelectorAll("[data-i18n]")) {
     element.textContent = t(element.dataset.i18n);
   }

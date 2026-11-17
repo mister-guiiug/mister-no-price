@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "pl"
+  },
+  "extName": {
+    "message": "Bez cen",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Bez cen"
+  },
+  "extDescription": {
+    "message": "Ukrywa ceny w sklepach, ogłoszeniach i serwisach z rzeczami używanymi (Amazon, eBay, Vinted…), by wybierać bez oglądania kwoty."
+  },
+  "titreActif": {
+    "message": "Bez cen: ceny ukryte"
+  },
+  "titrePause": {
+    "message": "Bez cen: ceny widoczne"
+  },
+  "badgePause": {
+    "message": "wył",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Ukryj lub pokaż ceny"
+  },
+  "popupActif": {
+    "message": "Ukrywaj ceny"
+  },
+  "popupStyle": {
+    "message": "Wygląd"
+  },
+  "styleBarre": {
+    "message": "Szary pasek"
+  },
+  "styleFlou": {
+    "message": "Rozmycie"
+  },
+  "popupRaccourci": {
+    "message": "Skrót: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Bez cen: niektóre witryny czekają na twoją zgodę"
+  },
+  "accesManquant": {
+    "message": "Rozszerzenie Bez cen nie ma jeszcze zgody na działanie w witrynach: $SITES$. Bez twojej zgody ceny wracają na każdej nowej stronie.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Zezwól"
+  },
+  "popupEnvies": {
+    "message": "Lista życzeń"
+  },
+  "popupEnviesBouton": {
+    "message": "Przycisk ♥ „Moja lista” na stronach produktów"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Otwórz listę ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Moja lista",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "Na mojej liście",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Dodaj do mojej listy życzeń"
+  },
+  "envieRetirerTitre": {
+    "message": "Usuń z mojej listy życzeń"
+  },
+  "envieAjoutee": {
+    "message": "Dodano do twojej listy życzeń"
+  },
+  "envieRetiree": {
+    "message": "Usunięto z twojej listy życzeń"
+  },
+  "listeTitre": {
+    "message": "Lista życzeń"
+  },
+  "listeExplication": {
+    "message": "Produkty oznaczone ♥ na stronach produktów. Ceny pozostają ukryte, dopóki nie poprosisz o ich pokazanie."
+  },
+  "listeCompte1": {
+    "message": "$N$ produkt",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "Produkty: $N$",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Pokaż ceny"
+  },
+  "listeMasquerPrix": {
+    "message": "Ukryj ceny"
+  },
+  "listePartager": {
+    "message": "Udostępnij listę"
+  },
+  "listeVider": {
+    "message": "Wyczyść wszystko"
+  },
+  "listeViderConfirmer": {
+    "message": "Wyczyścić całą listę życzeń?"
+  },
+  "listeVide": {
+    "message": "Na razie nic tu nie ma. Na stronie produktu przycisk ♥ „Moja lista” dodaje go tutaj."
+  },
+  "listeRetirer": {
+    "message": "Usuń"
+  },
+  "listeRetirerArticle": {
+    "message": "Usuń „$TITRE$”",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Cena ukryta"
+  },
+  "listePrixInconnu": {
+    "message": "Nie znaleziono ceny"
+  },
+  "listeTotal": {
+    "message": "Razem: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Skopiowano listę do schowka."
+  },
+  "listeCopieImpossible": {
+    "message": "Nie udało się skopiować listy."
+  },
+  "popupSitesNombre": {
+    "message": "Aktywne w $NOMBRE$ witrynach",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "Rozszerzenie Bez cen nie ma jeszcze zgody na działanie w $NOMBRE$ witrynach. Bez twojej zgody ceny wracają na każdej nowej stronie.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Pokaż, które"
+  },
+  "titrePauseJusqua": {
+    "message": "Bez cen: wstrzymane do $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pauza:"
+  },
+  "pause5": {
+    "message": "5 min"
+  },
+  "pause15": {
+    "message": "15 min"
+  },
+  "pause60": {
+    "message": "1 godz."
+  },
+  "pauseReprendre": {
+    "message": "Wznów"
+  },
+  "pauseJusqua": {
+    "message": "Wstrzymane do $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "Na $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Papier prezentowy"
+  },
+  "popupCompteur": {
+    "message": "Liczba ukrytych cen na ikonie"
+  },
+  "popupSitesAide": {
+    "message": "Odznacz witrynę, aby zobaczyć jej ceny."
+  },
+  "codeTitre": {
+    "message": "Kod rodzica"
+  },
+  "codeAide": {
+    "message": "Wymagany przy wszystkim, co odsłania ceny: wyłączeniu ukrywania, wstrzymaniu go, wyłączeniu w witrynie, pokazaniu cen na liście życzeń."
+  },
+  "codeEtatDefini": {
+    "message": "· ustawiony"
+  },
+  "codeEtatAucun": {
+    "message": "· brak"
+  },
+  "codeChanger": {
+    "message": "Zmień kod"
+  },
+  "codeRetirer": {
+    "message": "Usuń kod"
+  },
+  "codeDemande": {
+    "message": "Kod rodzica"
+  },
+  "codeAnnuler": {
+    "message": "Anuluj"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "To nie jest właściwy kod."
+  },
+  "codeNouveau": {
+    "message": "Nowy kod (od 4 do 8 cyfr)"
+  },
+  "codeConfirmer": {
+    "message": "Ten sam, jeszcze raz"
+  },
+  "codeDefinir": {
+    "message": "Ustaw kod"
+  },
+  "codeForme": {
+    "message": "Kod ma od 4 do 8 cyfr."
+  },
+  "codeDifferents": {
+    "message": "Kody się nie zgadzają."
+  },
+  "codeDejaDefini": {
+    "message": "Kod rodzica już chroni ustawienia. Aby go zmienić lub usunąć, otwórz okienko rozszerzenia."
+  },
+  "listeImprimer": {
+    "message": "Drukuj"
+  },
+  "listeFiltre": {
+    "message": "Dla:"
+  },
+  "listeFiltreTous": {
+    "message": "wszystkich"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "bez imienia"
+  },
+  "listePour": {
+    "message": "Dla"
+  },
+  "listePourExemple": {
+    "message": "imię"
+  },
+  "listePourImprime": {
+    "message": "Dla: $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "Przesuń „$TITRE$” w górę",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "Przesuń „$TITRE$” w dół",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Witaj w rozszerzeniu Bez cen"
+  },
+  "nouveautesTitre": {
+    "message": "Bez cen $VERSION$: co nowego",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Witryny do zatwierdzenia: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox nie przyznaje automatycznie dostępu do witryn dodanych w aktualizacji. Bez twojej zgody ceny wracają tam na każdej nowej stronie."
+  },
+  "nouveautesAccesOk": {
+    "message": "Wszystkie witryny mają zgodę: nic nie trzeba robić."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Co nowego"
+  },
+  "nouveautesPoints": {
+    "message": "Pauza na 5 minut, 15 minut lub godzinę, która kończy się sama.|Kod rodzica, wymagany przy wszystkim, co odsłania ceny.|Witryny pojedynczo: odznacz witrynę, aby zobaczyć jej ceny.|Papier prezentowy, wygląd dla dzieci; szary pasek widać teraz także na ciemnych witrynach.|Lista życzeń: imię przy każdym produkcie, własna kolejność, filtr dla każdego dziecka, drukowanie.|Liczba ukrytych cen na ikonie, strona po stronie.|20 serwisów ogłoszeniowych i z rzeczami używanymi: Leboncoin, Vinted, Back Market, Facebook Marketplace…|Lista witryn aktualizuje się codziennie, bez nowej wersji (ustawienie w okienku)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Kod z 4–8 cyfr, wymagany przy wszystkim, co odsłania ceny. Ponowne włączenie ukrywania nigdy go nie wymaga."
+  },
+  "nouveautesReglages": {
+    "message": "Pozostałe ustawienia — pauza, wygląd, witryny pojedynczo — są w okienku: to ikona Bez cen na pasku narzędzi."
+  },
+  "popupCatalogue": {
+    "message": "Aktualizuj listę witryn codziennie"
+  },
+  "popupCatalogueRevision": {
+    "message": "Lista witryn: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}
