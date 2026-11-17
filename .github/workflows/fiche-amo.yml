@@ -14,6 +14,11 @@ on:
       - "amo/captures/**"
       - "scripts/captures-amo.mjs"
   workflow_dispatch:
+    inputs:
+      supprimer:
+        description: "Captures à retirer de la fiche avant l'envoi (identifiants, séparés par des virgules)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -27,7 +32,7 @@ jobs:
     name: Captures de la fiche
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
         with:
@@ -39,8 +44,11 @@ jobs:
 
       - run: node scripts/captures-amo.mjs --verifier
 
+      # AMO limite le débit des écritures (429) : le script attend ce qu'il
+      # demande, d'où le délai du job.
       - name: Envoi sur addons.mozilla.org
         env:
           WEB_EXT_API_KEY: ${{ secrets.AMO_API_KEY }}
           WEB_EXT_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+          SUPPRIMER: ${{ inputs.supprimer }}
         run: node scripts/captures-amo.mjs

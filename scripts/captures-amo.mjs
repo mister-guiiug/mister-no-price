@@ -11,7 +11,11 @@
  *   - sur la fiche mais pas dans le fichier : signalée, JAMAIS supprimée (elle a
  *     pu être ajoutée à la main).
  *
- * Relancer ne double donc rien. Clés : WEB_EXT_API_KEY, WEB_EXT_API_SECRET.
+ * Relancer ne double donc rien. Une capture dont la légende n'a pas pu être
+ * posée est retirée aussitôt. SUPPRIMER="id,id" retire d'abord ces captures de
+ * la fiche (le seul moyen d'en supprimer une d'ici, nommément).
+ *
+ * Clés : WEB_EXT_API_KEY, WEB_EXT_API_SECRET.
  * Joué par fiche-amo.yml quand amo/ change sur main.
  *
  *   node scripts/captures-amo.mjs            synchronise
@@ -82,6 +86,20 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(import.met
   const manifeste = JSON.parse(await readFile(path.join(racine, "extension", "manifest.json"), "utf8"));
   const id = manifeste.browser_specific_settings.gecko.id;
   const amo = client({ cle, secret });
+
+  const aSupprimer = (process.env.SUPPRIMER ?? "").split(",").map((x) => x.trim()).filter(Boolean);
+  if (aSupprimer.length > 0) {
+    const presentes = new Set((await amo.captures(id)).map((c) => String(c.id)));
+    for (const capture of aSupprimer) {
+      if (!/^\d+$/.test(capture)) throw new Error(`SUPPRIMER : « ${capture} » n'est pas un identifiant de capture`);
+      if (!presentes.has(capture)) {
+        console.log(`::warning::capture ${capture} absente de la fiche : rien à supprimer`);
+        continue;
+      }
+      await amo.supprimerCapture(id, capture);
+      console.log(`supprimée : capture ${capture}`);
+    }
+  }
 
   const { ajouter, modifier, etrangeres } = planifier(captures, await amo.captures(id));
   for (const c of ajouter) {

@@ -41,8 +41,18 @@ export function etatDe(version) {
   return "en-relecture";
 }
 
-export function client({ cle, secret, fetch = globalThis.fetch }) {
-  const demander = async (url, attendu = "json", { methode = "GET", corps } = {}) => {
+/** Le délai qu'AMO demande sur un 429 : Retry-After, sinon « available in N seconds », sinon une minute. */
+export function delaiDemande(entetes, texte) {
+  const apres = Number(entetes.get("retry-after"));
+  if (apres > 0) return apres * 1000;
+  const n = Number(/available in (\d+) seconds?/.exec(texte)?.[1]);
+  return (n > 0 ? n : 60) * 1000;
+}
+
+const ESSAIS_429 = 4;
+
+export function client({ cle, secret, fetch = globalThis.fetch, dormir = (ms) => new Promise((r) => setTimeout(r, ms)) }) {
+  const demander = async (url, attendu = "json", { methode = "GET", corps } = {}, essai = 1) => {
     const enJson = corps !== undefined && !(corps instanceof FormData);
     const reponse = await fetch(url, {
       method: methode,
@@ -54,6 +64,14 @@ export function client({ cle, secret, fetch = globalThis.fetch }) {
       },
       body: enJson ? JSON.stringify(corps) : corps,
     });
+    // AMO limite le débit des écritures : attendre ce qu'il demande, puis
+    // reprendre la même requête.
+    if (reponse.status === 429 && essai < ESSAIS_429) {
+      const ms = delaiDemande(reponse.headers, await reponse.text().catch(() => ""));
+      console.log(`AMO demande d'attendre ${Math.round(ms / 1000)} s (${methode} ${url})`);
+      await dormir(ms + 1000);
+      return demander(url, attendu, { methode, corps }, essai + 1);
+    }
     if (!reponse.ok) {
       const detail = await reponse.text().catch(() => "");
       throw new Error(`AMO ${reponse.status} sur ${methode} ${url}${detail.startsWith("{") ? ` : ${detail.slice(0, 500)}` : ""}`);
@@ -104,7 +122,19 @@ export function client({ cle, secret, fetch = globalThis.fetch }) {
       formulaire.set("position", String(position));
       const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/`, API);
       const { id: capture } = await demander(url, "json", { methode: "POST", corps: formulaire });
-      return this.modifierCapture(id, capture, { legende, position });
+      try {
+        return await this.modifierCapture(id, capture, { legende, position });
+      } catch (erreur) {
+        // Sans légende, la capture ne serait plus reconnue au passage suivant,
+        // qui l'enverrait une seconde fois : la retirer.
+        await this.supprimerCapture(id, capture).catch(() => {});
+        throw erreur;
+      }
+    },
+
+    async supprimerCapture(id, capture) {
+      const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/${capture}/`, API);
+      return demander(url, "rien", { methode: "DELETE" });
     },
 
     async modifierCapture(id, capture, { legende, position }) {
