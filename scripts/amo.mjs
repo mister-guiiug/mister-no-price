@@ -42,11 +42,23 @@ export function etatDe(version) {
 }
 
 export function client({ cle, secret, fetch = globalThis.fetch }) {
-  const demander = async (url, attendu = "json") => {
+  const demander = async (url, attendu = "json", { methode = "GET", corps } = {}) => {
+    const enJson = corps !== undefined && !(corps instanceof FormData);
     const reponse = await fetch(url, {
-      headers: { Authorization: `JWT ${jeton(cle, secret)}`, Accept: "application/json", "User-Agent": AGENT },
+      method: methode,
+      headers: {
+        Authorization: `JWT ${jeton(cle, secret)}`,
+        Accept: "application/json",
+        "User-Agent": AGENT,
+        ...(enJson ? { "Content-Type": "application/json" } : {}),
+      },
+      body: enJson ? JSON.stringify(corps) : corps,
     });
-    if (!reponse.ok) throw new Error(`AMO ${reponse.status} sur ${url}`);
+    if (!reponse.ok) {
+      const detail = await reponse.text().catch(() => "");
+      throw new Error(`AMO ${reponse.status} sur ${methode} ${url}${detail.startsWith("{") ? ` : ${detail.slice(0, 500)}` : ""}`);
+    }
+    if (attendu === "rien") return null;
     if (attendu === "json") {
       const type = reponse.headers.get("content-type") ?? "";
       if (!type.includes("json")) throw new Error(`AMO a répondu ${type || "sans type"} au lieu de JSON sur ${url}`);
@@ -77,6 +89,27 @@ export function client({ cle, secret, fetch = globalThis.fetch }) {
         if (Date.now() + intervalle > fin) return version;
         await dormir(intervalle);
       }
+    },
+
+    /** Les captures de la fiche, dans leur ordre : `{ id, caption, position, image_url }`. */
+    async captures(id) {
+      const { previews } = await demander(new URL(`addons/addon/${encodeURIComponent(id)}/`, API));
+      return previews ?? [];
+    },
+
+    /** Ajoute une capture, puis lui donne sa légende et sa place (l'API refuse les deux à l'envoi). */
+    async ajouterCapture(id, { image, nom, legende, position }) {
+      const formulaire = new FormData();
+      formulaire.set("image", new Blob([image], { type: "image/png" }), nom);
+      formulaire.set("position", String(position));
+      const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/`, API);
+      const { id: capture } = await demander(url, "json", { methode: "POST", corps: formulaire });
+      return this.modifierCapture(id, capture, { legende, position });
+    },
+
+    async modifierCapture(id, capture, { legende, position }) {
+      const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/${capture}/`, API);
+      return demander(url, "json", { methode: "PATCH", corps: { caption: legende, position } });
     },
 
     /** Télécharge le fichier signé d'une version publiée. */

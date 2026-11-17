@@ -1,0 +1,46 @@
+# Les captures d'écran de la fiche addons.mozilla.org, tenues par le dépôt
+# (amo/captures.json et amo/captures/) : envoyées quand elles changent sur
+# main, ou à la main. Rien n'est supprimé de la fiche ; relancer ne double rien
+# (scripts/captures-amo.mjs).
+#
+# Secrets : AMO_API_KEY et AMO_API_SECRET, passés à la seule étape qui envoie.
+name: Fiche AMO
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "amo/captures.json"
+      - "amo/captures/**"
+      - "scripts/captures-amo.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fiche-amo
+  cancel-in-progress: false
+
+jobs:
+  captures:
+    name: Captures de la fiche
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - run: node scripts/captures-amo.mjs --verifier
+
+      - name: Envoi sur addons.mozilla.org
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+        run: node scripts/captures-amo.mjs

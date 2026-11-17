@@ -159,3 +159,59 @@ describe("le client d'addons.mozilla.org", async () => {
     await assert.rejects(client({ cle: "k", secret: "s", fetch }).version("a@b", "1.8.0"), /au lieu de JSON/);
   });
 });
+
+describe("les captures de la fiche", async () => {
+  const { chargerCaptures, planifier } = await import("../scripts/captures-amo.mjs");
+  const captures = await chargerCaptures();
+
+  it("sont des PNG de 1280 × 800, légendés en français et en anglais, sans doublon", () => {
+    assert.ok(captures.length >= 1);
+    assert.deepEqual(captures.map((c) => c.position), captures.map((_, i) => i + 1));
+  });
+
+  const voulues = [
+    { fichier: "a.png", legende: { fr: "A", "en-US": "A en" }, position: 1 },
+    { fichier: "b.png", legende: { fr: "B", "en-US": "B en" }, position: 2 },
+  ];
+
+  it("ajoute ce qui manque, remet d'aplomb ce qui a bougé, ne touche pas au reste", () => {
+    const { ajouter, modifier, etrangeres } = planifier(voulues, [
+      { id: 7, caption: { fr: "B", "en-US": "vieux" }, position: 2 },
+      { id: 9, caption: { fr: "Faite à la main" }, position: 3 },
+    ]);
+    assert.deepEqual(ajouter.map((c) => c.fichier), ["a.png"]);
+    assert.deepEqual(modifier.map((c) => [c.fichier, c.id]), [["b.png", 7]]);
+    assert.deepEqual(etrangeres.map((c) => c.id), [9]);
+  });
+
+  it("ne fait rien quand la fiche est à jour", () => {
+    const enLigne = voulues.map((c, i) => ({ id: i, caption: c.legende, position: c.position }));
+    assert.deepEqual(planifier(voulues, enLigne), { ajouter: [], modifier: [], etrangeres: [] });
+  });
+});
+
+describe("l'envoi d'une capture", async () => {
+  const { client } = await import("../scripts/amo.mjs");
+
+  it("envoie l'image en multipart, puis légende et place en JSON", async () => {
+    const appels = [];
+    const fetch = async (url, { method, headers, body }) => {
+      appels.push({ url: String(url), method, type: headers["Content-Type"], corps: body });
+      const reponse = method === "POST" ? { id: 42 } : { id: 42, position: 3 };
+      return { ok: true, headers: new Headers({ "content-type": "application/json" }), json: async () => reponse };
+    };
+    const legende = { fr: "Une", "en-US": "One" };
+    await client({ cle: "k", secret: "s", fetch }).ajouterCapture("a@b", {
+      image: Buffer.from("png"), nom: "1.png", legende, position: 3,
+    });
+    assert.equal(appels.length, 2);
+    assert.equal(appels[0].method, "POST");
+    assert.match(appels[0].url, /addons\/addon\/a%40b\/previews\/$/);
+    assert.ok(appels[0].corps instanceof FormData);
+    assert.equal(appels[0].corps.get("position"), "3");
+    assert.equal(appels[1].method, "PATCH");
+    assert.match(appels[1].url, /previews\/42\/$/);
+    assert.equal(appels[1].type, "application/json");
+    assert.deepEqual(JSON.parse(appels[1].corps), { caption: legende, position: 3 });
+  });
+});

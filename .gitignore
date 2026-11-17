@@ -5,3 +5,5 @@ captures/
 .amo-upload-uuid
 # Clés d'API d'addons.mozilla.org, lues par npm run paquet.
 .env
+# Les captures de la fiche addons.mozilla.org, elles, sont versionnées.
+!/amo/captures/
