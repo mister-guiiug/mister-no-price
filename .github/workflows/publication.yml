@@ -1,32 +1,43 @@
 # La publication, automatique : chaque version nouvelle qui arrive sur main est
-# signée par Mozilla et publiée en release GitHub.
+# soumise au catalogue d'addons.mozilla.org, puis, une fois publiée par
+# Mozilla, mise en release GitHub.
 #
 # Publier une version, c'est donc monter `version` dans extension/manifest.json
 # et package.json (les tests les gardent alignés), puis fusionner la PR. Ce
-# workflow, à chaque poussée sur main :
+# workflow, à chaque poussée sur main et toutes les trois heures :
 #   1. lit la version du manifeste ; si la release v<version> existe déjà, il
 #      s'arrête là — une PR qui ne change pas de version ne publie rien ;
-#   2. teste, valide (web-ext lint), construit le paquet et le fait SIGNER
-#      (canal « unlisted » : Mozilla signe sans publier sur son catalogue) ;
-#   3. publie la release v<version> — étiquette posée sur le commit —, avec le
-#      .xpi signé, le paquet complet et `updates.json`.
+#   2. teste, valide (web-ext lint, règles du catalogue public), puis SOUMET la
+#      version à addons.mozilla.org (canal « listed »), avec la fiche de
+#      amo/fiche.json — ou, déjà soumise par un passage précédent, regarde où en
+#      est sa relecture ;
+#   3. publiée par Mozilla (souvent en quelques minutes, parfois après une
+#      relecture humaine de plusieurs jours), elle est mise en release
+#      v<version> — étiquette posée sur le commit — avec le .xpi signé, le
+#      paquet complet et `updates.json`. Encore en relecture : le passage
+#      s'arrête en vert, sans release ; le passage planifié suivant reprend.
 #
-# Les Firefox qui ont installé le .xpi lisent `update_url` (manifeste), qui
-# vise `releases/latest/download/updates.json` : la nouvelle version leur
-# arrive d'elle-même, à la vérification suivante (une fois par jour).
+# Mises à jour : une version publiée sur le catalogue n'a pas d'`update_url`,
+# Firefox la met à jour depuis addons.mozilla.org. Les installations faites
+# depuis les releases jusqu'à la 1.7.0 lisent encore
+# `releases/latest/download/updates.json` : c'est par lui qu'elles passent à la
+# version du catalogue, et de là à addons.mozilla.org.
 #
 # Secrets : AMO_API_KEY et AMO_API_SECRET (clés d'API d'addons.mozilla.org),
-# passés à la seule étape qui signe. Sans eux, le workflow échoue plutôt que de
+# passés à la seule étape qui soumet. Sans eux, le workflow échoue plutôt que de
 # publier une release sans fichier installable.
 #
-# Mozilla ne signe qu'une fois une version. Si la signature passe et que la
-# release échoue ensuite, NE PAS relancer : le paquet signé est en artefact du
-# run ; créer la release à la main avec ses fichiers.
+# Mozilla n'accepte qu'une fois un numéro de version. Si la release échoue après
+# le téléchargement du fichier signé, relancer : la version est retrouvée sur
+# AMO, rien n'est soumis deux fois.
 name: Publication
 
 on:
   push:
     branches: [main]
+  # Reprend une version restée en relecture chez Mozilla.
+  schedule:
+    - cron: "41 */3 * * *"
   workflow_dispatch:
 
 permissions:
@@ -83,7 +94,8 @@ jobs:
         run: npm run lint -- --warnings-as-errors
 
       # Les clés ne sont passées qu'à cette étape.
-      - name: Paquet signé
+      - name: Soumission à addons.mozilla.org, paquet signé
+        id: paquet
         if: steps.version.outputs.a-publier == 'oui'
         env:
           WEB_EXT_API_KEY: ${{ secrets.AMO_API_KEY }}
@@ -92,7 +104,7 @@ jobs:
         run: npm run paquet
 
       - name: Archive du paquet
-        if: steps.version.outputs.a-publier == 'oui'
+        if: steps.paquet.outputs.signe == 'oui'
         env:
           VERSION: ${{ steps.version.outputs.version }}
         working-directory: web-ext-artifacts
@@ -100,14 +112,14 @@ jobs:
 
       # Avant la release : si elle échoue, le fichier signé reste récupérable.
       - uses: actions/upload-artifact@v7
-        if: steps.version.outputs.a-publier == 'oui'
+        if: steps.paquet.outputs.signe == 'oui'
         with:
           name: mister-no-prices-${{ steps.version.outputs.version }}
           path: web-ext-artifacts/mister-no-prices-${{ steps.version.outputs.version }}/
           if-no-files-found: error
 
       - name: Release
-        if: steps.version.outputs.a-publier == 'oui'
+        if: steps.paquet.outputs.signe == 'oui'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -117,7 +129,7 @@ jobs:
           test -f "$dossier/mister-no-prices-$VERSION.xpi" && test -f "$dossier/updates.json"
           gh release create "v$VERSION" --target "$GITHUB_SHA" --latest \
             --title "Sans prix $VERSION" \
-            --notes "Installer : ouvrir mister-no-prices-$VERSION.xpi dans Firefox (140 ou plus récent). Les installations existantes se mettent à jour seules. Mode d'emploi complet : INSTALLER.md, dans mister-no-prices-$VERSION-paquet.zip." \
+            --notes "Installer : depuis addons.mozilla.org (https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/), ou ouvrir mister-no-prices-$VERSION.xpi dans Firefox (140 ou plus récent). Les installations existantes se mettent à jour seules. Mode d'emploi complet : INSTALLER.md, dans mister-no-prices-$VERSION-paquet.zip." \
             --generate-notes \
             "web-ext-artifacts/mister-no-prices-$VERSION-paquet.zip" \
             "$dossier"/*

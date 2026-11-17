@@ -13,7 +13,12 @@ Firefox 140 ou plus récent, sur ordinateur.
 
 Le `.xpi` n'existe que si le paquet a été signé. S'il manque, passer au § 2.
 
-## 1. Installer le fichier signé (recommandé)
+**Le plus simple** : l'extension est publiée sur addons.mozilla.org. Ouvrir
+<https://addons.mozilla.org/firefox/addon/mister-no-price@mister-guiiug/> dans Firefox, puis **Ajouter à Firefox**, et régler la navigation
+privée comme au § 1, étape 4. Le reste de ce guide sert à installer sans
+passer par le catalogue.
+
+## 1. Installer le fichier signé
 
 1. Dans Firefox, ouvrir le menu **≡ → Extensions et thèmes** (ou taper
    `about:addons` dans la barre d'adresse).
@@ -27,9 +32,9 @@ Le `.xpi` n'existe que si le paquet a été signé. S'il manque, passer au § 2.
 L'icône apparaît dans la barre d'outils (sinon : pièce de puzzle → épingler).
 Un clic ouvre le réglage : interrupteur, barre ou flou, sites couverts.
 
-**Mises à jour** : automatiques. Firefox vérifie une fois par jour si une
-version plus récente est publiée et l'installe, réglages et liste d'envies
-conservés. Pour vérifier tout de suite : `about:addons` → roue dentée →
+**Mises à jour** : automatiques, depuis addons.mozilla.org. Firefox vérifie
+une fois par jour si une version plus récente est publiée et l'installe,
+réglages et liste d'envies conservés. Pour vérifier tout de suite : `about:addons` → roue dentée →
 **Rechercher des mises à jour**. Les versions publiées :
 <https://github.com/mister-guiiug/mister-no-prices/releases>
 
