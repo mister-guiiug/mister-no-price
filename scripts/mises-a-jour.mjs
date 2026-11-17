@@ -24,7 +24,7 @@ export function depotDe(manifeste) {
 }
 
 /** Le nom du `.xpi` signé d'une version : celui que la release joint. */
-export const nomXpi = (version) => `mister-no-price-${version}.xpi`;
+export const nomXpi = (version) => `mister-no-prices-${version}.xpi`;
 
 /**
  * @param {object} manifeste le manifest.json de l'extension

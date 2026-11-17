@@ -3,7 +3,7 @@
     "ExtensionSettings": {
       "{{id}}": {
         "installation_mode": "force_installed",
-        "install_url": "file:///C:/Firefox/mister-no-price.xpi",
+        "install_url": "file:///C:/Firefox/mister-no-prices.xpi",
         "private_browsing": true
       }
     }

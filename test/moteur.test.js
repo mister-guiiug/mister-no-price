@@ -29,7 +29,8 @@ describe("trouverRegle", () => {
     ["www.e.leclerc", "leclerc"],
     ["www.leclerc.fr", "leclerc"],
     ["fr.aliexpress.com", "aliexpress"],
-    ["fr.shopping.rakuten.com", "rakuten"],
+    // Rakuten retiré : sa place de marché française a fermé.
+    ["fr.shopping.rakuten.com", null],
     ["www.ebay.com", "ebay"],
     ["www.rueducommerce.fr", "rueducommerce"],
     // Google : la recherche et Images, jamais les autres services du domaine.

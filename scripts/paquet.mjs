@@ -3,9 +3,9 @@
  * Le paquet de déploiement : tout ce qu'il faut pour installer l'extension sans
  * passer par addons.mozilla.org ni par ce dépôt.
  *
- *   web-ext-artifacts/mister-no-price-<version>/
- *   ├── mister-no-price-<version>.zip   l'extension, non signée
- *   ├── mister-no-price-<version>.xpi   la même, signée par Mozilla (si clés)
+ *   web-ext-artifacts/mister-no-prices-<version>/
+ *   ├── mister-no-prices-<version>.zip   l'extension, non signée
+ *   ├── mister-no-prices-<version>.xpi   la même, signée par Mozilla (si clés)
  *   ├── INSTALLER.md                    les façons d'installer, pas à pas
  *   ├── policies.json                   imposer l'extension sur un poste
  *   ├── updates.json                    ce que Firefox lit pour se mettre à
@@ -52,7 +52,7 @@ if (versionPaquet !== version) {
   throw new Error(`package.json (${versionPaquet}) et manifest.json (${version}) divergent`);
 }
 
-const nom = `mister-no-price-${version}`;
+const nom = `mister-no-prices-${version}`;
 const dossier = path.join(racine, "web-ext-artifacts", nom);
 await rm(dossier, { recursive: true, force: true });
 await mkdir(dossier, { recursive: true });

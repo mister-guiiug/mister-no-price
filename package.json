@@ -1,8 +1,8 @@
 {
-  "name": "mister-no-price",
-  "version": "1.3.0",
+  "name": "mister-no-prices",
+  "version": "1.3.1",
   "private": true,
-  "description": "Extension Firefox qui masque les prix sur Amazon et 16 autres boutiques.",
+  "description": "Extension Firefox qui masque les prix sur Amazon, 15 autres boutiques et Google.",
   "license": "MIT",
   "type": "module",
   "engines": {
@@ -11,7 +11,7 @@
   "scripts": {
     "start": "web-ext run --source-dir extension --start-url https://www.amazon.fr",
     "lint": "web-ext lint --source-dir extension --self-hosted",
-    "build": "web-ext build --source-dir extension --artifacts-dir web-ext-artifacts --filename \"mister-no-price-{version}.zip\" --overwrite-dest",
+    "build": "web-ext build --source-dir extension --artifacts-dir web-ext-artifacts --filename \"mister-no-prices-{version}.zip\" --overwrite-dest",
     "paquet": "node scripts/paquet.mjs",
     "test": "node --test",
     "verifier": "node scripts/verifier.mjs",
