@@ -10,6 +10,12 @@
  *                  large (« www.google.fr », sans mail.google.fr ni docs) ;
  *                  le manifeste doit déclarer les uns et les autres, un test le
  *                  vérifie ;
+ *   - `chemins`  : facultatif, pour un site dont une seule partie vend — les
+ *                  débuts de chemin couverts (« /marketplace » couvre
+ *                  /marketplace et /marketplace/item/…, pas /marketplacex).
+ *                  Ailleurs sur le site, l'extension ne masque rien, et elle
+ *                  suit la navigation d'une application qui change d'adresse
+ *                  sans recharger la page ;
  *   - `masquer`  : les sélecteurs CSS des éléments qui ne contiennent QUE des
  *                  prix. Ils sont couverts avant le premier affichage ;
  *   - `fiche`    : facultatif, pour la liste d'envies — les sélecteurs du
@@ -271,6 +277,210 @@
       // Vérification anti-robot dès la première page : balisage non relevé.
       masquer: [],
     },
+    // --- Petites annonces -----------------------------------------------------
+    {
+      id: "leboncoin",
+      nom: "Leboncoin",
+      domaines: ["leboncoin.fr"],
+      // Vérification anti-robot dès la première page : balisage non relevé.
+      masquer: [],
+    },
+    {
+      id: "facebook",
+      nom: "Facebook Marketplace",
+      domaines: ["facebook.com"],
+      // Le reste de Facebook n'a rien à vendre : masquer chaque montant d'une
+      // publication ou d'une conversation serait un défaut, pas une protection.
+      chemins: ["/marketplace"],
+      masquer: [],
+    },
+    {
+      id: "paruvendu",
+      nom: "ParuVendu",
+      domaines: ["paruvendu.fr"],
+      // Classes utilitaires (Tailwind) seulement : le générique couvre les prix,
+      // écrits en clair.
+      masquer: [],
+    },
+    {
+      id: "vivastreet",
+      nom: "Vivastreet",
+      domaines: ["vivastreet.com"],
+      // Les pages relevées ne portent que des montants en clair : générique
+      // seul.
+      masquer: [],
+    },
+    {
+      id: "wallapop",
+      nom: "Wallapop",
+      domaines: ["wallapop.com"],
+      // Modules CSS : classes hachées, préfixes stables.
+      masquer: [
+        '[class*="RetrievalItemCard__price"]',
+        '[class*="RetrievalItemCard__currentPrice"]',
+      ],
+    },
+    {
+      id: "marktplaats",
+      nom: "Marktplaats",
+      domaines: ["marktplaats.nl"],
+      // Modules CSS : classe hachée, préfixe stable. Le bouton « Details »
+      // voisin, non.
+      masquer: ['[class*="ListingPrice_hz-Listing-price"]'],
+    },
+    {
+      id: "kleinanzeigen",
+      nom: "Kleinanzeigen",
+      domaines: ["kleinanzeigen.de"],
+      // Classes utilitaires (Tailwind) seulement : le générique couvre les prix,
+      // écrits en clair.
+      masquer: [],
+    },
+    {
+      id: "subito",
+      nom: "Subito",
+      domaines: ["subito.it"],
+      // Modules CSS : classe hachée, préfixe stable.
+      masquer: ['[class*="index-module_price__"]'],
+    },
+    {
+      id: "milanuncios",
+      nom: "Milanuncios",
+      domaines: ["milanuncios.com"],
+      // Visite interrompue dès la première page (« Algo se detuvo ») : balisage
+      // non relevé.
+      masquer: [],
+    },
+    {
+      id: "craigslist",
+      nom: "Craigslist",
+      domaines: ["craigslist.org"],
+      // Prix en clair (« $250 »), histogramme des prix en SVG : générique seul.
+      masquer: [],
+    },
+    // --- Occasion et collection -------------------------------------------------
+    {
+      id: "vinted",
+      nom: "Vinted",
+      domaines: [
+        "vinted.fr",
+        "vinted.be",
+        "vinted.lu",
+        "vinted.es",
+        "vinted.it",
+        "vinted.de",
+        "vinted.at",
+        "vinted.nl",
+        "vinted.pt",
+        "vinted.pl",
+        "vinted.co.uk",
+        "vinted.com",
+      ],
+      // Les attributs de test sont stables, les classes hachées. Le total
+      // « frais inclus » est un prix ; sa ligne « incl. », non.
+      masquer: [
+        '[data-testid$="--price-text"]',
+        '[data-testid="total-combined-price"]',
+      ],
+    },
+    {
+      id: "backmarket",
+      nom: "Back Market",
+      domaines: [
+        "backmarket.fr",
+        "backmarket.be",
+        "backmarket.de",
+        "backmarket.es",
+        "backmarket.it",
+        "backmarket.nl",
+        "backmarket.at",
+        "backmarket.pt",
+        "backmarket.co.uk",
+        "backmarket.com",
+      ],
+      // Vérification anti-robot sur les fiches ; la liste, vue, n'a laissé aucun
+      // montant lisible.
+      masquer: [],
+    },
+    {
+      id: "cashexpress",
+      nom: "Cash Express",
+      domaines: ["cashexpress.fr"],
+      // « À partir de » reste lisible : seul le montant est couvert. Sur la
+      // fiche, « 399,99 » et « € » sont deux nœuds.
+      masquer: [".product-card__price .price", ".price--product-page", ".price__new"],
+      // Ni JSON-LD utile (un @graph vide) ni Open Graph sur la fiche.
+      fiche: {
+        titre: "h1.product__name",
+        prix: ".price--product-page .price__new",
+        image: 'img[src*="/uploaded/product-"]',
+      },
+    },
+    {
+      id: "easycash",
+      nom: "Easy Cash",
+      domaines: ["easycash.fr"],
+      // Les fiches vivent sur bons-plans.easycash.fr, couvert.
+      masquer: [".productsheet-block-item--price"],
+    },
+    {
+      id: "reverb",
+      nom: "Reverb",
+      domaines: ["reverb.com"],
+      // Le prix et sa copie pour les lecteurs d'écran.
+      masquer: [
+        ".rc-price-block__price",
+        ".rc-listing-card__price",
+      ],
+    },
+    {
+      id: "discogs",
+      nom: "Discogs",
+      domaines: ["discogs.com"],
+      // Prix du vendeur et prix converti dans la devise du visiteur.
+      masquer: [
+        "span.price",
+        ".converted_price",
+      ],
+    },
+    {
+      id: "delcampe",
+      nom: "Delcampe",
+      domaines: ["delcampe.net"],
+      masquer: [".item-price"],
+    },
+    {
+      id: "catawiki",
+      nom: "Catawiki",
+      domaines: ["catawiki.com"],
+      // Enchère en cours sur les cartes de lots.
+      masquer: [".c-lot-card__price"],
+    },
+    {
+      id: "vestiairecollective",
+      nom: "Vestiaire Collective",
+      domaines: ["vestiairecollective.com"],
+      // Modules CSS : classe hachée, préfixe stable.
+      masquer: ['[class*="productCard__text--price"]'],
+    },
+    {
+      id: "chrono24",
+      nom: "Chrono24",
+      domaines: [
+        "chrono24.fr",
+        "chrono24.com",
+        "chrono24.de",
+        "chrono24.it",
+        "chrono24.es",
+        "chrono24.co.uk",
+        "chrono24.ch",
+        "chrono24.be",
+        "chrono24.nl",
+        "chrono24.at",
+      ],
+      // Vérification anti-robot dès la première page : balisage non relevé.
+      masquer: [],
+    },
     {
       id: "google",
       nom: "Google",
@@ -306,6 +516,7 @@
         ...regle,
         domaines: Object.freeze([...(regle.domaines ?? [])]),
         hotes: Object.freeze([...(regle.hotes ?? [])]),
+        chemins: regle.chemins ? Object.freeze([...regle.chemins]) : null,
         masquer: Object.freeze([...regle.masquer]),
         fiche: regle.fiche ? Object.freeze({ ...regle.fiche }) : null,
       }),

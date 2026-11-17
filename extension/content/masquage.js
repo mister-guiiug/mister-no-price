@@ -19,6 +19,9 @@
  * 4. Le titre de l'onglet perd ses montants (« Robot 999€ chez … »).
  *
  * Le script suit aussi les réglages (actif, apparence) et les applique en direct.
+ * Une règle limitée à des `chemins` (Facebook : /marketplace) n'agit que là :
+ * ailleurs, le script éteint le masquage dès document_start et ne lit pas le
+ * texte ; il suit les changements d'adresse sans rechargement.
  */
 (() => {
   "use strict";
@@ -26,7 +29,7 @@
   const { lire, suivre } = globalThis.SansPrixReglages;
   const { contientChiffre, trouverMontants, masquerMontants, estFragment } =
     globalThis.SansPrixDetection;
-  const { ATTRIBUT_ECLATE, trouverRegle, construireFeuille } = globalThis.SansPrixMoteur;
+  const { ATTRIBUT_ECLATE, trouverRegle, couvreChemin, construireFeuille } = globalThis.SansPrixMoteur;
 
   const NOM = "sans-prix";
   const IGNORES = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE", "TEXTAREA", "TITLE"]);
@@ -42,6 +45,10 @@
   const feuille = document.createElement("style");
   feuille.setAttribute("data-sans-prix", "");
   feuille.textContent = construireFeuille(regle?.masquer ?? []);
+
+  /** La page est-elle dans le périmètre de la règle (ses `chemins`) ? */
+  let ici = couvreChemin(regle, location.pathname);
+  const actifIci = () => reglages.actif && ici;
 
   // Accrochée à <html> plutôt qu'à <head> : une application qui remplace son
   // <head> ne l'emporte pas. Si elle disparaît quand même, on la remet.
@@ -101,6 +108,9 @@
 
   function traiterTexte(noeud) {
     oublier(noeud);
+    // Hors du périmètre, rien à masquer : inutile de lire chaque texte d'un fil
+    // d'actualité. Le texte sera parcouru en entier si la page y entre.
+    if (!ici) return;
     const texte = noeud.data;
     if (!contientChiffre(texte) && !estFragment(texte)) return;
     const parent = noeud.parentElement;
@@ -157,7 +167,7 @@
   function majTitre() {
     const courant = document.title;
     if (courant !== titreEcrit) titreDeLaPage = courant;
-    const voulu = reglages.actif ? masquerMontants(titreDeLaPage) : titreDeLaPage;
+    const voulu = actifIci() ? masquerMontants(titreDeLaPage) : titreDeLaPage;
     titreEcrit = voulu;
     if (courant !== voulu) document.title = voulu;
   }
@@ -222,9 +232,17 @@
   /** Pose les attributs de réglage sur <html>, s'ils n'y sont pas déjà. */
   function poserAttributs() {
     const racine = document.documentElement;
-    if (!reglagesLus || !racine) return;
+    if (!racine) return;
+    if (!reglagesLus) {
+      // Avant la lecture des réglages : masqué dans le périmètre (la feuille
+      // échoue fermée tant que rien ne dit « off »), éteint en dehors.
+      const off = racine.getAttribute("data-sans-prix") === "off";
+      if (ici && off) racine.removeAttribute("data-sans-prix");
+      else if (!ici && !off) racine.setAttribute("data-sans-prix", "off");
+      return;
+    }
     const voulus = {
-      "data-sans-prix": reglages.actif ? "on" : "off",
+      "data-sans-prix": actifIci() ? "on" : "off",
       "data-sans-prix-style": reglages.style,
     };
     // Comparer avant d'écrire : réécrire la même valeur notifierait encore
@@ -245,14 +263,34 @@
       });
       return;
     }
+    majEtat();
+  }
+
+  /** Attributs, surlignage et titre, d'après les réglages et le périmètre. */
+  function majEtat() {
     poserAttributs();
-    if (actif) CSS.highlights.set(NOM, surlignage);
+    // Échoue fermé, comme la feuille : masqué tant que les réglages ne sont pas
+    // lus — dans le périmètre.
+    if (reglagesLus ? actifIci() : ici) CSS.highlights.set(NOM, surlignage);
     else CSS.highlights.delete(NOM);
     majTitre();
   }
 
-  // Échoue fermé, comme la feuille : masqué tant que les réglages ne sont pas lus.
-  CSS.highlights.set(NOM, surlignage);
+  // Une application (Facebook) change d'adresse sans recharger la page : on
+  // regarde le chemin à chaque retour en arrière, et deux fois par seconde.
+  function suivreChemin() {
+    const dedans = couvreChemin(regle, location.pathname);
+    if (dedans === ici) return;
+    ici = dedans;
+    if (ici) parcourir(document.body ?? document.documentElement);
+    majEtat();
+  }
+  if (regle?.chemins) {
+    addEventListener("popstate", suivreChemin);
+    setInterval(suivreChemin, 500);
+  }
+
+  majEtat();
   lire().then(appliquer, console.error);
   suivre(appliquer);
 })();

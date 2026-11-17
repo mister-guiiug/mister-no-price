@@ -155,6 +155,19 @@ footer p:empty {
   display: none;
 }
 
+.detail summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+.detail p {
+  margin: 0.25rem 0 0;
+}
+
+.detail[hidden] {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .interrupteur input,
   .interrupteur input::after {

@@ -84,6 +84,8 @@ async function preparer(page, url) {
       /continuer vos achats|continue shopping|continua con gli acquisti/i.test(
         document.body?.innerText.slice(0, 2000) ?? "",
       ) ||
+      // Milanuncios : « ¡Ups! Algo se detuvo », visite interrompue.
+      /algo se detuvo/i.test(document.body?.innerText.slice(0, 500) ?? "") ||
       // La page /sorry de Google : « trafic inhabituel », avec un captcha.
       location.pathname.startsWith("/sorry/"),
   );
@@ -105,7 +107,7 @@ async function preparer(page, url) {
 async function refuserCookies(page) {
   await page.evaluate(() => {
     const REFUS =
-      /^(tout\s+)?refuser( tout)?$|^continuer sans accepter$|^uniquement les essentiels$|^reject all$|^rifiuta( tutto)?$|^decline/i;
+      /^(tout\s+)?refuser( tout)?$|^refuser les cookies( optionnels| non essentiels)?$|^continuer sans accepter$|^uniquement les essentiels$|^reject all$|^rifiuta( tutto)?$|^alle ablehnen$|^ablehnen$|^rechazar( todo| todas)?$|^alles weigeren$|^weigeren$|^decline/i;
     const bouton =
       document.querySelector(
         "#sp-cc-rejectall-link, #didomi-notice-disagree-button, .didomi-continue-without-agreeing",
@@ -363,6 +365,7 @@ async function verifierSite(page, site) {
         `surlignage ${releve.surlignage ? "posé" : "ABSENT"}, ${releve.plages} plage(s), ` +
         `${releve.eclates} prix éclaté(s) marqué(s), ${releve.montantsTexte} montant(s) dans le texte`,
     );
+    if (genre === "fiche") console.log(`  ${url}`);
     if (releve.restes.length === 0) console.log("  ✔ aucun montant lisible");
     for (const r of releve.restes.slice(0, 25)) {
       console.log(`  ✘ « ${r.texte} »${r.eclate ? " (éclaté)" : ""}  ←  ${r.ou}`);

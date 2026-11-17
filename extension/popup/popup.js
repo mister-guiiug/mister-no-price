@@ -10,13 +10,14 @@
   }
 
   // La liste des sites vient des règles : un site ajouté y apparaît sans retouche.
+  // Repliée derrière leur nombre : une quarantaine de noms rempliraient le popup.
   const sites = globalThis.SansPrixRegles.map((r) => r.nom).sort((a, b) =>
     a.localeCompare(b, t("langue"), { sensitivity: "base" }),
   );
-  document.getElementById("sites").textContent = t(
-    "popupSites",
-    new Intl.ListFormat(t("langue"), { type: "conjunction" }).format(sites),
-  );
+  document.getElementById("sites-nombre").textContent = t("popupSitesNombre", String(sites.length));
+  document.getElementById("sites").textContent = new Intl.ListFormat(t("langue"), {
+    type: "conjunction",
+  }).format(sites);
 
   // Les sites qu'une mise à jour a ajoutés n'ont pas d'accès tant que
   // l'utilisateur n'a pas dit oui : on le signale, et on le demande d'un clic.
@@ -27,9 +28,18 @@
     );
   const encart = document.getElementById("acces");
   let manquants = await accesManquants();
+  // Au-delà de quelques noms (une mise à jour qui ajoute vingt sites), le
+  // message donne leur nombre et la liste se déplie à la demande.
+  const NOMS_EN_CLAIR = 4;
   const montrerAcces = () => {
-    encart.hidden = manquants.noms.length === 0;
-    document.getElementById("acces-texte").textContent = t("accesManquant", listeDe(manquants.noms));
+    const { noms } = manquants;
+    encart.hidden = noms.length === 0;
+    const enClair = noms.length <= NOMS_EN_CLAIR;
+    document.getElementById("acces-texte").textContent = enClair
+      ? t("accesManquant", listeDe(noms))
+      : t("accesManquantNombre", String(noms.length));
+    document.getElementById("acces-detail").hidden = enClair;
+    document.getElementById("acces-noms").textContent = listeDe(noms);
   };
   montrerAcces();
   document.getElementById("acces-bouton").addEventListener("click", () => {

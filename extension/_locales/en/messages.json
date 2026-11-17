@@ -10,7 +10,7 @@
     "message": "No Prices"
   },
   "extDescription": {
-    "message": "Hides prices on Amazon, Fnac, Cdiscount, Darty, eBay and other stores, so you can choose without being steered by the amount."
+    "message": "Hides prices on stores, classifieds and second-hand sites (Amazon, eBay, Vinted…), so you can choose without seeing the amount."
   },
   "titreActif": {
     "message": "No Prices: prices hidden"
@@ -43,15 +43,6 @@
       "shortcut": {
         "content": "$1",
         "example": "Alt+Shift+P"
-      }
-    }
-  },
-  "popupSites": {
-    "message": "Active on: $SITES$.",
-    "placeholders": {
-      "sites": {
-        "content": "$1",
-        "example": "Amazon, Dealabs, Decathlon, Cdiscount"
       }
     }
   },
@@ -179,5 +170,27 @@
   },
   "listeCopieImpossible": {
     "message": "Could not copy the list."
+  },
+  "popupSitesNombre": {
+    "message": "Active on $COUNT$ sites",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "No Prices isn’t allowed on $COUNT$ sites yet. Without your approval, prices come back on every new page.",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Show which"
   }
 }

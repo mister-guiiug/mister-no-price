@@ -14,6 +14,10 @@
 
       <section id="acces" class="acces" role="alert" hidden>
         <p id="acces-texte"></p>
+        <details id="acces-detail" class="detail" hidden>
+          <summary data-i18n="popupVoirLesquels"></summary>
+          <p id="acces-noms"></p>
+        </details>
         <button type="button" id="acces-bouton" data-i18n="accesBouton"></button>
       </section>
 
@@ -47,7 +51,10 @@
 
       <footer>
         <p id="raccourci"></p>
-        <p id="sites"></p>
+        <details class="detail">
+          <summary id="sites-nombre"></summary>
+          <p id="sites"></p>
+        </details>
       </footer>
     </main>
     <script src="../commun/reglages.js"></script>

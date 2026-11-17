@@ -19,7 +19,8 @@
   const Reglages = globalThis.SansPrixReglages;
   const Envies = globalThis.SansPrixEnvies;
   const { extraireProduit } = globalThis.SansPrixProduit;
-  const regle = globalThis.SansPrixMoteur.trouverRegle(location.hostname, globalThis.SansPrixRegles);
+  const { trouverRegle, couvreChemin } = globalThis.SansPrixMoteur;
+  const regle = trouverRegle(location.hostname, globalThis.SansPrixRegles);
   if (!regle) return;
 
   const t = (cle) => browser.i18n.getMessage(cle);
@@ -128,6 +129,8 @@
       produit = null;
       hote.remove();
     }
+    // Hors des `chemins` de la règle (Facebook hors Marketplace), pas de bouton.
+    if (!couvreChemin(regle, location.pathname)) return;
     if (!produit && essais < ESSAIS_MAX) {
       essais += 1;
       produit = extraireProduit(document, regle.fiche);

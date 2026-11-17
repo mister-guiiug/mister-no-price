@@ -50,6 +50,48 @@ export const PAGES = {
   },
   "zalando.fr": { liste: "https://www.zalando.fr/catalogue/?q=baskets", fiche: 'article a[href$=".html"]' },
   "manomano.fr": { liste: "https://www.manomano.fr/recherche/perceuse", fiche: 'a[href*="/p/"]' },
+  // Petites annonces.
+  "leboncoin.fr": { liste: "https://www.leboncoin.fr/recherche?text=velo", fiche: 'a[href*="/ad/"]' },
+  "facebook.com": {
+    liste: "https://www.facebook.com/marketplace/paris/search?query=velo",
+    fiche: 'a[href*="/marketplace/item/"]',
+  },
+  "paruvendu.fr": { liste: "https://www.paruvendu.fr/voiture-occasion/", fiche: 'a[href*="/a/"][href*="A1K"]' },
+  "vivastreet.com": { liste: "https://www.vivastreet.com/", fiche: 'a[href*="/annonces/"]' },
+  "wallapop.com": { liste: "https://fr.wallapop.com/search?keywords=velo", fiche: 'a[href*="/item/"]' },
+  "marktplaats.nl": { liste: "https://www.marktplaats.nl/q/fiets/", fiche: 'a[href*="/v/"]' },
+  "kleinanzeigen.de": { liste: "https://www.kleinanzeigen.de/s-fahrrad/k0", fiche: 'a[href*="/s-anzeige/"]' },
+  "subito.it": {
+    liste: "https://www.subito.it/annunci-italia/vendita/usato/?q=bicicletta",
+    fiche: 'a[href*="/biciclette/"][href$=".htm"]',
+  },
+  "milanuncios.com": { liste: "https://www.milanuncios.com/anuncios/?s=bicicleta", fiche: 'a[href$=".htm"]' },
+  // Paris n'a presque rien : New York, en anglais.
+  "craigslist.org": {
+    liste: "https://www.craigslist.org/search/area/newyork?cat=sss&query=bike",
+    fiche: 'a[href*="/view/d/"]',
+  },
+  // Occasion et collection.
+  "vinted.fr": { liste: "https://www.vinted.fr/catalog?search_text=velo", fiche: 'a[href*="/items/"]' },
+  "backmarket.fr": { liste: "https://www.backmarket.fr/fr-fr/search?q=iphone", fiche: 'a[href*="/p/"]' },
+  "cashexpress.fr": { liste: "https://www.cashexpress.fr/", fiche: '.product-card a[href*="/p-"], a.product-card' },
+  // Les fiches vivent sur un sous-domaine, couvert par la règle.
+  "easycash.fr": {
+    liste: "https://www.easycash.fr/",
+    fiche: 'a[href*="bons-plans.easycash.fr/"]:has(.productsheet-block-item--price)',
+  },
+  "reverb.com": { liste: "https://reverb.com/fr/marketplace?query=guitare", fiche: 'a[href*="/item/"]' },
+  "discogs.com": { liste: "https://www.discogs.com/fr/sell/list?q=beatles", fiche: 'a[href*="/sell/item/"]' },
+  "delcampe.net": {
+    liste: "https://www.delcampe.net/fr/collections/search?term=timbre",
+    fiche: 'a[href*="/collections/"][href$=".html"]',
+  },
+  "catawiki.com": { liste: "https://www.catawiki.com/fr/s?q=montre", fiche: 'a[href*="/l/"]' },
+  "vestiairecollective.com": {
+    liste: "https://fr.vestiairecollective.com/search/?q=sac",
+    fiche: 'a[href$=".shtml"]',
+  },
+  "chrono24.fr": { liste: "https://www.chrono24.fr/search/index.htm?query=rolex", fiche: 'a[href*="--id"]' },
   // Pas de fiche produit : la recherche (produits sponsorisés) et Google Images.
   "google.fr": {
     urls: {

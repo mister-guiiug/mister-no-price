@@ -133,6 +133,9 @@
   }
 
   // « Product », « schema:Product », « https://schema.org/Product », « product » (Cdiscount).
+  // Avec les sous-types de Product que publient les annonces : un véhicule
+  // (ParuVendu : `Vehicle`), un objet unique, un modèle.
+  const PRODUITS = ["product", "productgroup", "individualproduct", "productmodel", "vehicle", "car", "motorcycle"];
   const estDuType = (objet, ...types) =>
     [objet["@type"]]
       .flat()
@@ -161,7 +164,7 @@
    */
   function depuisJsonLd(doc) {
     const produits = objetsJsonLd(doc)
-      .filter((o) => estDuType(o, "product", "productgroup"))
+      .filter((o) => estDuType(o, ...PRODUITS))
       .flatMap((o) => [o, ...[o.hasVariant ?? []].flat().filter((v) => v && typeof v === "object")])
       .map(lireProduitJsonLd);
     if (produits.length === 0) return null;
