@@ -51,7 +51,25 @@ export function delaiDemande(entetes, texte) {
 
 const ESSAIS_429 = 4;
 
-export function client({ cle, secret, fetch = globalThis.fetch, dormir = (ms) => new Promise((r) => setTimeout(r, ms)) }) {
+/**
+ * AMO a demandé une attente plus longue que ce qu'on accepte de patienter
+ * (souvent une demi-heure après quelques envois d'images) : mieux vaut
+ * s'arrêter et reprendre au passage suivant.
+ */
+export class DebitEpuise extends Error {
+  constructor(ms, requete) {
+    super(`AMO demande d'attendre ${Math.round(ms / 60_000)} min avant ${requete}`);
+    this.ms = ms;
+  }
+}
+
+export function client({
+  cle,
+  secret,
+  fetch = globalThis.fetch,
+  dormir = (ms) => new Promise((r) => setTimeout(r, ms)),
+  attenteMax = 5 * 60_000,
+}) {
   const demander = async (url, attendu = "json", { methode = "GET", corps } = {}, essai = 1) => {
     const enJson = corps !== undefined && !(corps instanceof FormData);
     const reponse = await fetch(url, {
@@ -68,6 +86,7 @@ export function client({ cle, secret, fetch = globalThis.fetch, dormir = (ms) =>
     // reprendre la même requête.
     if (reponse.status === 429 && essai < ESSAIS_429) {
       const ms = delaiDemande(reponse.headers, await reponse.text().catch(() => ""));
+      if (ms > attenteMax) throw new DebitEpuise(ms, `${methode} ${url}`);
       console.log(`AMO demande d'attendre ${Math.round(ms / 1000)} s (${methode} ${url})`);
       await dormir(ms + 1000);
       return demander(url, attendu, { methode, corps }, essai + 1);
@@ -109,21 +128,52 @@ export function client({ cle, secret, fetch = globalThis.fetch, dormir = (ms) =>
       }
     },
 
-    /** Les captures de la fiche, dans leur ordre : `{ id, caption, position, image_url }`. */
-    async captures(id) {
-      const { previews } = await demander(new URL(`addons/addon/${encodeURIComponent(id)}/`, API));
-      return previews ?? [];
+    /** La fiche telle que l'API la rend (nom, résumé, captures, icône…). */
+    async fiche(id) {
+      return demander(new URL(`addons/addon/${encodeURIComponent(id)}/`, API));
     },
 
-    /** Ajoute une capture, puis lui donne sa légende et sa place (l'API refuse les deux à l'envoi). */
-    async ajouterCapture(id, { image, nom, legende, position }) {
+    /** Modifie des champs de la fiche (JSON) ; `icone` passe en multipart. */
+    async modifierFiche(id, champs) {
+      const url = new URL(`addons/addon/${encodeURIComponent(id)}/`, API);
+      return demander(url, "json", { methode: "PATCH", corps: champs });
+    },
+
+    async envoyerIcone(id, image) {
+      const formulaire = new FormData();
+      formulaire.set("icon", new Blob([image], { type: "image/png" }), "icone-128.png");
+      const url = new URL(`addons/addon/${encodeURIComponent(id)}/`, API);
+      return demander(url, "json", { methode: "PATCH", corps: formulaire });
+    },
+
+    /** Les captures de la fiche, dans leur ordre : `{ id, caption, position, image_url }`. */
+    async captures(id) {
+      return (await this.fiche(id)).previews ?? [];
+    },
+
+    /**
+     * Ajoute une capture, puis lui donne sa légende et sa place — l'API refuse
+     * les deux à l'envoi. AMO retraite l'image après l'envoi et, ce faisant,
+     * efface une légende posée trop tôt (vu le 18/11 : seule a tenu celle
+     * posée une minute après) : attendre `traitement` ms, poser la légende,
+     * vérifier qu'elle a tenu, sinon recommencer.
+     */
+    async ajouterCapture(id, { image, nom, legende, position }, { traitement = 60_000, essais = 3 } = {}) {
       const formulaire = new FormData();
       formulaire.set("image", new Blob([image], { type: "image/png" }), nom);
       formulaire.set("position", String(position));
       const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/`, API);
       const { id: capture } = await demander(url, "json", { methode: "POST", corps: formulaire });
       try {
-        return await this.modifierCapture(id, capture, { legende, position });
+        for (let essai = 1; ; essai += 1) {
+          await dormir(traitement);
+          await this.modifierCapture(id, capture, { legende, position });
+          await dormir(traitement / 2);
+          const enLigne = (await this.captures(id)).find((c) => c.id === capture);
+          if (enLigne?.caption?.fr === legende.fr) return enLigne;
+          if (essai >= essais) throw new Error(`légende de la capture ${capture} effacée ${essais} fois`);
+          console.log(`légende de la capture ${capture} effacée par AMO : nouvel essai`);
+        }
       } catch (erreur) {
         // Sans légende, la capture ne serait plus reconnue au passage suivant,
         // qui l'enverrait une seconde fois : la retirer.
@@ -132,14 +182,14 @@ export function client({ cle, secret, fetch = globalThis.fetch, dormir = (ms) =>
       }
     },
 
-    async supprimerCapture(id, capture) {
-      const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/${capture}/`, API);
-      return demander(url, "rien", { methode: "DELETE" });
-    },
-
     async modifierCapture(id, capture, { legende, position }) {
       const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/${capture}/`, API);
       return demander(url, "json", { methode: "PATCH", corps: { caption: legende, position } });
+    },
+
+    async supprimerCapture(id, capture) {
+      const url = new URL(`addons/addon/${encodeURIComponent(id)}/previews/${capture}/`, API);
+      return demander(url, "rien", { methode: "DELETE" });
     },
 
     /** Télécharge le fichier signé d'une version publiée. */

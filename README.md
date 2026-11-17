@@ -207,15 +207,25 @@ release suit, étiquette posée sur le commit, avec le `.xpi`, le paquet complet
 et `updates.json`. Les installations existantes la reçoivent d'elles-mêmes.
 Une PR qui ne change pas de version ne publie rien.
 
-Le nom, le résumé et l'icône de la fiche viennent du manifeste et de ses
-quinze langues ; la description, de `amo/fiche.json`, en français et en
-anglais. Les **captures d'écran** sont tenues par le dépôt :
-[`amo/captures.json`](amo/captures.json) (ordre, légendes en français et en
-anglais) et `amo/captures/` (PNG de 1280 × 800). Le workflow
-[`fiche-amo.yml`](.github/workflows/fiche-amo.yml) les envoie quand elles
-changent sur `main` ; une capture est reconnue par sa légende française, donc
-relancer ne double rien, et une capture ajoutée à la main sur la fiche n'est
-jamais supprimée. Les deux captures d'Amazon ont l'adresse de livraison floutée
+La **fiche** est tenue par le dépôt, et
+[`fiche-amo.yml`](.github/workflows/fiche-amo.yml) la remet d'aplomb quand ses
+sources changent sur `main`, et chaque jour : AMO ne lit le nom et le résumé du
+manifeste qu'à la création de la fiche, et jamais son icône.
+
+| Sur la fiche | Vient de |
+| ------------ | -------- |
+| nom, résumé | `extName`, `extDescription` du français et de l'anglais |
+| description, catégorie | [`amo/fiche.json`](amo/fiche.json) |
+| page d'accueil | `homepage_url` du manifeste |
+| icône | `extension/icons/icone-128.png` |
+| captures d'écran | [`amo/captures.json`](amo/captures.json) (ordre, légendes) et `amo/captures/` (PNG de 1280 × 800) |
+
+Une capture est reconnue par sa légende française : relancer ne double rien,
+et une capture ajoutée à la main sur la fiche n'est jamais supprimée. AMO
+efface une légende posée juste après l'envoi de l'image : le script attend une
+minute, pose la légende et vérifie qu'elle a tenu. AMO limite aussi le débit
+(une demi-heure d'attente après quelques images) : le passage s'arrête alors en
+vert, et le suivant reprend. Les deux captures d'Amazon ont l'adresse de livraison floutée
 : à refaire pour toute nouvelle capture d'un site où l'on a une adresse.
 
 La signature demande les secrets `AMO_API_KEY` et `AMO_API_SECRET` du dépôt ;

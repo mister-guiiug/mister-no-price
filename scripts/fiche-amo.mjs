@@ -1,0 +1,175 @@
+#!/usr/bin/env node
+/**
+ * La fiche addons.mozilla.org, tenue par le dépôt. AMO ne lit le nom et le
+ * résumé du manifeste qu'à la création de la fiche, et jamais son icône : ce
+ * script les remet d'aplomb, avec la description, la catégorie, la page
+ * d'accueil et les captures d'écran.
+ *
+ *   - nom et résumé : `extName` et `extDescription` du français et de
+ *     l'anglais (extension/_locales) ;
+ *   - description et catégories : amo/fiche.json ;
+ *   - page d'accueil : `homepage_url` du manifeste ;
+ *   - icône : extension/icons/icone-128.png, envoyée si la fiche montre
+ *     l'icône par défaut ;
+ *   - captures : amo/captures.json (ordre, légendes) et amo/captures/.
+ *
+ * Seuls les champs qui diffèrent sont modifiés. Une capture est reconnue par
+ * sa légende française : absente, elle est envoyée ; présente, sa place et sa
+ * légende anglaise sont remises d'aplomb (pour changer l'image, changer la
+ * légende) ; sur la fiche mais pas dans le fichier, elle est signalée, JAMAIS
+ * supprimée. SUPPRIMER="id,id" en retire nommément.
+ *
+ * AMO limite le débit des écritures. Une attente courte est patientée ; une
+ * longue (souvent une demi-heure après quelques images) arrête le passage en
+ * vert : le suivant reprend là où il s'est arrêté.
+ *
+ * Clés : WEB_EXT_API_KEY, WEB_EXT_API_SECRET. Joué par fiche-amo.yml.
+ *
+ *   node scripts/fiche-amo.mjs            synchronise
+ *   node scripts/fiche-amo.mjs --verifier vérifie seulement les fichiers
+ */
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { client, DebitEpuise } from "./amo.mjs";
+
+const racine = path.resolve(import.meta.dirname, "..");
+const lireJson = async (...chemin) => JSON.parse(await readFile(path.join(racine, ...chemin), "utf8"));
+
+/** Les captures déclarées, vérifiées : fichiers présents, PNG 1280 × 800, légendes fr et en-US. */
+export async function chargerCaptures(dossier = path.join(racine, "amo")) {
+  const liste = JSON.parse(await readFile(path.join(dossier, "captures.json"), "utf8"));
+  if (!Array.isArray(liste) || liste.length === 0) throw new Error("captures.json : une liste non vide");
+  const vues = new Set();
+  return Promise.all(
+    liste.map(async ({ fichier, legende }, rang) => {
+      if (!/^[\w-]+\.png$/.test(fichier ?? "")) throw new Error(`captures.json[${rang}] : nom de fichier « ${fichier} »`);
+      for (const langue of ["fr", "en-US"]) {
+        const texte = legende?.[langue];
+        if (typeof texte !== "string" || texte.trim().length === 0 || texte.length > 280) {
+          throw new Error(`${fichier} : légende ${langue} manquante ou trop longue`);
+        }
+      }
+      if (vues.has(legende.fr)) throw new Error(`${fichier} : légende française en double`);
+      vues.add(legende.fr);
+      const image = await readFile(path.join(dossier, "captures", fichier));
+      // En-tête PNG puis IHDR : largeur et hauteur en octets 16 à 23.
+      if (image.subarray(1, 4).toString() !== "PNG") throw new Error(`${fichier} n'est pas un PNG`);
+      const [largeur, hauteur] = [image.readUInt32BE(16), image.readUInt32BE(20)];
+      if (largeur !== 1280 || hauteur !== 800) throw new Error(`${fichier} : ${largeur} × ${hauteur}, 1280 × 800 attendu`);
+      return { fichier, legende, image, position: rang }; // AMO compte à partir de 0
+    }),
+  );
+}
+
+/** Les champs voulus sur la fiche, tirés du dépôt. */
+export async function ficheVoulue() {
+  const manifeste = await lireJson("extension", "manifest.json");
+  const fiche = await lireJson("amo", "fiche.json");
+  const fr = await lireJson("extension", "_locales", "fr", "messages.json");
+  const en = await lireJson("extension", "_locales", "en", "messages.json");
+  return {
+    name: { fr: fr.extName.message, "en-US": en.extName.message },
+    summary: { fr: fr.extDescription.message, "en-US": en.extDescription.message },
+    description: fiche.description,
+    homepage: { fr: manifeste.homepage_url, "en-US": manifeste.homepage_url },
+    categories: fiche.categories,
+  };
+}
+
+/** Une page d'accueil rendue par l'API : `{ url: {fr: …}, outgoing: … }`, ou déjà un objet de langues. */
+const urlsDe = (champ) => champ?.url ?? champ ?? {};
+
+/** Les champs de `voulue` que la fiche `enLigne` n'a pas, prêts pour un PATCH. */
+export function ecarts(voulue, enLigne) {
+  const champs = {};
+  for (const cle of ["name", "summary", "description"]) {
+    const actuel = enLigne[cle] ?? {};
+    if (Object.entries(voulue[cle]).some(([langue, texte]) => actuel[langue] !== texte)) champs[cle] = voulue[cle];
+  }
+  const accueil = urlsDe(enLigne.homepage);
+  if (Object.entries(voulue.homepage).some(([langue, url]) => accueil[langue] !== url)) champs.homepage = voulue.homepage;
+  const categories = [enLigne.categories ?? []].flat();
+  if ([...categories].sort().join() !== [...voulue.categories].sort().join()) champs.categories = voulue.categories;
+  return champs;
+}
+
+/** L'icône montrée par la fiche est-elle celle par défaut ? */
+export const iconeParDefaut = (enLigne) => /default/.test(enLigne.icon_url ?? "default");
+
+/** Ce qu'il faut faire pour que la fiche montre `voulues`, d'après ses captures `enLigne`. */
+export function planifier(voulues, enLigne) {
+  const parLegende = new Map(enLigne.map((c) => [c.caption?.fr, c]));
+  const ajouter = [];
+  const modifier = [];
+  for (const capture of voulues) {
+    const existante = parLegende.get(capture.legende.fr);
+    if (!existante) ajouter.push(capture);
+    else if (existante.position !== capture.position || existante.caption?.["en-US"] !== capture.legende["en-US"]) {
+      modifier.push({ ...capture, id: existante.id });
+    }
+  }
+  const voulu = new Set(voulues.map((c) => c.legende.fr));
+  const etrangeres = enLigne.filter((c) => !voulu.has(c.caption?.fr));
+  return { ajouter, modifier, etrangeres };
+}
+
+async function synchroniser(amo, id, captures) {
+  const aSupprimer = (process.env.SUPPRIMER ?? "").split(",").map((x) => x.trim()).filter(Boolean);
+  for (const capture of aSupprimer) {
+    if (!/^\d+$/.test(capture)) throw new Error(`SUPPRIMER : « ${capture} » n'est pas un identifiant de capture`);
+    if (!(await amo.captures(id)).some((c) => String(c.id) === capture)) {
+      console.log(`::warning::capture ${capture} absente de la fiche : rien à supprimer`);
+      continue;
+    }
+    await amo.supprimerCapture(id, capture);
+    console.log(`supprimée : capture ${capture}`);
+  }
+
+  const enLigne = await amo.fiche(id);
+  const champs = ecarts(await ficheVoulue(), enLigne);
+  if (Object.keys(champs).length > 0) {
+    await amo.modifierFiche(id, champs);
+    console.log(`fiche : ${Object.keys(champs).join(", ")} remis d'aplomb`);
+  }
+  if (iconeParDefaut(enLigne)) {
+    await amo.envoyerIcone(id, await readFile(path.join(racine, "extension", "icons", "icone-128.png")));
+    console.log("fiche : icône envoyée");
+  }
+
+  const { ajouter, modifier, etrangeres } = planifier(captures, enLigne.previews ?? []);
+  for (const c of modifier) {
+    await amo.modifierCapture(id, c.id, { legende: c.legende, position: c.position });
+    console.log(`capture remise d'aplomb : ${c.fichier}`);
+  }
+  for (const c of ajouter) {
+    await amo.ajouterCapture(id, { image: c.image, nom: c.fichier, legende: c.legende, position: c.position });
+    console.log(`capture ajoutée : ${c.fichier}`);
+  }
+  for (const c of etrangeres) {
+    console.log(`::warning::capture ${c.id} sur la fiche mais pas dans amo/captures.json (« ${c.caption?.fr ?? "sans légende"} ») : laissée en place`);
+  }
+  console.log(`Fiche à jour : ${(await amo.captures(id)).length} capture(s).`);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(import.meta.filename)) {
+  const captures = await chargerCaptures();
+  await ficheVoulue();
+  if (process.argv.includes("--verifier")) {
+    console.log(`Fiche prête, ${captures.length} captures : ${captures.map((c) => c.fichier).join(", ")}`);
+    process.exit(0);
+  }
+  try {
+    process.loadEnvFile(path.join(racine, ".env"));
+  } catch (erreur) {
+    if (erreur.code !== "ENOENT") throw erreur;
+  }
+  const { WEB_EXT_API_KEY: cle, WEB_EXT_API_SECRET: secret } = process.env;
+  if (!cle || !secret) throw new Error("WEB_EXT_API_KEY et WEB_EXT_API_SECRET manquent");
+  const { id } = (await lireJson("extension", "manifest.json")).browser_specific_settings.gecko;
+  try {
+    await synchroniser(client({ cle, secret }), id, captures);
+  } catch (erreur) {
+    if (!(erreur instanceof DebitEpuise)) throw erreur;
+    console.log(`::notice::${erreur.message} : arrêt, le prochain passage reprendra.`);
+  }
+}

@@ -1,7 +1,8 @@
-# Les captures d'écran de la fiche addons.mozilla.org, tenues par le dépôt
-# (amo/captures.json et amo/captures/) : envoyées quand elles changent sur
-# main, ou à la main. Rien n'est supprimé de la fiche ; relancer ne double rien
-# (scripts/captures-amo.mjs).
+# La fiche addons.mozilla.org, tenue par le dépôt (scripts/fiche-amo.mjs) :
+# nom, résumé, description, catégorie, page d'accueil, icône et captures
+# d'écran. Joué quand l'une de leurs sources change sur main, chaque jour (une
+# reprise, si AMO a limité le débit), ou à la main. Rien n'est supprimé de la
+# fiche sans être nommé ; relancer ne double rien.
 #
 # Secrets : AMO_API_KEY et AMO_API_SECRET, passés à la seule étape qui envoie.
 name: Fiche AMO
@@ -10,9 +11,14 @@ on:
   push:
     branches: [main]
     paths:
-      - "amo/captures.json"
-      - "amo/captures/**"
-      - "scripts/captures-amo.mjs"
+      - "amo/**"
+      - "extension/_locales/fr/messages.json"
+      - "extension/_locales/en/messages.json"
+      - "extension/icons/icone-128.png"
+      - "scripts/fiche-amo.mjs"
+      - "scripts/amo.mjs"
+  schedule:
+    - cron: "17 5 * * *"
   workflow_dispatch:
     inputs:
       supprimer:
@@ -29,7 +35,7 @@ concurrency:
 
 jobs:
   captures:
-    name: Captures de la fiche
+    name: Fiche addons.mozilla.org
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -42,7 +48,7 @@ jobs:
         with:
           node-version: 24
 
-      - run: node scripts/captures-amo.mjs --verifier
+      - run: node scripts/fiche-amo.mjs --verifier
 
       # AMO limite le débit des écritures (429) : le script attend ce qu'il
       # demande, d'où le délai du job.
@@ -51,4 +57,4 @@ jobs:
           WEB_EXT_API_KEY: ${{ secrets.AMO_API_KEY }}
           WEB_EXT_API_SECRET: ${{ secrets.AMO_API_SECRET }}
           SUPPRIMER: ${{ inputs.supprimer }}
-        run: node scripts/captures-amo.mjs
+        run: node scripts/fiche-amo.mjs
