@@ -36,12 +36,33 @@ par leur prix.
 
 ## En pratique
 
-Les prix sont remplacés par une **barre grise** (ou **floutés**, au choix). Un
-interrupteur dans le popup, ou <kbd>Alt</kbd>+<kbd>Maj</kbd>+<kbd>P</kbd>, les
-fait revenir dans tous les onglets à la fois ; une pastille « off » sur l'icône
-rappelle qu'ils sont visibles.
+Les prix sont remplacés par une **barre grise** — translucide, elle se voit sur
+un site clair comme sur un site sombre —, **floutés**, ou recouverts de
+**papier cadeau** (rayures rose et jaune), au choix. Un interrupteur dans le
+popup, ou <kbd>Alt</kbd>+<kbd>Maj</kbd>+<kbd>P</kbd>, les fait revenir dans tous
+les onglets à la fois ; une pastille « off » sur l'icône rappelle qu'ils sont
+visibles.
 
-<img src="docs/popup.png" alt="Le popup : interrupteur « Masquer les prix », choix entre barre grise et flou, liste d’envies (bouton ♥ sur les fiches, Voir la liste), sites couverts" width="290">
+- **Pause** de 5 minutes, 15 minutes ou une heure : le temps de jeter un œil,
+  puis le masquage revient seul, sans qu'on ait à y penser.
+- **Ce site** : sur une page couverte, un second interrupteur éteint le
+  masquage pour ce site seulement ; la liste repliée « Active sur 37 sites »
+  fait de même site par site.
+- **Code parent** (4 à 8 chiffres) : demandé pour tout ce qui **dévoile** les
+  prix — couper le masquage, le mettre en pause, éteindre un site, afficher les
+  prix de la liste d'envies, la vider, changer ou retirer le code. Rallumer ne
+  le demande jamais. Avec un code, le raccourci clavier ouvre le popup au lieu
+  de couper. C'est une porte fermée à un enfant curieux, pas un coffre-fort :
+  qui ouvre `about:addons` peut désinstaller l'extension — sauf si elle est
+  imposée par la stratégie du paquet (`policies.json`, ci-dessous).
+- **Compteur** : le nombre de prix masqués sur la page, sur l'icône, onglet par
+  onglet (« 99+ » au-delà). Il se coupe dans le popup.
+
+À l'installation, puis après une mise à jour qui ajoute des sites ou change de
+version mineure, une page **Quoi de neuf** s'ouvre : les sites à autoriser d'un
+grand bouton, ce que la version change, le code parent à poser.
+
+<img src="docs/popup.png" alt="Le popup : interrupteur « Masquer les prix », pause de 5 min, 15 min ou 1 h, choix entre barre grise, flou et papier cadeau, liste d’envies, compteur sur l’icône, code parent, sites couverts" width="290">
 
 _Extension indépendante : ni éditée ni approuvée par les sites qu'elle couvre._
 
@@ -52,12 +73,23 @@ qui lui plaît, sans jamais y voir de prix. Le parent retrouve la liste depuis l
 popup (**Voir la liste**) : image, titre, boutique, lien vers la fiche.
 
 Les prix y sont **masqués à l'ouverture**, comme sur les boutiques : l'enfant
-peut ouvrir la liste sans rien dévoiler. **Afficher les prix** les montre, avec
-le **total** par devise, le temps de la visite. **Partager la liste** passe par
-le partage du système sur Android, par le presse-papiers ailleurs, et reprend ce
-qui est à l'écran : sans les prix tant qu'ils sont masqués.
+peut ouvrir la liste sans rien dévoiler. **Afficher les prix** les montre (code
+parent demandé s'il y en a un), avec le **total** par devise, le temps de la
+visite. **Partager la liste** passe par le partage du système sur Android, par
+le presse-papiers ailleurs, et reprend ce qui est à l'écran : sans les prix tant
+qu'ils sont masqués.
 
-<img src="docs/liste.png" alt="La liste d'envies : cinq articles (AliExpress, Rue du Commerce, Decathlon, Boulanger, Amazon), image, titre et boutique, prix sous une barre grise" width="560">
+Pour une famille de plusieurs enfants :
+
+- chaque article peut porter un **prénom** (« Pour Léa »), proposé parmi ceux
+  déjà saisis ;
+- **↑ ↓** rangent la liste dans l'ordre qu'on veut — un nouveau ♥ sur la même
+  fiche met titre et prix à jour sans défaire ce rangement ;
+- **Pour :** filtre la liste sur un enfant, total compris ;
+- **Imprimer** sort la liste sans les boutons, prénoms en clair, prix masqués
+  tant qu'on ne les a pas montrés.
+
+<img src="docs/liste.png" alt="La liste d'envies, prix affichés : trois articles Vinted, un prénom par article (Léa, Tom), boutons pour ranger, filtre « Pour : tout le monde », total 63 €" width="560">
 
 L'extension reconnaît une fiche à ses données structurées — JSON-LD
 `Product`, microdonnées, Open Graph — que la plupart des boutiques publient pour
@@ -329,10 +361,14 @@ application les efface (Decathlon le fait).
 ## Confidentialité
 
 L'extension ne collecte, n'envoie ni ne lit rien d'autre que les pages des sites
-qu'elle masque. Aucune requête réseau de son fait. Elle conserve trois réglages
-(`actif`, `style`, `envies`) dans `storage.sync`, qui suivent le compte Firefox
-s'il est synchronisé, et la liste d'envies dans `storage.local`, sur l'appareil
-seulement. Le manifeste le déclare (`data_collection_permissions: none`).
+qu'elle masque. Aucune requête réseau de son fait. Elle conserve ses réglages
+(`actif`, `pauseJusqua`, `sitesEteints`, `style`, `envies`, `compteur`) dans
+`storage.sync`, qui suivent le compte Firefox s'il est synchronisé, et dans
+`storage.local`, sur l'appareil seulement, la liste d'envies (prénoms compris)
+et le code parent — jamais en clair : un sel tiré au hasard et l'empreinte
+SHA-256 du sel et du code. Le manifeste le déclare
+(`data_collection_permissions: none`). La permission `alarms` sert à lever la
+pause à l'heure dite.
 
 La page de la liste affiche les images des articles depuis les serveurs des
 boutiques, sans en-tête `Referer` : la boutique voit qu'une de ses images est

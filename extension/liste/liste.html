@@ -7,6 +7,7 @@
     <title data-i18n="listeTitre"></title>
     <link rel="icon" href="../icons/icone.svg" />
     <link rel="stylesheet" href="liste.css" />
+    <link rel="stylesheet" href="../commun/code.css" />
   </head>
   <body>
     <main>
@@ -21,16 +22,25 @@
       <div class="actions">
         <button type="button" id="prix" aria-pressed="false" data-i18n="listeMontrerPrix"></button>
         <button type="button" id="partager" data-i18n="listePartager"></button>
+        <button type="button" id="imprimer" data-i18n="listeImprimer"></button>
         <button type="button" id="vider" class="danger" data-i18n="listeVider"></button>
       </div>
+
+      <label id="filtre-ligne" class="filtre" hidden>
+        <span data-i18n="listeFiltre"></span>
+        <select id="filtre"></select>
+      </label>
 
       <p id="total" hidden></p>
       <p id="message" role="status"></p>
 
       <ul id="articles"></ul>
       <p id="vide" class="vide" hidden data-i18n="listeVide"></p>
+      <datalist id="prenoms"></datalist>
     </main>
     <script src="../commun/envies.js"></script>
+    <script src="../commun/code.js"></script>
+    <script src="../commun/code-ui.js"></script>
     <script src="liste.js"></script>
   </body>
 </html>

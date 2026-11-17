@@ -192,5 +192,180 @@
   },
   "popupVoirLesquels": {
     "message": "Show which"
+  },
+  "titrePauseJusqua": {
+    "message": "No Prices: paused until $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pause:"
+  },
+  "pause5": {
+    "message": "5 min"
+  },
+  "pause15": {
+    "message": "15 min"
+  },
+  "pause60": {
+    "message": "1 h"
+  },
+  "pauseReprendre": {
+    "message": "Resume"
+  },
+  "pauseJusqua": {
+    "message": "Paused until $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "On $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Gift wrap"
+  },
+  "popupCompteur": {
+    "message": "Number of hidden prices on the icon"
+  },
+  "popupSitesAide": {
+    "message": "Untick a site to see its prices."
+  },
+  "codeTitre": {
+    "message": "Parent code"
+  },
+  "codeAide": {
+    "message": "Asked for anything that reveals prices: turning hiding off, pausing it, turning it off on a site, showing prices in the wish list."
+  },
+  "codeEtatDefini": {
+    "message": "· set"
+  },
+  "codeEtatAucun": {
+    "message": "· none"
+  },
+  "codeChanger": {
+    "message": "Change code"
+  },
+  "codeRetirer": {
+    "message": "Remove code"
+  },
+  "codeDemande": {
+    "message": "Parent code"
+  },
+  "codeAnnuler": {
+    "message": "Cancel"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "That’s not the right code."
+  },
+  "codeNouveau": {
+    "message": "New code (4 to 8 digits)"
+  },
+  "codeConfirmer": {
+    "message": "The same, once more"
+  },
+  "codeDefinir": {
+    "message": "Set code"
+  },
+  "codeForme": {
+    "message": "The code has 4 to 8 digits."
+  },
+  "codeDifferents": {
+    "message": "The two codes don’t match."
+  },
+  "codeDejaDefini": {
+    "message": "A parent code already protects the settings. To change or remove it: the extension’s popup."
+  },
+  "listeImprimer": {
+    "message": "Print"
+  },
+  "listeFiltre": {
+    "message": "For:"
+  },
+  "listeFiltreTous": {
+    "message": "everyone"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "no name"
+  },
+  "listePour": {
+    "message": "For"
+  },
+  "listePourExemple": {
+    "message": "first name"
+  },
+  "listePourImprime": {
+    "message": "For $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "Move “$TITRE$” up",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "Move “$TITRE$” down",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Welcome to No Prices"
+  },
+  "nouveautesTitre": {
+    "message": "No Prices $VERSION$: what’s new",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Sites to allow: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox doesn’t grant the sites an update adds. Without your approval, prices come back there on every new page."
+  },
+  "nouveautesAccesOk": {
+    "message": "All sites are allowed: nothing to do."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "What’s new"
+  },
+  "nouveautesPoints": {
+    "message": "A 5-minute, 15-minute or one-hour pause that lifts by itself.|A parent code, asked for anything that reveals prices.|Sites one by one: untick a site to see its prices.|Gift wrap, a look for children; the grey bar now shows on dark sites too.|The wish list: a first name per item, your own order, a filter per child, printing.|The number of hidden prices on the icon, page by page.|20 classifieds and second-hand sites: Leboncoin, Vinted, Back Market, Facebook Marketplace…"
+  },
+  "nouveautesCodeTexte": {
+    "message": "A 4- to 8-digit code, asked for anything that reveals prices. Turning hiding back on never asks for it."
+  },
+  "nouveautesReglages": {
+    "message": "Other settings — pause, look, sites one by one — are in the popup: the No Prices icon in the toolbar."
   }
 }

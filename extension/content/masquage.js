@@ -18,7 +18,9 @@
  *    nœud.
  * 4. Le titre de l'onglet perd ses montants (« Robot 999€ chez … »).
  *
- * Le script suit aussi les réglages (actif, apparence) et les applique en direct.
+ * Le script suit aussi les réglages (actif, pause minutée, sites éteints,
+ * apparence) et les applique en direct ; il donne à l'arrière-plan le nombre de
+ * prix masqués, que l'icône affiche.
  * Une règle limitée à des `chemins` (Facebook : /marketplace) n'agit que là :
  * ailleurs, le script éteint le masquage dès document_start et ne lit pas le
  * texte ; il suit les changements d'adresse sans rechargement.
@@ -26,7 +28,7 @@
 (() => {
   "use strict";
 
-  const { lire, suivre } = globalThis.SansPrixReglages;
+  const { DEFAUTS, lire, suivre, masquageEnCours } = globalThis.SansPrixReglages;
   const { contientChiffre, trouverMontants, masquerMontants, estFragment } =
     globalThis.SansPrixDetection;
   const { ATTRIBUT_ECLATE, trouverRegle, couvreChemin, construireFeuille } = globalThis.SansPrixMoteur;
@@ -37,7 +39,7 @@
   const LONGUEUR_MAX_ECLATE = 30;
   const NIVEAUX_MAX_ECLATE = 3;
 
-  const reglages = { actif: true, style: "barre" };
+  let reglages = { ...DEFAUTS };
 
   // --- 1. La feuille du site ----------------------------------------------
 
@@ -48,7 +50,7 @@
 
   /** La page est-elle dans le périmètre de la règle (ses `chemins`) ? */
   let ici = couvreChemin(regle, location.pathname);
-  const actifIci = () => reglages.actif && ici;
+  const actifIci = () => ici && masquageEnCours(reglages, regle?.id);
 
   // Accrochée à <html> plutôt qu'à <head> : une application qui remplace son
   // <head> ne l'emporte pas. Si elle disparaît quand même, on la remet.
@@ -199,6 +201,7 @@
     poserFeuille();
     if (titre) majTitre();
     if (retraits) prevoirPurge();
+    prevoirCompte();
   });
   // Les attributs de réglage sur <html> aussi : une application qui hydrate sa
   // page (Decathlon, en Vue) réécrit ceux de <html> et efface les nôtres. Le
@@ -252,15 +255,18 @@
     }
   }
 
-  function appliquer({ actif, style }) {
-    reglages.actif = actif;
-    reglages.style = style;
+  // La pause se lève d'elle-même : à son terme, on réapplique.
+  let finDePause = null;
+
+  function appliquer(nouveaux) {
+    reglages = nouveaux;
     reglagesLus = true;
+    clearTimeout(finDePause);
+    const reste = reglages.pauseJusqua - Date.now();
+    if (reste > 0) finDePause = setTimeout(() => majEtat(), reste + 50);
     const racine = document.documentElement;
     if (!racine) {
-      document.addEventListener("DOMContentLoaded", () => appliquer({ actif, style }), {
-        once: true,
-      });
+      document.addEventListener("DOMContentLoaded", () => appliquer(nouveaux), { once: true });
       return;
     }
     majEtat();
@@ -274,6 +280,45 @@
     if (reglagesLus ? actifIci() : ici) CSS.highlights.set(NOM, surlignage);
     else CSS.highlights.delete(NOM);
     majTitre();
+    prevoirCompte();
+  }
+
+  // --- Le compteur de l'icône ---------------------------------------------------
+
+  // Le nombre de prix masqués, pour la pastille de l'onglet : les montants
+  // surlignés, les prix éclatés, et les composants de prix de la règle — les
+  // plus extérieurs seulement (« .a-price » contient « .a-price-whole »).
+  // Compté au plus toutes les deux secondes, et par le cadre principal seul.
+  const principal = window.top === window;
+  const selecteurSite = regle?.masquer.length ? `:is(${regle.masquer.join(",")})` : null;
+  let comptePrevu = false;
+  let dernierCompte = -1;
+
+  function compter() {
+    if (!actifIci() || !reglages.compteur) return 0;
+    let n = surlignage.size + document.querySelectorAll(`[${ATTRIBUT_ECLATE}]`).length;
+    if (selecteurSite) {
+      try {
+        for (const e of document.querySelectorAll(selecteurSite)) {
+          if (!e.parentElement?.closest(selecteurSite)) n += 1;
+        }
+      } catch {
+        // Un sélecteur que ce navigateur refuse : on compte sans lui.
+      }
+    }
+    return n;
+  }
+
+  function prevoirCompte() {
+    if (!principal || comptePrevu || !reglagesLus) return;
+    comptePrevu = true;
+    setTimeout(() => {
+      comptePrevu = false;
+      const n = compter();
+      if (n === dernierCompte) return;
+      dernierCompte = n;
+      browser.runtime.sendMessage({ type: "compteur", n }).catch(() => {});
+    }, 2_000);
   }
 
   // Une application (Facebook) change d'adresse sans recharger la page : on

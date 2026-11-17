@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title data-i18n="extShortName"></title>
+    <link rel="icon" href="../icons/icone.svg" />
+    <link rel="stylesheet" href="../liste/liste.css" />
+    <link rel="stylesheet" href="../commun/code.css" />
+    <link rel="stylesheet" href="nouveautes.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icons/icone.svg" alt="" width="32" height="32" />
+        <h1 id="titre"></h1>
+      </header>
+
+      <section id="acces" class="carte carte-alerte" hidden>
+        <h2 id="acces-titre"></h2>
+        <p data-i18n="nouveautesAccesTexte"></p>
+        <details>
+          <summary data-i18n="popupVoirLesquels"></summary>
+          <p id="acces-noms"></p>
+        </details>
+        <button type="button" id="acces-bouton" class="principal" data-i18n="accesBouton"></button>
+      </section>
+      <p id="acces-ok" class="carte" hidden data-i18n="nouveautesAccesOk"></p>
+
+      <section class="carte">
+        <h2 data-i18n="nouveautesQuoiDeNeuf"></h2>
+        <ul id="points"></ul>
+      </section>
+
+      <section class="carte">
+        <h2 data-i18n="codeTitre"></h2>
+        <p data-i18n="nouveautesCodeTexte"></p>
+        <div id="code"></div>
+      </section>
+
+      <p class="explication" data-i18n="nouveautesReglages"></p>
+    </main>
+    <script src="../regles.js"></script>
+    <script src="../content/moteur.js"></script>
+    <script src="../commun/acces.js"></script>
+    <script src="../commun/code.js"></script>
+    <script src="../commun/code-ui.js"></script>
+    <script src="nouveautes.js"></script>
+  </body>
+</html>
