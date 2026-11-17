@@ -209,8 +209,14 @@ Une PR qui ne change pas de version ne publie rien.
 
 Le nom, le résumé et l'icône de la fiche viennent du manifeste et de ses
 quinze langues ; la description, de `amo/fiche.json`, en français et en
-anglais. Les captures d'écran s'ajoutent à la main, sur le tableau de bord du
-développeur.
+anglais. Les **captures d'écran** sont tenues par le dépôt :
+[`amo/captures.json`](amo/captures.json) (ordre, légendes en français et en
+anglais) et `amo/captures/` (PNG de 1280 × 800). Le workflow
+[`fiche-amo.yml`](.github/workflows/fiche-amo.yml) les envoie quand elles
+changent sur `main` ; une capture est reconnue par sa légende française, donc
+relancer ne double rien, et une capture ajoutée à la main sur la fiche n'est
+jamais supprimée. Les deux captures d'Amazon ont l'adresse de livraison floutée
+: à refaire pour toute nouvelle capture d'un site où l'on a une adresse.
 
 La signature demande les secrets `AMO_API_KEY` et `AMO_API_SECRET` du dépôt ;
 sans eux, le workflow échoue plutôt que de publier une release sans fichier

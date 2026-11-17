@@ -1,0 +1,30 @@
+[
+  {
+    "fichier": "1-recherche.png",
+    "legende": {
+      "fr": "Une recherche sur Amazon : les produits restent, les prix disparaissent, filtres compris.",
+      "en-US": "An Amazon search: the products stay, the prices disappear, filters included."
+    }
+  },
+  {
+    "fichier": "2-fiche.png",
+    "legende": {
+      "fr": "Une fiche produit sans prix, et le bouton ♥ « Ma liste » pour garder ce qui plaît.",
+      "en-US": "A product page without prices, and the ♥ “My list” button to keep what they like."
+    }
+  },
+  {
+    "fichier": "3-reglage.png",
+    "legende": {
+      "fr": "Le réglage : interrupteur, pause, apparence (barre grise, flou, papier cadeau), liste d'envies, code parent.",
+      "en-US": "Settings: on/off switch, pause, look (grey bar, blur, gift wrap), wish list, parent code."
+    }
+  },
+  {
+    "fichier": "4-liste.png",
+    "legende": {
+      "fr": "La liste d'envies côté parent : les prix à la demande, un prénom par article, à imprimer.",
+      "en-US": "The wish list, parent side: prices on request, a first name per item, ready to print."
+    }
+  }
+]
