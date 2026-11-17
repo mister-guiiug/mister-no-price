@@ -5,11 +5,16 @@
  * cette page sans tout dévoiler. « Afficher les prix » les montre, avec le
  * total par devise, le temps de la visite — rien n'est retenu. Le partage
  * reprend ce qui est à l'écran : sans les prix tant qu'ils sont masqués.
+ *
+ * Chaque article peut porter le prénom de l'enfant (« pour Léa »), se ranger
+ * (↑ ↓), et la liste se filtrer par enfant, s'imprimer. Avec un code parent,
+ * afficher les prix et tout effacer le demandent.
  */
 (() => {
   "use strict";
 
   const Envies = globalThis.SansPrixEnvies;
+  const { exiger } = globalThis.SansPrixCodeUI;
   const t = (cle, ...valeurs) => browser.i18n.getMessage(cle, valeurs);
   const langue = t("langue");
 
@@ -22,6 +27,15 @@
   const boutonPrix = $("prix");
   let prixVisibles = false;
   let articles = [];
+  // Le filtre par enfant : "" pour tout le monde, SANS_PRENOM pour les articles
+  // qui n'en portent pas, sinon un prénom.
+  const SANS_PRENOM = "-";
+  let filtre = "";
+  const visibles = () => (filtre === "" ? articles : articles.filter((a) => (a.pour ?? SANS_PRENOM) === filtre));
+  const prenoms = () =>
+    [...new Set(articles.map((a) => a.pour).filter(Boolean))].sort((a, b) =>
+      a.localeCompare(b, langue, { sensitivity: "base" }),
+    );
 
   const formatDate = new Intl.DateTimeFormat(langue, { day: "numeric", month: "short" });
 
@@ -45,7 +59,18 @@
     return [...parDevise].map(([devise, somme]) => formatPrix(somme, devise || null));
   }
 
-  function article(a) {
+  /** Un petit bouton d'action d'un article. */
+  function bouton(texte, etiquette, action, desactive = false) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = texte;
+    b.setAttribute("aria-label", etiquette);
+    b.disabled = desactive;
+    b.addEventListener("click", () => action().catch(console.error));
+    return b;
+  }
+
+  function article(a, rang, nombre) {
     const li = document.createElement("li");
     li.className = "article";
 
@@ -84,16 +109,37 @@
       prix.textContent = montant ?? t("listePrixInconnu");
       if (!montant) prix.classList.add("inconnu");
     }
-    infos.append(lien, meta, prix);
 
-    const retirer = document.createElement("button");
-    retirer.type = "button";
-    retirer.className = "retirer";
-    retirer.textContent = t("listeRetirer");
-    retirer.setAttribute("aria-label", t("listeRetirerArticle", a.titre));
-    retirer.addEventListener("click", () => Envies.retirer(a.url).catch(console.error));
+    // Le prénom de l'enfant : un champ à l'écran, un texte à l'impression.
+    const pour = document.createElement("label");
+    pour.className = "pour";
+    const champ = document.createElement("input");
+    champ.type = "text";
+    champ.value = a.pour ?? "";
+    champ.maxLength = 40;
+    champ.setAttribute("list", "prenoms");
+    champ.placeholder = t("listePourExemple");
+    champ.addEventListener("change", () => Envies.modifier(a.url, { pour: champ.value }).catch(console.error));
+    pour.append(t("listePour"), " ", champ);
+    const pourImprime = document.createElement("p");
+    pourImprime.className = "pour-imprime";
+    pourImprime.textContent = a.pour ? t("listePourImprime", a.pour) : "";
+    infos.append(lien, meta, prix, pour, pourImprime);
 
-    li.append(infos, retirer);
+    const actions = document.createElement("div");
+    actions.className = "article-actions";
+    // Ranger n'a de sens que sur la liste entière, pas sur une vue filtrée.
+    if (filtre === "") {
+      actions.append(
+        bouton("↑", t("listeMonter", a.titre), () => Envies.deplacer(a.url, -1), rang === 0),
+        bouton("↓", t("listeDescendre", a.titre), () => Envies.deplacer(a.url, 1), rang === nombre - 1),
+      );
+    }
+    const retirer = bouton(t("listeRetirer"), t("listeRetirerArticle", a.titre), () => Envies.retirer(a.url));
+    retirer.classList.add("retirer");
+    actions.append(retirer);
+
+    li.append(infos, actions);
     return li;
   }
 
@@ -105,32 +151,61 @@
     return span;
   }
 
+  function afficherPrenoms() {
+    const noms = prenoms();
+    $("prenoms").replaceChildren(...noms.map((nom) => Object.assign(document.createElement("option"), { value: nom })));
+    if (filtre !== "" && filtre !== SANS_PRENOM && !noms.includes(filtre)) filtre = "";
+    const options = [["", t("listeFiltreTous")], ...noms.map((nom) => [nom, nom]), [SANS_PRENOM, t("listeFiltreSansPrenom")]];
+    $("filtre").replaceChildren(
+      ...options.map(([valeur, texte]) =>
+        Object.assign(document.createElement("option"), {
+          value: valeur,
+          textContent: texte,
+          selected: valeur === filtre,
+        }),
+      ),
+    );
+    $("filtre-ligne").hidden = noms.length === 0;
+  }
+
   function afficher() {
-    $("articles").replaceChildren(...articles.map(article));
+    afficherPrenoms();
+    const vus = visibles();
+    $("articles").replaceChildren(...vus.map((a, rang) => article(a, rang, vus.length)));
     $("compte").textContent = t(articles.length > 1 ? "listeCompteN" : "listeCompte1", String(articles.length));
     $("vide").hidden = articles.length > 0;
-    for (const id of ["prix", "partager", "vider"]) $(id).disabled = articles.length === 0;
+    for (const id of ["prix", "partager", "imprimer", "vider"]) $(id).disabled = articles.length === 0;
 
     boutonPrix.setAttribute("aria-pressed", String(prixVisibles));
     boutonPrix.textContent = t(prixVisibles ? "listeMasquerPrix" : "listeMontrerPrix");
-    const sommes = totaux(articles);
+    const sommes = totaux(vus);
     $("total").hidden = !prixVisibles || sommes.length === 0;
     $("total").textContent = t("listeTotal", sommes.join(" + "));
   }
 
   function texteAPartager() {
-    const lignes = articles.map((a) => {
+    const lignes = visibles().map((a) => {
       const prix = prixVisibles ? formatPrix(a.prix, a.devise) : null;
-      const details = [prix, a.site].filter(Boolean).join(", ");
+      const details = [a.pour ? t("listePourImprime", a.pour) : null, prix, a.site].filter(Boolean).join(", ");
       return `• ${a.titre}${details ? ` (${details})` : ""}\n  ${a.url}`;
     });
     return `${t("listeTitre")}\n\n${lignes.join("\n")}\n`;
   }
 
-  boutonPrix.addEventListener("click", () => {
+  boutonPrix.addEventListener("click", async () => {
+    // Montrer les prix demande le code parent ; les cacher, jamais.
+    if (!prixVisibles && !(await exiger())) return;
     prixVisibles = !prixVisibles;
     afficher();
   });
+
+  $("filtre").addEventListener("change", () => {
+    filtre = $("filtre").value;
+    afficher();
+  });
+
+  // L'impression reprend l'écran : prix masqués tant qu'on ne les a pas montrés.
+  $("imprimer").addEventListener("click", () => window.print());
 
   $("partager").addEventListener("click", async () => {
     const texte = texteAPartager();
@@ -151,7 +226,8 @@
     }
   });
 
-  $("vider").addEventListener("click", () => {
+  $("vider").addEventListener("click", async () => {
+    if (!(await exiger())) return;
     if (window.confirm(t("listeViderConfirmer"))) Envies.vider().catch(console.error);
   });
 

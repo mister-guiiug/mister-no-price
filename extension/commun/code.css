@@ -1,0 +1,90 @@
+/* La boîte du code parent et le formulaire qui le pose : popup, liste
+   d'envies, page des nouveautés. Elle s'appuie sur leurs variables
+   (--accent, --bord, --texte, --fond ou --carte). */
+
+.code-dialogue {
+  max-width: 17rem;
+  padding: 1rem;
+  border: 1px solid var(--bord);
+  border-radius: 0.75rem;
+  background: var(--carte, var(--fond));
+  color: var(--texte);
+}
+
+.code-dialogue::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+
+.code-dialogue form,
+.code-formulaire {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.code-dialogue label,
+.code-champ {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+.code-dialogue input,
+.code-champ input {
+  width: 100%;
+  max-width: 12rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--bord);
+  border-radius: 0.375rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: 0.3em;
+}
+
+.code-erreur {
+  margin: 0;
+  color: #c92a2a;
+}
+
+.code-erreur:empty {
+  display: none;
+}
+
+.code-boutons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.code-boutons button,
+.code-definir {
+  min-height: 2.25rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.code-valider,
+.code-definir {
+  justify-self: start;
+  border-color: var(--accent) !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+}
+
+.code-pose {
+  margin: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .code-erreur {
+    color: #ff8787;
+  }
+}

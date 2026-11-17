@@ -192,5 +192,180 @@
   },
   "popupVoirLesquels": {
     "message": "Voir lesquels"
+  },
+  "titrePauseJusqua": {
+    "message": "Sans prix : en pause jusqu’à $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pause :"
+  },
+  "pause5": {
+    "message": "5 min"
+  },
+  "pause15": {
+    "message": "15 min"
+  },
+  "pause60": {
+    "message": "1 h"
+  },
+  "pauseReprendre": {
+    "message": "Reprendre"
+  },
+  "pauseJusqua": {
+    "message": "En pause jusqu’à $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "Sur $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Papier cadeau"
+  },
+  "popupCompteur": {
+    "message": "Nombre de prix masqués sur l’icône"
+  },
+  "popupSitesAide": {
+    "message": "Décocher un site y laisse voir les prix."
+  },
+  "codeTitre": {
+    "message": "Code parent"
+  },
+  "codeAide": {
+    "message": "Demandé pour tout ce qui dévoile les prix : couper le masquage, le mettre en pause, l’éteindre sur un site, afficher les prix de la liste d’envies."
+  },
+  "codeEtatDefini": {
+    "message": "· défini"
+  },
+  "codeEtatAucun": {
+    "message": "· aucun"
+  },
+  "codeChanger": {
+    "message": "Changer le code"
+  },
+  "codeRetirer": {
+    "message": "Retirer le code"
+  },
+  "codeDemande": {
+    "message": "Code parent"
+  },
+  "codeAnnuler": {
+    "message": "Annuler"
+  },
+  "codeValider": {
+    "message": "Valider"
+  },
+  "codeFaux": {
+    "message": "Ce n’est pas le bon code."
+  },
+  "codeNouveau": {
+    "message": "Nouveau code (4 à 8 chiffres)"
+  },
+  "codeConfirmer": {
+    "message": "Le même, une seconde fois"
+  },
+  "codeDefinir": {
+    "message": "Définir le code"
+  },
+  "codeForme": {
+    "message": "Le code compte de 4 à 8 chiffres."
+  },
+  "codeDifferents": {
+    "message": "Les deux codes ne sont pas les mêmes."
+  },
+  "codeDejaDefini": {
+    "message": "Un code parent protège déjà les réglages. Pour le changer ou le retirer : le popup de l’extension."
+  },
+  "listeImprimer": {
+    "message": "Imprimer"
+  },
+  "listeFiltre": {
+    "message": "Pour :"
+  },
+  "listeFiltreTous": {
+    "message": "tout le monde"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "sans prénom"
+  },
+  "listePour": {
+    "message": "Pour"
+  },
+  "listePourExemple": {
+    "message": "prénom"
+  },
+  "listePourImprime": {
+    "message": "Pour $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "Monter « $TITRE$ »",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "Descendre « $TITRE$ »",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Bienvenue dans Sans prix"
+  },
+  "nouveautesTitre": {
+    "message": "Sans prix $VERSION$ : quoi de neuf",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Sites à autoriser : $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox n’accorde pas d’office les sites qu’une mise à jour ajoute. Sans votre accord, les prix y réapparaissent à chaque changement de page."
+  },
+  "nouveautesAccesOk": {
+    "message": "Tous les sites sont autorisés : rien à faire."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Quoi de neuf"
+  },
+  "nouveautesPoints": {
+    "message": "Une pause de 5 minutes, 15 minutes ou une heure, qui se lève seule.|Un code parent, demandé pour tout ce qui dévoile les prix.|Les sites un par un : décocher un site y laisse voir les prix.|Le papier cadeau, une apparence pour les enfants ; la barre grise se voit aussi sur les sites sombres.|La liste d’envies : un prénom par article, un ordre à soi, un filtre par enfant, l’impression.|Le nombre de prix masqués sur l’icône, page par page.|20 sites de petites annonces et d’occasion : Leboncoin, Vinted, Back Market, Facebook Marketplace…"
+  },
+  "nouveautesCodeTexte": {
+    "message": "Un code de 4 à 8 chiffres, demandé pour tout ce qui dévoile les prix. Rallumer le masquage ne le demande jamais."
+  },
+  "nouveautesReglages": {
+    "message": "Les autres réglages — pause, apparence, sites un par un — sont dans le popup : l’icône Sans prix de la barre d’outils."
   }
 }

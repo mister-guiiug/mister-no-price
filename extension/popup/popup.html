@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="color-scheme" content="light dark" />
     <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="../commun/code.css" />
   </head>
   <body>
     <main>
@@ -11,7 +12,6 @@
         <img src="../icons/icone.svg" alt="" width="28" height="28" />
         <h1 data-i18n="extShortName"></h1>
       </header>
-
       <section id="acces" class="acces" role="alert" hidden>
         <p id="acces-texte"></p>
         <details id="acces-detail" class="detail" hidden>
@@ -25,6 +25,21 @@
         <span data-i18n="popupActif"></span>
         <input type="checkbox" id="actif" role="switch" />
       </label>
+      <label class="interrupteur interrupteur-site" id="ce-site" hidden>
+        <span id="ce-site-nom"></span>
+        <input type="checkbox" id="site" role="switch" />
+      </label>
+
+      <section class="pause" aria-labelledby="pause-titre">
+        <p id="pause-etat" class="pause-etat" hidden></p>
+        <div class="pause-ligne">
+          <span id="pause-titre" data-i18n="popupPause"></span>
+          <button type="button" data-minutes="5" data-i18n="pause5"></button>
+          <button type="button" data-minutes="15" data-i18n="pause15"></button>
+          <button type="button" data-minutes="60" data-i18n="pause60"></button>
+          <button type="button" id="reprendre" hidden data-i18n="pauseReprendre"></button>
+        </div>
+      </section>
 
       <fieldset>
         <legend data-i18n="popupStyle"></legend>
@@ -38,6 +53,11 @@
           <span class="apercu apercu-flou" aria-hidden="true">12,99 €</span>
           <span data-i18n="styleFlou"></span>
         </label>
+        <label class="choix">
+          <input type="radio" name="style" value="cadeau" />
+          <span class="apercu apercu-cadeau" aria-hidden="true">12,99 €</span>
+          <span data-i18n="styleCadeau"></span>
+        </label>
       </fieldset>
 
       <section class="envies" aria-labelledby="envies-titre">
@@ -49,11 +69,23 @@
         <button type="button" id="envies-ouvrir"></button>
       </section>
 
+      <label class="choix">
+        <input type="checkbox" id="compteur" />
+        <span data-i18n="popupCompteur"></span>
+      </label>
+
+      <details class="detail code" id="code">
+        <summary><span data-i18n="codeTitre"></span> <span id="code-etat" class="code-etat"></span></summary>
+        <p class="code-aide" data-i18n="codeAide"></p>
+        <div id="code-zone"></div>
+      </details>
+
       <footer>
         <p id="raccourci"></p>
         <details class="detail">
           <summary id="sites-nombre"></summary>
-          <p id="sites"></p>
+          <p class="sites-aide" data-i18n="popupSitesAide"></p>
+          <ul id="sites" class="sites"></ul>
         </details>
       </footer>
     </main>
@@ -62,6 +94,8 @@
     <script src="../content/moteur.js"></script>
     <script src="../commun/acces.js"></script>
     <script src="../commun/envies.js"></script>
+    <script src="../commun/code.js"></script>
+    <script src="../commun/code-ui.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

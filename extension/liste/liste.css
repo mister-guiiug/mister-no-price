@@ -6,7 +6,7 @@
   --bord: #e5e7eb;
   --accent: #7048e8;
   --danger: #c92a2a;
-  --barre: #d5d9d9;
+  --barre: rgb(128 134 134 / 0.45);
   color-scheme: light dark;
 }
 
@@ -229,5 +229,106 @@ button:disabled {
   .retirer {
     grid-column: 2;
     justify-self: start;
+  }
+}
+
+/* --- Prénom, rangement, filtre ---------------------------------------------- */
+
+.pour {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--discret);
+  font-size: 0.875rem;
+}
+
+.pour input,
+.filtre select {
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--bord);
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--texte);
+  font: inherit;
+}
+
+.pour input {
+  width: 9rem;
+}
+
+.pour-imprime {
+  display: none;
+}
+
+.article-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.article-actions button:not(.retirer) {
+  width: 2.75rem;
+  padding: 0;
+  font-size: 1.125rem;
+}
+
+.filtre {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--discret);
+}
+
+@media (max-width: 30rem) {
+  .article-actions {
+    grid-column: 2;
+  }
+}
+
+/* --- Impression : la liste, sans les commandes -------------------------------- */
+
+@media print {
+  :root {
+    --fond: #fff;
+    --carte: #fff;
+    --texte: #000;
+    --discret: #444;
+    --bord: #bbb;
+  }
+
+  .actions,
+  .explication,
+  .filtre,
+  .article-actions,
+  .pour,
+  #message {
+    display: none !important;
+  }
+
+  .pour-imprime:not(:empty) {
+    display: block;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .article {
+    grid-template-columns: 4rem 1fr;
+    break-inside: avoid;
+  }
+
+  .vignette {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .titre {
+    -webkit-line-clamp: unset;
+  }
+
+  .prix.masque {
+    background: #ddd;
+    print-color-adjust: exact;
   }
 }

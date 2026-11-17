@@ -95,9 +95,10 @@ describe("construireFeuille", () => {
     assert.ok(feuille.startsWith(':root:not([data-sans-prix="off"]) :is('));
   });
 
-  it("propose la barre et le flou", () => {
+  it("propose la barre, le flou et le papier cadeau", () => {
     assert.match(feuille, /:root:not\(\[data-sans-prix-style="flou"\]\) &/);
     assert.match(feuille, /:root\[data-sans-prix-style="flou"\] &/);
+    assert.match(feuille, /:root\[data-sans-prix-style="cadeau"\] &/);
   });
 
   it("sans règle, couvre encore les prix éclatés", () => {

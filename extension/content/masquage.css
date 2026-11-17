@@ -10,8 +10,14 @@
 /* Montants repérés dans le texte : posés par masquage.js, sans toucher au DOM */
 ::highlight(sans-prix) {
   color: transparent;
-  background-color: #d5d9d9;
+  /* Translucide : visible sur un fond clair comme sur un site sombre. */
+  background-color: rgb(128 134 134 / 0.45);
   text-decoration: none;
+}
+
+/* Un surlignage n'admet pas de dégradé : le rose du papier cadeau, uni. */
+:root[data-sans-prix-style="cadeau"] ::highlight(sans-prix) {
+  background-color: #f783ac;
 }
 
 :root[data-sans-prix-style="flou"] ::highlight(sans-prix) {

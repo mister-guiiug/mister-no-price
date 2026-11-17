@@ -58,11 +58,12 @@
   text-shadow: none !important;
 
   /* Barre grise (par défaut) : la place reste, le texte disparaît. Le trait
-     d'un prix barré a sa propre couleur : il faut l'éteindre aussi. */
+     d'un prix barré a sa propre couleur : il faut l'éteindre aussi. Un gris
+     translucide se voit sur un fond clair comme sur un site sombre. */
   :root:not([data-sans-prix-style="flou"]) & {
     color: transparent !important;
     text-decoration-color: transparent !important;
-    background: #d5d9d9 !important;
+    background: rgb(128 134 134 / 0.45) !important;
     border-radius: 0.25em !important;
 
     & * {
@@ -72,6 +73,16 @@
       border-color: transparent !important;
       text-shadow: none !important;
     }
+  }
+
+  /* Papier cadeau : des rayures rose et jaune, pour un enfant, à la place du
+     gris. Mêmes règles que la barre, seul le fond change. */
+  :root[data-sans-prix-style="cadeau"] & {
+    background: repeating-linear-gradient(
+      135deg,
+      #f783ac 0 0.35em,
+      #ffd43b 0.35em 0.7em
+    ) !important;
   }
 
   /* Flou : la forme reste, les chiffres ne se lisent plus. */
