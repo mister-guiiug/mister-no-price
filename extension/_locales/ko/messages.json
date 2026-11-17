@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "ko"
+  },
+  "extName": {
+    "message": "가격 숨기기",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "가격 숨기기"
+  },
+  "extDescription": {
+    "message": "쇼핑몰, 생활 광고, 중고 거래 사이트(Amazon, eBay, Vinted…)의 가격을 숨겨 금액을 보지 않고 고를 수 있게 해요."
+  },
+  "titreActif": {
+    "message": "가격 숨기기: 가격 숨김"
+  },
+  "titrePause": {
+    "message": "가격 숨기기: 가격 표시 중"
+  },
+  "badgePause": {
+    "message": "끔",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "가격 숨기기/표시"
+  },
+  "popupActif": {
+    "message": "가격 숨기기"
+  },
+  "popupStyle": {
+    "message": "모양"
+  },
+  "styleBarre": {
+    "message": "회색 막대"
+  },
+  "styleFlou": {
+    "message": "흐림"
+  },
+  "popupRaccourci": {
+    "message": "단축키: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "가격 숨기기: 일부 사이트에 허용이 필요해요"
+  },
+  "accesManquant": {
+    "message": "가격 숨기기가 아직 $SITES$에서 허용되지 않았어요. 허용하지 않으면 새 페이지를 열 때마다 가격이 다시 나타나요.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "허용"
+  },
+  "popupEnvies": {
+    "message": "위시리스트"
+  },
+  "popupEnviesBouton": {
+    "message": "상품 페이지의 ♥ “내 목록” 버튼"
+  },
+  "popupEnviesOuvrir": {
+    "message": "목록 열기($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "내 목록",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "목록에 있음",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "내 위시리스트에 추가"
+  },
+  "envieRetirerTitre": {
+    "message": "내 위시리스트에서 삭제"
+  },
+  "envieAjoutee": {
+    "message": "위시리스트에 추가했어요"
+  },
+  "envieRetiree": {
+    "message": "위시리스트에서 삭제했어요"
+  },
+  "listeTitre": {
+    "message": "위시리스트"
+  },
+  "listeExplication": {
+    "message": "상품 페이지에서 ♥ 표시한 상품이에요. 보여 달라고 하기 전까지 가격은 숨겨져 있어요."
+  },
+  "listeCompte1": {
+    "message": "상품 $N$개",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "상품 $N$개",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "가격 보기"
+  },
+  "listeMasquerPrix": {
+    "message": "가격 숨기기"
+  },
+  "listePartager": {
+    "message": "목록 공유"
+  },
+  "listeVider": {
+    "message": "모두 지우기"
+  },
+  "listeViderConfirmer": {
+    "message": "위시리스트를 모두 지울까요?"
+  },
+  "listeVide": {
+    "message": "아직 아무것도 없어요. 상품 페이지에서 ♥ “내 목록” 버튼을 누르면 여기에 추가돼요."
+  },
+  "listeRetirer": {
+    "message": "삭제"
+  },
+  "listeRetirerArticle": {
+    "message": "“$TITRE$” 삭제",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "가격 숨김"
+  },
+  "listePrixInconnu": {
+    "message": "가격을 찾지 못함"
+  },
+  "listeTotal": {
+    "message": "합계: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "목록을 클립보드에 복사했어요."
+  },
+  "listeCopieImpossible": {
+    "message": "목록을 복사하지 못했어요."
+  },
+  "popupSitesNombre": {
+    "message": "사이트 $NOMBRE$곳에서 작동 중",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "가격 숨기기가 아직 사이트 $NOMBRE$곳에서 허용되지 않았어요. 허용하지 않으면 새 페이지를 열 때마다 가격이 다시 나타나요.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "어디인지 보기"
+  },
+  "titrePauseJusqua": {
+    "message": "가격 숨기기: $HEURE$까지 일시 중지",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "일시 중지:"
+  },
+  "pause5": {
+    "message": "5분"
+  },
+  "pause15": {
+    "message": "15분"
+  },
+  "pause60": {
+    "message": "1시간"
+  },
+  "pauseReprendre": {
+    "message": "다시 시작"
+  },
+  "pauseJusqua": {
+    "message": "$HEURE$까지 일시 중지됨",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "$SITE$에서",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "선물 포장"
+  },
+  "popupCompteur": {
+    "message": "숨긴 가격 수를 아이콘에 표시"
+  },
+  "popupSitesAide": {
+    "message": "사이트의 체크를 해제하면 그 사이트의 가격이 보여요."
+  },
+  "codeTitre": {
+    "message": "부모 코드"
+  },
+  "codeAide": {
+    "message": "가격이 드러나는 모든 동작에 필요해요: 숨기기 끄기, 일시 중지, 특정 사이트에서 끄기, 위시리스트에서 가격 보기."
+  },
+  "codeEtatDefini": {
+    "message": "· 설정됨"
+  },
+  "codeEtatAucun": {
+    "message": "· 없음"
+  },
+  "codeChanger": {
+    "message": "코드 변경"
+  },
+  "codeRetirer": {
+    "message": "코드 삭제"
+  },
+  "codeDemande": {
+    "message": "부모 코드"
+  },
+  "codeAnnuler": {
+    "message": "취소"
+  },
+  "codeValider": {
+    "message": "확인"
+  },
+  "codeFaux": {
+    "message": "코드가 맞지 않아요."
+  },
+  "codeNouveau": {
+    "message": "새 코드(숫자 4~8자리)"
+  },
+  "codeConfirmer": {
+    "message": "한 번 더 입력해 주세요"
+  },
+  "codeDefinir": {
+    "message": "코드 설정"
+  },
+  "codeForme": {
+    "message": "코드는 숫자 4~8자리예요."
+  },
+  "codeDifferents": {
+    "message": "두 코드가 일치하지 않아요."
+  },
+  "codeDejaDefini": {
+    "message": "이미 부모 코드가 설정을 보호하고 있어요. 변경하거나 삭제하려면 확장 프로그램의 팝업을 열어 주세요."
+  },
+  "listeImprimer": {
+    "message": "인쇄"
+  },
+  "listeFiltre": {
+    "message": "받는 사람:"
+  },
+  "listeFiltreTous": {
+    "message": "모두"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "이름 없음"
+  },
+  "listePour": {
+    "message": "받는 사람"
+  },
+  "listePourExemple": {
+    "message": "이름"
+  },
+  "listePourImprime": {
+    "message": "$PRENOM$에게",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "“$TITRE$” 위로 이동",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "“$TITRE$” 아래로 이동",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "가격 숨기기에 오신 걸 환영해요"
+  },
+  "nouveautesTitre": {
+    "message": "가격 숨기기 $VERSION$: 새로운 기능",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "허용할 사이트: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox는 업데이트로 추가된 사이트를 자동으로 허용하지 않아요. 허용하지 않으면 그 사이트에서는 새 페이지를 열 때마다 가격이 다시 나타나요."
+  },
+  "nouveautesAccesOk": {
+    "message": "모든 사이트가 허용되었어요. 따로 할 일은 없어요."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "새로운 기능"
+  },
+  "nouveautesPoints": {
+    "message": "5분, 15분 또는 1시간 동안 일시 중지하고, 시간이 지나면 저절로 풀려요.|부모 코드: 가격이 드러나는 모든 동작에 필요해요.|사이트별 설정: 사이트의 체크를 해제하면 그 사이트의 가격이 보여요.|선물 포장: 아이를 위한 모양이에요. 이제 회색 막대도 어두운 사이트에서 잘 보여요.|위시리스트: 상품마다 받는 사람 이름, 원하는 순서, 아이별 필터, 인쇄를 지원해요.|숨긴 가격 수를 페이지마다 아이콘에 표시해요.|생활 광고·중고 거래 사이트 20곳: Leboncoin, Vinted, Back Market, Facebook Marketplace…|사이트 목록이 새 버전 없이도 매일 업데이트돼요(팝업에서 설정)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "숫자 4~8자리 코드로, 가격이 드러나는 모든 동작에 필요해요. 숨기기를 다시 켤 때는 묻지 않아요."
+  },
+  "nouveautesReglages": {
+    "message": "다른 설정(일시 중지, 모양, 사이트별 설정)은 팝업에 있어요. 도구 모음의 가격 숨기기 아이콘을 눌러 보세요."
+  },
+  "popupCatalogue": {
+    "message": "사이트 목록을 매일 업데이트"
+  },
+  "popupCatalogueRevision": {
+    "message": "사이트 목록: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

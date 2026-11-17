@@ -43,6 +43,9 @@
   // --- Le bouton -------------------------------------------------------------
 
   const hote = document.createElement("sans-prix-envie");
+  // Le sens de lecture est celui de la langue de l'extension (l'arabe se lit de
+  // droite à gauche), pas celui de la boutique.
+  hote.dir = browser.i18n.getMessage("@@bidi_dir") || "ltr";
   // Propriétés posées par le CSSOM, que la CSP d'une page n'interdit pas ; en
   // `important`, pour qu'une règle du site visant tout élément ne les écrase pas.
   for (const [propriete, valeur] of Object.entries({

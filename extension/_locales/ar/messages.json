@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "ar"
+  },
+  "extName": {
+    "message": "بلا أسعار",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "بلا أسعار"
+  },
+  "extDescription": {
+    "message": "يخفي الأسعار في المتاجر ومواقع الإعلانات المبوبة والسلع المستعملة (Amazon وeBay وVinted…) لتختار دون رؤية المبلغ."
+  },
+  "titreActif": {
+    "message": "بلا أسعار: الأسعار مخفية"
+  },
+  "titrePause": {
+    "message": "بلا أسعار: الأسعار ظاهرة"
+  },
+  "badgePause": {
+    "message": "off",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "إخفاء الأسعار أو إظهارها"
+  },
+  "popupActif": {
+    "message": "إخفاء الأسعار"
+  },
+  "popupStyle": {
+    "message": "المظهر"
+  },
+  "styleBarre": {
+    "message": "شريط رمادي"
+  },
+  "styleFlou": {
+    "message": "تمويه"
+  },
+  "popupRaccourci": {
+    "message": "الاختصار: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "بلا أسعار: بعض المواقع تحتاج إلى موافقتك"
+  },
+  "accesManquant": {
+    "message": "لم يُسمح لـ«بلا أسعار» بعد بالعمل على $SITES$. من دون موافقتك، تعود الأسعار إلى الظهور في كل صفحة جديدة.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "السماح"
+  },
+  "popupEnvies": {
+    "message": "قائمة الأمنيات"
+  },
+  "popupEnviesBouton": {
+    "message": "زر ♥ «قائمتي» في صفحات المنتجات"
+  },
+  "popupEnviesOuvrir": {
+    "message": "فتح القائمة ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "قائمتي",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "في قائمتي",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "أضف إلى قائمة أمنياتي"
+  },
+  "envieRetirerTitre": {
+    "message": "أزل من قائمة أمنياتي"
+  },
+  "envieAjoutee": {
+    "message": "أُضيف إلى قائمة أمنياتك"
+  },
+  "envieRetiree": {
+    "message": "أُزيل من قائمة أمنياتك"
+  },
+  "listeTitre": {
+    "message": "قائمة الأمنيات"
+  },
+  "listeExplication": {
+    "message": "العناصر المعلَّمة بـ ♥ في صفحات المنتجات. تبقى الأسعار مخفية حتى تطلب رؤيتها."
+  },
+  "listeCompte1": {
+    "message": "$N$ عنصر",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ عناصر",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "إظهار الأسعار"
+  },
+  "listeMasquerPrix": {
+    "message": "إخفاء الأسعار"
+  },
+  "listePartager": {
+    "message": "مشاركة القائمة"
+  },
+  "listeVider": {
+    "message": "مسح الكل"
+  },
+  "listeViderConfirmer": {
+    "message": "هل تريد مسح قائمة الأمنيات بالكامل؟"
+  },
+  "listeVide": {
+    "message": "لا شيء بعد. في صفحة أي منتج، يضيف زر ♥ «قائمتي» العنصر إلى هنا."
+  },
+  "listeRetirer": {
+    "message": "إزالة"
+  },
+  "listeRetirerArticle": {
+    "message": "إزالة «$TITRE$»",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "السعر مخفي"
+  },
+  "listePrixInconnu": {
+    "message": "لم يُعثر على السعر"
+  },
+  "listeTotal": {
+    "message": "المجموع: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "نُسخت القائمة إلى الحافظة."
+  },
+  "listeCopieImpossible": {
+    "message": "تعذّر نسخ القائمة."
+  },
+  "popupSitesNombre": {
+    "message": "يعمل على $NOMBRE$ موقعًا",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "لم يُسمح لـ«بلا أسعار» بعد بالعمل على $NOMBRE$ موقعًا. من دون موافقتك، تعود الأسعار إلى الظهور في كل صفحة جديدة.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "عرض المواقع"
+  },
+  "titrePauseJusqua": {
+    "message": "بلا أسعار: متوقف مؤقتًا حتى $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "إيقاف مؤقت:"
+  },
+  "pause5": {
+    "message": "5 دقائق"
+  },
+  "pause15": {
+    "message": "15 دقيقة"
+  },
+  "pause60": {
+    "message": "ساعة"
+  },
+  "pauseReprendre": {
+    "message": "استئناف"
+  },
+  "pauseJusqua": {
+    "message": "متوقف مؤقتًا حتى $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "على $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "ورق هدايا"
+  },
+  "popupCompteur": {
+    "message": "عدد الأسعار المخفية على الأيقونة"
+  },
+  "popupSitesAide": {
+    "message": "ألغِ تحديد موقع لترى أسعاره."
+  },
+  "codeTitre": {
+    "message": "رمز الوالدين"
+  },
+  "codeAide": {
+    "message": "يُطلب لكل ما يكشف الأسعار: إيقاف الإخفاء، أو إيقافه مؤقتًا، أو تعطيله على موقع، أو إظهار الأسعار في قائمة الأمنيات."
+  },
+  "codeEtatDefini": {
+    "message": "· مُعيَّن"
+  },
+  "codeEtatAucun": {
+    "message": "· لا يوجد"
+  },
+  "codeChanger": {
+    "message": "تغيير الرمز"
+  },
+  "codeRetirer": {
+    "message": "إزالة الرمز"
+  },
+  "codeDemande": {
+    "message": "رمز الوالدين"
+  },
+  "codeAnnuler": {
+    "message": "إلغاء"
+  },
+  "codeValider": {
+    "message": "موافق"
+  },
+  "codeFaux": {
+    "message": "هذا ليس الرمز الصحيح."
+  },
+  "codeNouveau": {
+    "message": "رمز جديد (من 4 إلى 8 أرقام)"
+  },
+  "codeConfirmer": {
+    "message": "الرمز نفسه مرة أخرى"
+  },
+  "codeDefinir": {
+    "message": "تعيين الرمز"
+  },
+  "codeForme": {
+    "message": "يتكوّن الرمز من 4 إلى 8 أرقام."
+  },
+  "codeDifferents": {
+    "message": "الرمزان غير متطابقين."
+  },
+  "codeDejaDefini": {
+    "message": "رمز الوالدين يحمي الإعدادات بالفعل. لتغييره أو إزالته: النافذة المنبثقة للإضافة."
+  },
+  "listeImprimer": {
+    "message": "طباعة"
+  },
+  "listeFiltre": {
+    "message": "لمن:"
+  },
+  "listeFiltreTous": {
+    "message": "الجميع"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "بلا اسم"
+  },
+  "listePour": {
+    "message": "لمن"
+  },
+  "listePourExemple": {
+    "message": "الاسم الأول"
+  },
+  "listePourImprime": {
+    "message": "إلى $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "نقل «$TITRE$» إلى الأعلى",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "نقل «$TITRE$» إلى الأسفل",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "مرحبًا بك في «بلا أسعار»"
+  },
+  "nouveautesTitre": {
+    "message": "بلا أسعار $VERSION$: ما الجديد",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "مواقع تنتظر السماح: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "لا يمنح Firefox تلقائيًا الإذن للمواقع التي يضيفها التحديث. من دون موافقتك، تعود الأسعار إلى الظهور فيها في كل صفحة جديدة."
+  },
+  "nouveautesAccesOk": {
+    "message": "كل المواقع مسموح بها: لا شيء عليك فعله."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "ما الجديد"
+  },
+  "nouveautesPoints": {
+    "message": "إيقاف مؤقت لمدة 5 دقائق أو 15 دقيقة أو ساعة، ينتهي من تلقاء نفسه.|رمز للوالدين، يُطلب لكل ما يكشف الأسعار.|المواقع واحدًا واحدًا: ألغِ تحديد موقع لترى أسعاره.|ورق الهدايا، مظهر للأطفال؛ والشريط الرمادي يظهر الآن على المواقع الداكنة أيضًا.|قائمة الأمنيات: اسم لكل عنصر، وترتيب خاص بك، وتصفية حسب كل طفل، وطباعة.|عدد الأسعار المخفية على الأيقونة، صفحةً بصفحة.|20 موقعًا للإعلانات المبوبة والسلع المستعملة: Leboncoin وVinted وBack Market وFacebook Marketplace…|تُحدَّث قائمة المواقع يوميًا، دون إصدار جديد (الإعداد في النافذة المنبثقة)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "رمز من 4 إلى 8 أرقام، يُطلب لكل ما يكشف الأسعار. إعادة تشغيل الإخفاء لا تطلبه أبدًا."
+  },
+  "nouveautesReglages": {
+    "message": "الإعدادات الأخرى — الإيقاف المؤقت، والمظهر، والمواقع واحدًا واحدًا — في النافذة المنبثقة: أيقونة «بلا أسعار» في شريط الأدوات."
+  },
+  "popupCatalogue": {
+    "message": "تحديث قائمة المواقع يوميًا"
+  },
+  "popupCatalogueRevision": {
+    "message": "قائمة المواقع: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

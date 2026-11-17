@@ -1,3 +1,5 @@
+<img src="extension/icons/icone.svg" alt="" width="96" align="right">
+
 # Sans prix
 
 Extension Firefox qui **masque les prix sur les grandes boutiques en ligne** —
@@ -96,6 +98,30 @@ L'extension reconnaît une fiche à ses données structurées — JSON-LD
 les moteurs de recherche ; pour Amazon et Rue du Commerce, qui n'en publient
 pas, la règle du site indique où lire titre, prix et image (`fiche`). Le bouton
 se désactive dans le popup.
+
+## Langues
+
+L'extension parle **quinze langues** et suit celle de Firefox (le français par
+défaut) : popup, liste d'envies, page des nouveautés, bouton ♥ sur les fiches,
+nom et description dans le gestionnaire des modules.
+
+| Priorité | Langues |
+| -------- | ------- |
+| P1 | français (`fr`), anglais (`en`), espagnol (`es`), allemand (`de`), italien (`it`), portugais (`pt`) |
+| P2 | néerlandais (`nl`), polonais (`pl`), chinois simplifié (`zh_CN`), japonais (`ja`) |
+| P3 | arabe (`ar`), coréen (`ko`), turc (`tr`), hindi (`hi`), russe (`ru`) |
+
+L'**arabe** se lit de droite à gauche : les pages de l'extension prennent le
+sens que Firefox donne à la langue (`@@bidi_dir`), et leur feuille n'emploie
+que des propriétés logiques. Les dates, les nombres, les listes et les montants
+de la liste d'envies suivent la langue (clé `langue`, une étiquette BCP 47 que
+lit `Intl`).
+
+Les traductions autres que le français et l'anglais n'ont pas encore été
+relues par une personne de langue maternelle : une correction est la bienvenue
+(un fichier, `extension/_locales/<langue>/messages.json`).
+`npm test` vérifie que chaque langue a toutes les clés, garde ses marques
+(`$NOMBRE$`…) et tient dans les limites du nom et de la description.
 
 ## Installer
 
@@ -450,6 +476,15 @@ chargée, comme lors de la visite de la fiche.
 - La feuille d'un site est posée dans un `<style>` ; une politique de sécurité
   (CSP) qui interdirait les styles en ligne la bloquerait. Aucun des sites
   vérifiés ne le fait ; le repérage dans le texte, lui, n'en dépend pas.
+
+### Le logo
+
+[`extension/icons/icone.svg`](extension/icons/icone.svg) : une étiquette de
+prix dont le montant est masqué par une barre — ce que fait l'extension — aux
+couleurs du papier cadeau, sur un fond violet. Lisible de 16 à 128 pixels, sur
+une barre d'outils claire comme sombre. Le SVG sert à la barre d'outils et aux
+pages ; les PNG (`icone-32.png` à `icone-128.png`) au gestionnaire des modules
+et à addons.mozilla.org, qui demande une icône de 128 × 128.
 
 ## Développer
 

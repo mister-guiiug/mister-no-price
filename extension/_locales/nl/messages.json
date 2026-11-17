@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "nl"
+  },
+  "extName": {
+    "message": "Zonder prijzen",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Zonder prijzen"
+  },
+  "extDescription": {
+    "message": "Verbergt prijzen in webwinkels, op advertentie- en tweedehandssites (Amazon, eBay, Vinted…): je kiest zonder het bedrag te zien."
+  },
+  "titreActif": {
+    "message": "Zonder prijzen: prijzen verborgen"
+  },
+  "titrePause": {
+    "message": "Zonder prijzen: prijzen zichtbaar"
+  },
+  "badgePause": {
+    "message": "uit",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Prijzen verbergen of tonen"
+  },
+  "popupActif": {
+    "message": "Prijzen verbergen"
+  },
+  "popupStyle": {
+    "message": "Weergave"
+  },
+  "styleBarre": {
+    "message": "Grijze balk"
+  },
+  "styleFlou": {
+    "message": "Vervagen"
+  },
+  "popupRaccourci": {
+    "message": "Sneltoets: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Zonder prijzen: sommige sites hebben je toestemming nodig"
+  },
+  "accesManquant": {
+    "message": "Zonder prijzen heeft nog geen toegang tot $SITES$. Zonder je toestemming komen de prijzen op elke nieuwe pagina terug.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "Toestaan"
+  },
+  "popupEnvies": {
+    "message": "Verlanglijst"
+  },
+  "popupEnviesBouton": {
+    "message": "♥-knop “Mijn lijst” op productpagina’s"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Lijst openen ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Mijn lijst",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "In mijn lijst",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "Toevoegen aan mijn verlanglijst"
+  },
+  "envieRetirerTitre": {
+    "message": "Verwijderen uit mijn verlanglijst"
+  },
+  "envieAjoutee": {
+    "message": "Toegevoegd aan je verlanglijst"
+  },
+  "envieRetiree": {
+    "message": "Verwijderd uit je verlanglijst"
+  },
+  "listeTitre": {
+    "message": "Verlanglijst"
+  },
+  "listeExplication": {
+    "message": "Artikelen die je op productpagina’s met een ♥ hebt gemarkeerd. De prijzen blijven verborgen tot je vraagt om ze te zien."
+  },
+  "listeCompte1": {
+    "message": "$N$ artikel",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ artikelen",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Prijzen tonen"
+  },
+  "listeMasquerPrix": {
+    "message": "Prijzen verbergen"
+  },
+  "listePartager": {
+    "message": "Lijst delen"
+  },
+  "listeVider": {
+    "message": "Alles wissen"
+  },
+  "listeViderConfirmer": {
+    "message": "De hele verlanglijst wissen?"
+  },
+  "listeVide": {
+    "message": "Nog niets. Op een productpagina voegt de knop ♥ “Mijn lijst” het artikel hier toe."
+  },
+  "listeRetirer": {
+    "message": "Verwijderen"
+  },
+  "listeRetirerArticle": {
+    "message": "“$TITRE$” verwijderen",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Prijs verborgen"
+  },
+  "listePrixInconnu": {
+    "message": "Prijs niet gevonden"
+  },
+  "listeTotal": {
+    "message": "Totaal: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Lijst gekopieerd naar het klembord."
+  },
+  "listeCopieImpossible": {
+    "message": "Kan de lijst niet kopiëren."
+  },
+  "popupSitesNombre": {
+    "message": "Actief op $NOMBRE$ sites",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "Zonder prijzen heeft nog geen toegang tot $NOMBRE$ sites. Zonder je toestemming komen de prijzen op elke nieuwe pagina terug.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Toon welke"
+  },
+  "titrePauseJusqua": {
+    "message": "Zonder prijzen: gepauzeerd tot $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Pauze:"
+  },
+  "pause5": {
+    "message": "5 min"
+  },
+  "pause15": {
+    "message": "15 min"
+  },
+  "pause60": {
+    "message": "1 u"
+  },
+  "pauseReprendre": {
+    "message": "Hervatten"
+  },
+  "pauseJusqua": {
+    "message": "Gepauzeerd tot $HEURE$",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "Op $SITE$",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Cadeaupapier"
+  },
+  "popupCompteur": {
+    "message": "Aantal verborgen prijzen op het pictogram"
+  },
+  "popupSitesAide": {
+    "message": "Vink een site uit om de prijzen ervan te zien."
+  },
+  "codeTitre": {
+    "message": "Oudercode"
+  },
+  "codeAide": {
+    "message": "Gevraagd voor alles wat prijzen onthult: het verbergen uitzetten, pauzeren, uitzetten op een site, prijzen tonen in de verlanglijst."
+  },
+  "codeEtatDefini": {
+    "message": "· ingesteld"
+  },
+  "codeEtatAucun": {
+    "message": "· geen"
+  },
+  "codeChanger": {
+    "message": "Code wijzigen"
+  },
+  "codeRetirer": {
+    "message": "Code verwijderen"
+  },
+  "codeDemande": {
+    "message": "Oudercode"
+  },
+  "codeAnnuler": {
+    "message": "Annuleren"
+  },
+  "codeValider": {
+    "message": "OK"
+  },
+  "codeFaux": {
+    "message": "Dat is niet de juiste code."
+  },
+  "codeNouveau": {
+    "message": "Nieuwe code (4 tot 8 cijfers)"
+  },
+  "codeConfirmer": {
+    "message": "Nog een keer dezelfde"
+  },
+  "codeDefinir": {
+    "message": "Code instellen"
+  },
+  "codeForme": {
+    "message": "De code heeft 4 tot 8 cijfers."
+  },
+  "codeDifferents": {
+    "message": "De twee codes komen niet overeen."
+  },
+  "codeDejaDefini": {
+    "message": "Een oudercode beschermt de instellingen al. Wijzigen of verwijderen doe je in de pop-up van de extensie."
+  },
+  "listeImprimer": {
+    "message": "Afdrukken"
+  },
+  "listeFiltre": {
+    "message": "Voor:"
+  },
+  "listeFiltreTous": {
+    "message": "iedereen"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "zonder naam"
+  },
+  "listePour": {
+    "message": "Voor"
+  },
+  "listePourExemple": {
+    "message": "voornaam"
+  },
+  "listePourImprime": {
+    "message": "Voor $PRENOM$",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "“$TITRE$” omhoog",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "“$TITRE$” omlaag",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Welkom bij Zonder prijzen"
+  },
+  "nouveautesTitre": {
+    "message": "Zonder prijzen $VERSION$: wat is er nieuw",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "Toe te staan sites: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox geeft niet vanzelf toegang tot de sites die een update toevoegt. Zonder je toestemming komen de prijzen daar op elke nieuwe pagina terug."
+  },
+  "nouveautesAccesOk": {
+    "message": "Alle sites zijn toegestaan: niets te doen."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Wat is er nieuw"
+  },
+  "nouveautesPoints": {
+    "message": "Een pauze van 5 minuten, 15 minuten of een uur, die vanzelf afloopt.|Een oudercode, gevraagd voor alles wat prijzen onthult.|Sites één voor één: vink een site uit om de prijzen ervan te zien.|Cadeaupapier, een weergave voor kinderen; de grijze balk is nu ook zichtbaar op donkere sites.|De verlanglijst: een voornaam per artikel, je eigen volgorde, een filter per kind, afdrukken.|Het aantal verborgen prijzen op het pictogram, pagina voor pagina.|20 advertentie- en tweedehandssites: Leboncoin, Vinted, Back Market, Facebook Marketplace…|De lijst met sites wordt dagelijks bijgewerkt, zonder nieuwe versie (instelling in de pop-up)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Een code van 4 tot 8 cijfers, gevraagd voor alles wat prijzen onthult. Om het verbergen weer aan te zetten is hij nooit nodig."
+  },
+  "nouveautesReglages": {
+    "message": "Andere instellingen – pauze, weergave, sites één voor één – staan in de pop-up: het pictogram van Zonder prijzen in de werkbalk."
+  },
+  "popupCatalogue": {
+    "message": "Lijst met sites dagelijks bijwerken"
+  },
+  "popupCatalogueRevision": {
+    "message": "Lijst met sites: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}

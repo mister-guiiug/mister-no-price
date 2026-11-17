@@ -1,0 +1,382 @@
+{
+  "langue": {
+    "message": "tr"
+  },
+  "extName": {
+    "message": "Fiyatsız",
+    "description": "Extension name. It is neither published nor endorsed by the sites it covers."
+  },
+  "extShortName": {
+    "message": "Fiyatsız"
+  },
+  "extDescription": {
+    "message": "Mağazalarda, ilan ve ikinci el sitelerinde (Amazon, eBay, Vinted…) fiyatları gizler; tutarı görmeden seçim yapabilirsiniz."
+  },
+  "titreActif": {
+    "message": "Fiyatsız: fiyatlar gizli"
+  },
+  "titrePause": {
+    "message": "Fiyatsız: fiyatlar görünür"
+  },
+  "badgePause": {
+    "message": "off",
+    "description": "Badge on the toolbar icon while hiding is paused. Three or four characters at most."
+  },
+  "commandeBasculer": {
+    "message": "Fiyatları gizle veya göster"
+  },
+  "popupActif": {
+    "message": "Fiyatları gizle"
+  },
+  "popupStyle": {
+    "message": "Görünüm"
+  },
+  "styleBarre": {
+    "message": "Gri çubuk"
+  },
+  "styleFlou": {
+    "message": "Bulanık"
+  },
+  "popupRaccourci": {
+    "message": "Kısayol: $RACCOURCI$",
+    "placeholders": {
+      "raccourci": {
+        "content": "$1",
+        "example": "Alt+Shift+P"
+      }
+    }
+  },
+  "titreAcces": {
+    "message": "Fiyatsız: bazı siteler onayınızı bekliyor"
+  },
+  "accesManquant": {
+    "message": "Fiyatsız’ın henüz $SITES$ üzerinde izni yok. Onayınız olmadan fiyatlar her yeni sayfada geri gelir.",
+    "placeholders": {
+      "sites": {
+        "content": "$1",
+        "example": "Dealabs and Fnac"
+      }
+    }
+  },
+  "accesBouton": {
+    "message": "İzin ver"
+  },
+  "popupEnvies": {
+    "message": "İstek listesi"
+  },
+  "popupEnviesBouton": {
+    "message": "Ürün sayfalarında ♥ “Listem” düğmesi"
+  },
+  "popupEnviesOuvrir": {
+    "message": "Listeyi aç ($N$)",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "envieAjouter": {
+    "message": "Listem",
+    "description": "Button on a product page: add the item to the wish list. Very short."
+  },
+  "envieDansLaListe": {
+    "message": "Listemde",
+    "description": "The same button, once the item is in the list."
+  },
+  "envieAjouterTitre": {
+    "message": "İstek listeme ekle"
+  },
+  "envieRetirerTitre": {
+    "message": "İstek listemden çıkar"
+  },
+  "envieAjoutee": {
+    "message": "İstek listenize eklendi"
+  },
+  "envieRetiree": {
+    "message": "İstek listenizden çıkarıldı"
+  },
+  "listeTitre": {
+    "message": "İstek listesi"
+  },
+  "listeExplication": {
+    "message": "Ürün sayfalarında ♥ ile işaretlenen ürünler. Siz görmek isteyene kadar fiyatlar gizli kalır."
+  },
+  "listeCompte1": {
+    "message": "$N$ ürün",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
+  },
+  "listeCompteN": {
+    "message": "$N$ ürün",
+    "placeholders": {
+      "n": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "listeMontrerPrix": {
+    "message": "Fiyatları göster"
+  },
+  "listeMasquerPrix": {
+    "message": "Fiyatları gizle"
+  },
+  "listePartager": {
+    "message": "Listeyi paylaş"
+  },
+  "listeVider": {
+    "message": "Tümünü temizle"
+  },
+  "listeViderConfirmer": {
+    "message": "İstek listesinin tamamı temizlensin mi?"
+  },
+  "listeVide": {
+    "message": "Henüz bir şey yok. Bir ürün sayfasındaki ♥ “Listem” düğmesi ürünü buraya ekler."
+  },
+  "listeRetirer": {
+    "message": "Çıkar"
+  },
+  "listeRetirerArticle": {
+    "message": "“$TITRE$” ürününü çıkar",
+    "placeholders": {
+      "titre": {
+        "content": "$1",
+        "example": "Headphones"
+      }
+    }
+  },
+  "listePrixMasque": {
+    "message": "Fiyat gizli"
+  },
+  "listePrixInconnu": {
+    "message": "Fiyat bulunamadı"
+  },
+  "listeTotal": {
+    "message": "Toplam: $SOMMES$",
+    "placeholders": {
+      "sommes": {
+        "content": "$1",
+        "example": "$131.98"
+      }
+    }
+  },
+  "listeCopiee": {
+    "message": "Liste panoya kopyalandı."
+  },
+  "listeCopieImpossible": {
+    "message": "Liste kopyalanamadı."
+  },
+  "popupSitesNombre": {
+    "message": "$NOMBRE$ sitede etkin",
+    "description": "Collapsed summary of the list of covered sites.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "37"
+      }
+    }
+  },
+  "accesManquantNombre": {
+    "message": "Fiyatsız’ın henüz $NOMBRE$ sitede izni yok. Onayınız olmadan fiyatlar her yeni sayfada geri gelir.",
+    "placeholders": {
+      "nombre": {
+        "content": "$1",
+        "example": "20"
+      }
+    }
+  },
+  "popupVoirLesquels": {
+    "message": "Hangileri olduğunu göster"
+  },
+  "titrePauseJusqua": {
+    "message": "Fiyatsız: $HEURE$ saatine kadar duraklatıldı",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupPause": {
+    "message": "Duraklat:"
+  },
+  "pause5": {
+    "message": "5 dk"
+  },
+  "pause15": {
+    "message": "15 dk"
+  },
+  "pause60": {
+    "message": "1 sa"
+  },
+  "pauseReprendre": {
+    "message": "Sürdür"
+  },
+  "pauseJusqua": {
+    "message": "$HEURE$ saatine kadar duraklatıldı",
+    "placeholders": {
+      "heure": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupCeSite": {
+    "message": "$SITE$ üzerinde",
+    "placeholders": {
+      "site": {
+        "content": "$1"
+      }
+    }
+  },
+  "styleCadeau": {
+    "message": "Hediye paketi"
+  },
+  "popupCompteur": {
+    "message": "Simgede gizlenen fiyat sayısı"
+  },
+  "popupSitesAide": {
+    "message": "Bir sitenin fiyatlarını görmek için işaretini kaldırın."
+  },
+  "codeTitre": {
+    "message": "Ebeveyn kodu"
+  },
+  "codeAide": {
+    "message": "Fiyatları gösteren her işlemde sorulur: gizlemeyi kapatmak, duraklatmak, bir sitede kapatmak, istek listesindeki fiyatları göstermek."
+  },
+  "codeEtatDefini": {
+    "message": "· ayarlı"
+  },
+  "codeEtatAucun": {
+    "message": "· yok"
+  },
+  "codeChanger": {
+    "message": "Kodu değiştir"
+  },
+  "codeRetirer": {
+    "message": "Kodu kaldır"
+  },
+  "codeDemande": {
+    "message": "Ebeveyn kodu"
+  },
+  "codeAnnuler": {
+    "message": "İptal"
+  },
+  "codeValider": {
+    "message": "Tamam"
+  },
+  "codeFaux": {
+    "message": "Kod yanlış."
+  },
+  "codeNouveau": {
+    "message": "Yeni kod (4 ila 8 rakam)"
+  },
+  "codeConfirmer": {
+    "message": "Aynısını bir kez daha"
+  },
+  "codeDefinir": {
+    "message": "Kodu ayarla"
+  },
+  "codeForme": {
+    "message": "Kod 4 ila 8 rakamdan oluşur."
+  },
+  "codeDifferents": {
+    "message": "İki kod eşleşmiyor."
+  },
+  "codeDejaDefini": {
+    "message": "Ayarlar zaten bir ebeveyn koduyla korunuyor. Değiştirmek veya kaldırmak için: eklentinin açılır penceresi."
+  },
+  "listeImprimer": {
+    "message": "Yazdır"
+  },
+  "listeFiltre": {
+    "message": "Kimin için:"
+  },
+  "listeFiltreTous": {
+    "message": "herkes"
+  },
+  "listeFiltreSansPrenom": {
+    "message": "isimsiz"
+  },
+  "listePour": {
+    "message": "Kimin için"
+  },
+  "listePourExemple": {
+    "message": "ad"
+  },
+  "listePourImprime": {
+    "message": "$PRENOM$ için",
+    "placeholders": {
+      "prenom": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeMonter": {
+    "message": "“$TITRE$” ürününü yukarı taşı",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "listeDescendre": {
+    "message": "“$TITRE$” ürününü aşağı taşı",
+    "placeholders": {
+      "titre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesBienvenue": {
+    "message": "Fiyatsız’a hoş geldiniz"
+  },
+  "nouveautesTitre": {
+    "message": "Fiyatsız $VERSION$: yenilikler",
+    "placeholders": {
+      "version": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTitre": {
+    "message": "İzin verilecek siteler: $NOMBRE$",
+    "placeholders": {
+      "nombre": {
+        "content": "$1"
+      }
+    }
+  },
+  "nouveautesAccesTexte": {
+    "message": "Firefox, bir güncellemenin eklediği sitelere kendiliğinden izin vermez. Onayınız olmadan fiyatlar oralarda her yeni sayfada geri gelir."
+  },
+  "nouveautesAccesOk": {
+    "message": "Tüm sitelere izin verildi: yapılacak bir şey yok."
+  },
+  "nouveautesQuoiDeNeuf": {
+    "message": "Yenilikler"
+  },
+  "nouveautesPoints": {
+    "message": "Kendiliğinden sona eren 5 dakikalık, 15 dakikalık veya bir saatlik duraklatma.|Fiyatları gösteren her işlemde sorulan bir ebeveyn kodu.|Siteler tek tek: bir sitenin fiyatlarını görmek için işaretini kaldırın.|Hediye paketi, çocuklar için bir görünüm; gri çubuk artık koyu renkli sitelerde de görünüyor.|İstek listesi: her ürün için bir ad, size özel sıralama, çocuk başına filtre, yazdırma.|Simgede gizlenen fiyat sayısı, sayfa sayfa.|20 ilan ve ikinci el sitesi: Leboncoin, Vinted, Back Market, Facebook Marketplace…|Site listesi, yeni sürüm gerekmeden her gün güncellenir (ayarı açılır pencerede)."
+  },
+  "nouveautesCodeTexte": {
+    "message": "Fiyatları gösteren her işlemde sorulan 4 ila 8 haneli bir kod. Gizlemeyi yeniden açmak için hiçbir zaman sorulmaz."
+  },
+  "nouveautesReglages": {
+    "message": "Diğer ayarlar — duraklatma, görünüm, siteler tek tek — açılır pencerede: araç çubuğundaki Fiyatsız simgesine tıklayın."
+  },
+  "popupCatalogue": {
+    "message": "Site listesini her gün güncelle"
+  },
+  "popupCatalogueRevision": {
+    "message": "Site listesi: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
+  }
+}
