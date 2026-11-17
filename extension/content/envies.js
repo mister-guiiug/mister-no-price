@@ -20,8 +20,14 @@
   const Envies = globalThis.SansPrixEnvies;
   const { extraireProduit } = globalThis.SansPrixProduit;
   const { trouverRegle, couvreChemin } = globalThis.SansPrixMoteur;
-  const regle = trouverRegle(location.hostname, globalThis.SansPrixRegles);
-  if (!regle) return;
+  // La règle du catalogue embarqué, puis celle du catalogue distant s'il est
+  // plus récent : un site ajouté par le catalogue n'a pas de règle embarquée.
+  let regle = trouverRegle(location.hostname, globalThis.SansPrixRegles);
+  const adopter = (catalogue) => {
+    regle = trouverRegle(location.hostname, catalogue.regles);
+  };
+  globalThis.SansPrixCatalogue.lire().then(adopter, console.error);
+  globalThis.SansPrixCatalogue.suivre(adopter);
 
   const t = (cle) => browser.i18n.getMessage(cle);
   // Les données structurées arrivent parfois après le premier rendu : quelques
@@ -130,7 +136,7 @@
       hote.remove();
     }
     // Hors des `chemins` de la règle (Facebook hors Marketplace), pas de bouton.
-    if (!couvreChemin(regle, location.pathname)) return;
+    if (!regle || !couvreChemin(regle, location.pathname)) return;
     if (!produit && essais < ESSAIS_MAX) {
       essais += 1;
       produit = extraireProduit(document, regle.fiche);

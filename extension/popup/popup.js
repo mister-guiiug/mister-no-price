@@ -3,7 +3,9 @@
 
   const { lire, ecrire, suivre, enPause } = globalThis.SansPrixReglages;
   const { trouverRegle } = globalThis.SansPrixMoteur;
-  const REGLES = globalThis.SansPrixRegles;
+  // Les règles appliquées : le catalogue embarqué, ou le distant s'il est plus récent.
+  const catalogue = await globalThis.SansPrixCatalogue.lire();
+  const REGLES = catalogue.regles;
   const Code = globalThis.SansPrixCode;
   const { exiger, formulaireNouveauCode } = globalThis.SansPrixCodeUI;
   const t = (cle, ...valeurs) => browser.i18n.getMessage(cle, valeurs);
@@ -126,6 +128,11 @@
   const compteur = $("compteur");
   compteur.addEventListener("change", () => ecrire({ compteur: compteur.checked }));
 
+  // Le catalogue des règles : relu chaque jour sur le dépôt, ou jamais.
+  const caseCatalogue = $("catalogue");
+  caseCatalogue.addEventListener("change", () => ecrire({ catalogueDistant: caseCatalogue.checked }));
+  $("catalogue-revision").textContent = t("popupCatalogueRevision", catalogue.revision);
+
   // --- Le code parent ----------------------------------------------------------------
 
   async function rendreCode() {
@@ -188,6 +195,7 @@
     for (const choix of styles) choix.checked = choix.value === reglages.style;
     enviesBouton.checked = reglages.envies;
     compteur.checked = reglages.compteur;
+    caseCatalogue.checked = reglages.catalogueDistant;
     if (regleIci) site.checked = !reglages.sitesEteints.includes(regleIci.id);
     for (const [id, caseACocher] of casesSites) caseACocher.checked = !reglages.sitesEteints.includes(id);
 

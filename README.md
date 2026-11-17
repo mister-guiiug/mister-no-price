@@ -357,24 +357,73 @@ application les efface (Decathlon le fait).
    lisible, et un bouton ♥ sur la fiche. S'il manque, le site ne publie pas de
    données structurées : donner à sa règle une `fiche` (sélecteurs du titre, du
    prix, de l'image).
+4. Monter `revision` en tête de `regles.js` (`AAAA-MM-JJ.n`), puis
+   `npm run catalogue` : il réécrit [`regles/regles.json`](regles/regles.json).
+   La CI refuse un `regles.json` en retard, et une PR qui change les règles sans
+   monter la révision.
+
+### Publier une règle sans nouvelle version
+
+Les installations relisent chaque jour **le catalogue des règles**,
+[`regles/regles.json`](regles/regles.json) sur `main`, et l'adoptent s'il est
+plus récent que celui qu'elles appliquent. Corriger un sélecteur ou ajouter un
+site, c'est donc **fusionner une PR** qui modifie `regles.js`, monte la
+révision et régénère `regles.json` : la correction arrive dans la journée, sans
+signature ni mise à jour de l'extension. Une version ne monte plus que si le
+moteur ou le `format` du catalogue changent.
+
+- **Le catalogue embarqué** (`regles.js`) reste la référence et le repli : il
+  est appliqué dès `document_start`, sans attendre ; la règle du catalogue
+  distant, si elle diffère, la remplace quelques millisecondes plus tard, sans
+  recharger la page.
+- **Un site nouveau** n'a pas d'accès : le popup et la page des nouveautés le
+  demandent, comme après une mise à jour (permission optionnelle `*://*/*`,
+  accordée site par site, jamais en bloc). Une fois accordé, l'arrière-plan y
+  enregistre les content scripts (`scripting.registerContentScripts`). Le
+  manifeste doit tout de même le déclarer (étape 2) : il entrera dans les
+  permissions de la version suivante.
+- **Validation** : un catalogue distant n'est adopté qu'après les mêmes
+  contrôles que les tests (identifiants, domaines nus, chemins, sélecteurs sans
+  accolade, commentaire ni parenthèse orpheline) ; au premier défaut, il est
+  rejeté en entier et le précédent reste.
+- **Revenir en arrière** : republier l'ancien contenu avec une révision plus
+  haute. Une révision ne redescend jamais.
+- Ce sont des **données**, pas du code — des noms de domaine et des
+  sélecteurs CSS : rien n'y est exécuté, conformément aux règles des modules de
+  Mozilla.
 
 ## Confidentialité
 
 L'extension ne collecte, n'envoie ni ne lit rien d'autre que les pages des sites
-qu'elle masque. Aucune requête réseau de son fait. Elle conserve ses réglages
+qu'elle masque. Une seule requête réseau de son fait : la relecture quotidienne
+du catalogue des règles, ci-dessous, qui se coupe. Elle conserve ses réglages
 (`actif`, `pauseJusqua`, `sitesEteints`, `style`, `envies`, `compteur`) dans
 `storage.sync`, qui suivent le compte Firefox s'il est synchronisé, et dans
 `storage.local`, sur l'appareil seulement, la liste d'envies (prénoms compris)
 et le code parent — jamais en clair : un sel tiré au hasard et l'empreinte
 SHA-256 du sel et du code. Le manifeste le déclare
 (`data_collection_permissions: none`). La permission `alarms` sert à lever la
-pause à l'heure dite.
+pause à l'heure dite, et à relire le catalogue chaque jour.
+
+**Une requête par jour** : l'arrière-plan relit le catalogue des règles sur
+`raw.githubusercontent.com` (GitHub voit l'adresse IP, comme pour toute page
+web ; aucune donnée n'est envoyée, ni cookie ni identifiant). Le réglage
+« Mettre à jour la liste des sites chaque jour » du popup la coupe : le
+catalogue distant est alors oublié, et seul l'embarqué s'applique, mis à jour
+avec l'extension.
 
 La page de la liste affiche les images des articles depuis les serveurs des
 boutiques, sans en-tête `Referer` : la boutique voit qu'une de ses images est
 chargée, comme lors de la visite de la fiche.
 
 ## Limites connues
+
+- Un catalogue distant fautif toucherait toutes les installations à la fois.
+  La validation en refuse la forme abîmée, pas un sélecteur valide mais trop
+  large : c'est la relecture de la PR et `npm run verifier` qui le gardent.
+- La permission optionnelle `*://*/*` paraît large à la lecture du
+  manifeste ; elle n'est jamais demandée en bloc, seulement site par site,
+  pour les sites du catalogue.
 
 - Un prix dessiné dans une **image** (bannière, vignette d'un bon plan) reste
   visible.

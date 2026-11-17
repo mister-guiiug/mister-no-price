@@ -360,12 +360,23 @@
     "message": "Quoi de neuf"
   },
   "nouveautesPoints": {
-    "message": "Une pause de 5 minutes, 15 minutes ou une heure, qui se lève seule.|Un code parent, demandé pour tout ce qui dévoile les prix.|Les sites un par un : décocher un site y laisse voir les prix.|Le papier cadeau, une apparence pour les enfants ; la barre grise se voit aussi sur les sites sombres.|La liste d’envies : un prénom par article, un ordre à soi, un filtre par enfant, l’impression.|Le nombre de prix masqués sur l’icône, page par page.|20 sites de petites annonces et d’occasion : Leboncoin, Vinted, Back Market, Facebook Marketplace…"
+    "message": "Une pause de 5 minutes, 15 minutes ou une heure, qui se lève seule.|Un code parent, demandé pour tout ce qui dévoile les prix.|Les sites un par un : décocher un site y laisse voir les prix.|Le papier cadeau, une apparence pour les enfants ; la barre grise se voit aussi sur les sites sombres.|La liste d’envies : un prénom par article, un ordre à soi, un filtre par enfant, l’impression.|Le nombre de prix masqués sur l’icône, page par page.|20 sites de petites annonces et d’occasion : Leboncoin, Vinted, Back Market, Facebook Marketplace…|La liste des sites se met à jour chaque jour, sans nouvelle version (réglage dans le popup)."
   },
   "nouveautesCodeTexte": {
     "message": "Un code de 4 à 8 chiffres, demandé pour tout ce qui dévoile les prix. Rallumer le masquage ne le demande jamais."
   },
   "nouveautesReglages": {
     "message": "Les autres réglages — pause, apparence, sites un par un — sont dans le popup : l’icône Sans prix de la barre d’outils."
+  },
+  "popupCatalogue": {
+    "message": "Mettre à jour la liste des sites chaque jour"
+  },
+  "popupCatalogueRevision": {
+    "message": "Liste des sites : $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
   }
 }

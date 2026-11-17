@@ -204,11 +204,14 @@ describe("l'arrière-plan", () => {
   const FICHIERS = [
     "commun/reglages.js",
     "regles.js",
+    "commun/catalogue.js",
     "content/moteur.js",
     "commun/acces.js",
     "commun/code.js",
     "background.js",
   ];
+  // Deux écouteurs de stockage : les réglages, et le catalogue des règles.
+  const ECOUTEURS_STOCKAGE = 2;
 
   // Firefox pour Android n'a pas `browser.commands` : y toucher sans garde levait
   // une erreur qui empêchait le reste du script — pastille, suivi des réglages —
@@ -216,14 +219,14 @@ describe("l'arrière-plan", () => {
   it("démarre sous Firefox pour Android, sans API des raccourcis", () => {
     const navigateur = fauxNavigateur({ android: true });
     charger(FICHIERS, navigateur);
-    assert.equal(navigateur.ecouteurs.stockage.length, 1);
+    assert.equal(navigateur.ecouteurs.stockage.length, ECOUTEURS_STOCKAGE);
   });
 
   it("écoute le raccourci là où il existe", () => {
     const navigateur = fauxNavigateur();
     charger(FICHIERS, navigateur);
     assert.equal(navigateur.ecouteurs.commandes.length, 1);
-    assert.equal(navigateur.ecouteurs.stockage.length, 1);
+    assert.equal(navigateur.ecouteurs.stockage.length, ECOUTEURS_STOCKAGE);
   });
 });
 

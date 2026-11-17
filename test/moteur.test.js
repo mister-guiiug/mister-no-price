@@ -193,7 +193,7 @@ describe("le manifeste", () => {
 
   it("charge les règles et le moteur avant le script de masquage", () => {
     const ordre = (f) => script.js.indexOf(f);
-    for (const f of ["commun/reglages.js", "regles.js", "content/detection.js", "content/moteur.js"]) {
+    for (const f of ["commun/reglages.js", "regles.js", "commun/catalogue.js", "content/detection.js", "content/moteur.js"]) {
       assert.ok(ordre(f) >= 0 && ordre(f) < ordre("content/masquage.js"), f);
     }
   });

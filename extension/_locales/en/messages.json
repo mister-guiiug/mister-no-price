@@ -360,12 +360,23 @@
     "message": "What’s new"
   },
   "nouveautesPoints": {
-    "message": "A 5-minute, 15-minute or one-hour pause that lifts by itself.|A parent code, asked for anything that reveals prices.|Sites one by one: untick a site to see its prices.|Gift wrap, a look for children; the grey bar now shows on dark sites too.|The wish list: a first name per item, your own order, a filter per child, printing.|The number of hidden prices on the icon, page by page.|20 classifieds and second-hand sites: Leboncoin, Vinted, Back Market, Facebook Marketplace…"
+    "message": "A 5-minute, 15-minute or one-hour pause that lifts by itself.|A parent code, asked for anything that reveals prices.|Sites one by one: untick a site to see its prices.|Gift wrap, a look for children; the grey bar now shows on dark sites too.|The wish list: a first name per item, your own order, a filter per child, printing.|The number of hidden prices on the icon, page by page.|20 classifieds and second-hand sites: Leboncoin, Vinted, Back Market, Facebook Marketplace…|The list of sites updates daily, without a new version (setting in the popup)."
   },
   "nouveautesCodeTexte": {
     "message": "A 4- to 8-digit code, asked for anything that reveals prices. Turning hiding back on never asks for it."
   },
   "nouveautesReglages": {
     "message": "Other settings — pause, look, sites one by one — are in the popup: the No Prices icon in the toolbar."
+  },
+  "popupCatalogue": {
+    "message": "Update the list of sites daily"
+  },
+  "popupCatalogueRevision": {
+    "message": "List of sites: $REVISION$",
+    "placeholders": {
+      "revision": {
+        "content": "$1"
+      }
+    }
   }
 }
