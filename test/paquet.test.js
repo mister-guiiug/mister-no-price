@@ -319,3 +319,51 @@ describe("le débit limité d'addons.mozilla.org", async () => {
     assert.deepEqual(methodes, ["POST", "PATCH", "DELETE"]);
   });
 });
+
+describe("la reprise d'une fiche à moitié faite", async () => {
+  const { planifier, texteDe, ecarts, ficheVoulue } = await import("../scripts/fiche-amo.mjs");
+  const voulues = [
+    { fichier: "a.png", legende: { fr: "A", "en-US": "A en" }, position: 0 },
+    { fichier: "b.png", legende: { fr: "B", "en-US": "B en" }, position: 1 },
+    { fichier: "c.png", legende: { fr: "C", "en-US": "C en" }, position: 2 },
+  ];
+
+  it("reprend l'unique capture sans légende pour la première manquante", () => {
+    const { ajouter, modifier, etrangeres } = planifier(voulues, [
+      { id: 1, caption: { fr: "A", "en-US": "A en" }, position: 0 },
+      { id: 2, caption: null, position: 1 },
+    ]);
+    assert.deepEqual(modifier.map((c) => [c.fichier, c.id, c.reprise]), [["b.png", 2, true]]);
+    assert.deepEqual(ajouter.map((c) => c.fichier), ["c.png"]);
+    assert.deepEqual(etrangeres, []);
+  });
+
+  it("ne reprend rien quand plusieurs captures sont sans légende", () => {
+    const { ajouter, modifier, etrangeres } = planifier(voulues, [
+      { id: 2, caption: null, position: 0 },
+      { id: 3, caption: { fr: null }, position: 1 },
+    ]);
+    assert.deepEqual(modifier, []);
+    assert.equal(ajouter.length, 3);
+    assert.deepEqual(etrangeres.map((c) => c.id), [2, 3]);
+  });
+
+  it("compare la description sans les liens enveloppés ni les balises", () => {
+    const source = "Ligne.\n\n<b>Titre</b>\nCode : https://github.com/mister-guiiug/mister-no-prices";
+    const rendue =
+      'Ligne.\r\n\r\n<b>Titre</b>\r\nCode : <a href="https://outgoing.prod.mozaws.net/v1/0a1b2c/https%3A//github.com/mister-guiiug/mister-no-prices" rel="nofollow">https://github.com/mister-guiiug/mister-no-prices</a>';
+    assert.equal(texteDe(rendue), texteDe(source));
+  });
+
+  it("ne réécrit pas une description rendue avec ses liens enveloppés", async () => {
+    const voulue = await ficheVoulue();
+    const enveloppe = (t) =>
+      t.replace(/https:\/\/github\.com\/[\w/-]+/g, (u) => `<a href="https://outgoing.prod.mozaws.net/v1/abc123/${encodeURIComponent(u)}">${u}</a>`);
+    const enLigne = {
+      ...structuredClone(voulue),
+      description: Object.fromEntries(Object.entries(voulue.description).map(([l, t]) => [l, enveloppe(t)])),
+      homepage: { url: voulue.homepage, outgoing: {} },
+    };
+    assert.deepEqual(ecarts(voulue, enLigne), {});
+  });
+});

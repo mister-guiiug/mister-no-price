@@ -175,9 +175,10 @@ export function client({
           console.log(`légende de la capture ${capture} effacée par AMO : nouvel essai`);
         }
       } catch (erreur) {
-        // Sans légende, la capture ne serait plus reconnue au passage suivant,
-        // qui l'enverrait une seconde fois : la retirer.
-        await this.supprimerCapture(id, capture).catch(() => {});
+        // AMO demande d'attendre : la capture reste sans légende, et le
+        // passage suivant la reprend (fiche-amo.mjs, `planifier`). Toute autre
+        // erreur : la retirer, sans quoi elle serait renvoyée en double.
+        if (!(erreur instanceof DebitEpuise)) await this.supprimerCapture(id, capture).catch(() => {});
         throw erreur;
       }
     },

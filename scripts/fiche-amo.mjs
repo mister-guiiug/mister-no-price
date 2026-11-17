@@ -17,7 +17,9 @@
  * sa légende française : absente, elle est envoyée ; présente, sa place et sa
  * légende anglaise sont remises d'aplomb (pour changer l'image, changer la
  * légende) ; sur la fiche mais pas dans le fichier, elle est signalée, JAMAIS
- * supprimée. SUPPRIMER="id,id" en retire nommément.
+ * supprimée. Une seule capture sans légende — laissée par un passage arrêté
+ * entre l'image et la légende — est reprise pour la première manquante.
+ * SUPPRIMER="id,id" en retire nommément.
  *
  * AMO limite le débit des écritures. Une attente courte est patientée ; une
  * longue (souvent une demi-heure après quelques images) arrête le passage en
@@ -76,6 +78,24 @@ export async function ficheVoulue() {
   };
 }
 
+/**
+ * Le texte d'une description, pour comparer : l'API la rend avec ses adresses
+ * changées en liens enveloppés (`outgoing.prod.mozaws.net/v1/…/<adresse>`) ;
+ * on compare le texte, balises ôtées et liens déballés.
+ */
+export function texteDe(html) {
+  return String(html ?? "")
+    .replace(/https:\/\/outgoing\.prod\.mozaws\.net\/v1\/[0-9a-f]+\/([^"'\s<]+)/g, (_, cible) => decodeURIComponent(cible))
+    .replace(/<[^>]+>/g, "")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/\r\n/g, "\n")
+    .trim();
+}
+
 /** Une page d'accueil rendue par l'API : `{ url: {fr: …}, outgoing: … }`, ou déjà un objet de langues. */
 const urlsDe = (champ) => champ?.url ?? champ ?? {};
 
@@ -84,7 +104,9 @@ export function ecarts(voulue, enLigne) {
   const champs = {};
   for (const cle of ["name", "summary", "description"]) {
     const actuel = enLigne[cle] ?? {};
-    if (Object.entries(voulue[cle]).some(([langue, texte]) => actuel[langue] !== texte)) champs[cle] = voulue[cle];
+    if (Object.entries(voulue[cle]).some(([langue, texte]) => texteDe(actuel[langue]) !== texteDe(texte))) {
+      champs[cle] = voulue[cle];
+    }
   }
   const accueil = urlsDe(enLigne.homepage);
   if (Object.entries(voulue.homepage).some(([langue, url]) => accueil[langue] !== url)) champs.homepage = voulue.homepage;
@@ -96,20 +118,35 @@ export function ecarts(voulue, enLigne) {
 /** L'icône montrée par la fiche est-elle celle par défaut ? */
 export const iconeParDefaut = (enLigne) => /default/.test(enLigne.icon_url ?? "default");
 
-/** Ce qu'il faut faire pour que la fiche montre `voulues`, d'après ses captures `enLigne`. */
+/**
+ * Ce qu'il faut faire pour que la fiche montre `voulues`, d'après ses captures
+ * `enLigne`.
+ *
+ * Une capture SANS légende est celle qu'un passage a envoyée sans pouvoir la
+ * légender (AMO a demandé d'attendre entre l'image et la légende) : s'il n'y en
+ * a qu'une, elle est reprise pour la première capture manquante — c'est elle
+ * que ce passage-là envoyait, les captures partant dans l'ordre — au lieu
+ * d'être renvoyée en double.
+ */
 export function planifier(voulues, enLigne) {
-  const parLegende = new Map(enLigne.map((c) => [c.caption?.fr, c]));
+  const parLegende = new Map(enLigne.filter((c) => c.caption?.fr).map((c) => [c.caption.fr, c]));
+  const orphelines = enLigne.filter((c) => !c.caption?.fr);
+  let aReprendre = orphelines.length === 1 ? orphelines[0] : null;
   const ajouter = [];
   const modifier = [];
   for (const capture of voulues) {
     const existante = parLegende.get(capture.legende.fr);
-    if (!existante) ajouter.push(capture);
+    if (!existante && aReprendre) {
+      modifier.push({ ...capture, id: aReprendre.id, reprise: true });
+      aReprendre = null;
+    } else if (!existante) ajouter.push(capture);
     else if (existante.position !== capture.position || existante.caption?.["en-US"] !== capture.legende["en-US"]) {
       modifier.push({ ...capture, id: existante.id });
     }
   }
   const voulu = new Set(voulues.map((c) => c.legende.fr));
-  const etrangeres = enLigne.filter((c) => !voulu.has(c.caption?.fr));
+  const reprises = new Set(modifier.filter((c) => c.reprise).map((c) => c.id));
+  const etrangeres = enLigne.filter((c) => !voulu.has(c.caption?.fr) && !reprises.has(c.id));
   return { ajouter, modifier, etrangeres };
 }
 
@@ -139,7 +176,7 @@ async function synchroniser(amo, id, captures) {
   const { ajouter, modifier, etrangeres } = planifier(captures, enLigne.previews ?? []);
   for (const c of modifier) {
     await amo.modifierCapture(id, c.id, { legende: c.legende, position: c.position });
-    console.log(`capture remise d'aplomb : ${c.fichier}`);
+    console.log(`capture ${c.reprise ? `${c.id} reprise et légendée` : "remise d'aplomb"} : ${c.fichier}`);
   }
   for (const c of ajouter) {
     await amo.ajouterCapture(id, { image: c.image, nom: c.fichier, legende: c.legende, position: c.position });
