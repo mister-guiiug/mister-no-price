@@ -367,3 +367,23 @@ describe("la reprise d'une fiche à moitié faite", async () => {
     assert.deepEqual(ecarts(voulue, enLigne), {});
   });
 });
+
+describe("la comparaison de la description, quelle que soit sa mise en forme", async () => {
+  const { texteDe, apercu } = await import("../scripts/fiche-amo.mjs");
+  const source = "Sans prix masque les prix.\n\n<b>Vie privée</b>\nL'extension, « ♥ ».";
+
+  it("ignore les <br>, les entités et les balises échappées", () => {
+    for (const rendue of [
+      "Sans prix masque les prix.<br><br><b>Vie privée</b><br>L&#x27;extension, « ♥ ».",
+      "Sans prix masque les prix.\r\n\r\n&lt;b&gt;Vie privée&lt;/b&gt;\r\nL&#39;extension,&nbsp;« ♥ ».",
+      "<p>Sans prix masque les prix.</p><p><strong>Vie privée</strong><br/>L'extension, « ♥ ».</p>",
+    ]) {
+      assert.equal(texteDe(rendue), texteDe(source), rendue);
+    }
+  });
+
+  it("dit où un champ diffère", () => {
+    const message = apercu("summary", { fr: "Masque les prix des boutiques" }, { summary: { fr: "Masque les prix sur Amazon" } });
+    assert.match(message, /^fr, caractère 16 : « sur Amazon » au lieu de « des boutiques »$/);
+  });
+});

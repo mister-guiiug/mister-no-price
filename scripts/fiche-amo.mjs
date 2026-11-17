@@ -81,18 +81,24 @@ export async function ficheVoulue() {
 /**
  * Le texte d'une description, pour comparer : l'API la rend avec ses adresses
  * changées en liens enveloppés (`outgoing.prod.mozaws.net/v1/…/<adresse>`) ;
- * on compare le texte, balises ôtées et liens déballés.
+ * on compare le texte, balises ôtées, liens déballés, entités décodées et
+ * blancs réduits — l'API peut aussi rendre les retours à la ligne en <br>.
  */
 export function texteDe(html) {
   return String(html ?? "")
     .replace(/https:\/\/outgoing\.prod\.mozaws\.net\/v1\/[0-9a-f]+\/([^"'\s<]+)/g, (_, cible) => decodeURIComponent(cible))
-    .replace(/<[^>]+>/g, "")
-    .replace(/&amp;/g, "&")
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+    .replace(/&#([0-9]+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&nbsp;/g, " ")
+    .replace(/&quot;/g, '"')
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#0?39;/g, "'")
-    .replace(/\r\n/g, "\n")
+    .replace(/&amp;/g, "&")
+    // Après les entités : une balise que l'API rend échappée (&lt;b&gt;) part aussi.
+    .replace(/<[^>]+>/g, " ")
+    // Retours à la ligne, <br>, espaces insécables : la mise en forme ne compte pas.
+    .replace(/\s+/g, " ")
     .trim();
 }
 
@@ -113,6 +119,21 @@ export function ecarts(voulue, enLigne) {
   const categories = [enLigne.categories ?? []].flat();
   if ([...categories].sort().join() !== [...voulue.categories].sort().join()) champs.categories = voulue.categories;
   return champs;
+}
+
+/** Où un champ diffère, en clair et court (la fiche est publique). */
+export function apercu(cle, voulu, enLigne) {
+  const actuel = cle === "homepage" ? urlsDe(enLigne.homepage) : enLigne[cle];
+  if (cle === "categories") return `${JSON.stringify(actuel)} → ${JSON.stringify(voulu)}`;
+  for (const [langue, texte] of Object.entries(voulu)) {
+    const a = texteDe(actuel?.[langue]);
+    const b = texteDe(texte);
+    if (a === b) continue;
+    let i = 0;
+    while (i < a.length && a[i] === b[i]) i += 1;
+    return `${langue}, caractère ${i} : « ${a.slice(i, i + 40)} » au lieu de « ${b.slice(i, i + 40)} »`;
+  }
+  return "?";
 }
 
 /** L'icône montrée par la fiche est-elle celle par défaut ? */
@@ -165,6 +186,9 @@ async function synchroniser(amo, id, captures) {
   const enLigne = await amo.fiche(id);
   const champs = ecarts(await ficheVoulue(), enLigne);
   if (Object.keys(champs).length > 0) {
+    // Dit ce qui diffère AVANT d'écrire : une écriture refusée pour le débit
+    // ne laisserait sinon aucune trace de la raison.
+    for (const [cle, voulu] of Object.entries(champs)) console.log(`écart sur ${cle} : ${apercu(cle, voulu, enLigne)}`);
     await amo.modifierFiche(id, champs);
     console.log(`fiche : ${Object.keys(champs).join(", ")} remis d'aplomb`);
   }
