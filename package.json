@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "web-ext run --source-dir extension --start-url https://www.amazon.fr",
-    "lint": "web-ext lint --source-dir extension",
+    "lint": "web-ext lint --source-dir extension --self-hosted",
     "build": "web-ext build --source-dir extension --artifacts-dir web-ext-artifacts --filename \"mister-no-price-{version}.zip\" --overwrite-dest",
     "paquet": "node scripts/paquet.mjs",
     "test": "node --test",

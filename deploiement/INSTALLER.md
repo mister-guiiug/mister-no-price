@@ -27,8 +27,11 @@ Le `.xpi` n'existe que si le paquet a été signé. S'il manque, passer au § 2.
 L'icône apparaît dans la barre d'outils (sinon : pièce de puzzle → épingler).
 Un clic ouvre le réglage : interrupteur, barre ou flou, sites couverts.
 
-**Mettre à jour** : installer le `.xpi` de la nouvelle version par-dessus,
-de la même façon. Les réglages sont conservés.
+**Mises à jour** : automatiques. Firefox vérifie une fois par jour si une
+version plus récente est publiée et l'installe, réglages et liste d'envies
+conservés. Pour vérifier tout de suite : `about:addons` → roue dentée →
+**Rechercher des mises à jour**. Les versions publiées :
+<https://github.com/mister-guiiug/mister-no-price/releases>
 
 ## 2. Installer le fichier non signé (.zip)
 
@@ -66,9 +69,11 @@ La stratégie autorise aussi l'extension en navigation privée
 (`private_browsing`). Elle ne verrouille pas l'interrupteur du popup ni le
 raccourci **Alt+Maj+P** : qui connaît le geste peut suspendre le masquage.
 
-**Mettre à jour** : écraser `C:\Firefox\mister-no-price.xpi` par le fichier
-de la nouvelle version, puis redémarrer Firefox. Il réinstalle l'extension dès
-que le fichier change à ce chemin ; `policies.json` ne bouge pas.
+**Mises à jour** : automatiques, comme au § 1 — l'extension imposée se met à
+jour comme les autres. Pour figer une version, désactiver ces mises à jour par
+la stratégie (`"updates_disabled": true`) et écraser
+`C:\Firefox\mister-no-price.xpi` à chaque nouvelle version : Firefox
+réinstalle l'extension dès que le fichier change à ce chemin.
 
 Firefox 136 ou ESR 128.8 au moins pour `private_browsing` ; plus ancien, la
 clé est ignorée et le § 1, étape 4, reste à faire à la main.

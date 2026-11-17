@@ -67,15 +67,21 @@ se désactive dans le popup.
 
 Firefox 140 ou plus récent.
 
-| Façon                              | Durée                  | Ce qu'il faut                                                                                                                                                                      |
-| ---------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Temporaire**                     | jusqu'au redémarrage   | `about:debugging#/runtime/this-firefox` → _Charger un module complémentaire temporaire…_ → choisir `extension/manifest.json`                                                       |
-| **Essai en un geste**              | le temps de la session | `npm install` puis `npm start` : ouvre Firefox sur amazon.fr, extension chargée, rechargée à chaque modification                                                                  |
-| **Permanente, pour soi**           | définitive             | signer sans publier : clés d'API sur [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/), puis `npx web-ext sign --channel unlisted --source-dir extension` |
-| **Permanente, pour tout le monde** | définitive             | publier sur addons.mozilla.org (`--channel listed`), après relecture par Mozilla                                                                                                  |
+| Façon                   | Durée                                 | Ce qu'il faut                                                                                                                |
+| ----------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Depuis les releases** | définitive, mises à jour automatiques | ouvrir le `.xpi` de la [dernière release](https://github.com/mister-guiiug/mister-no-price/releases/latest) dans Firefox     |
+| **Temporaire**          | jusqu'au redémarrage                  | `about:debugging#/runtime/this-firefox` → _Charger un module complémentaire temporaire…_ → choisir `extension/manifest.json` |
+| **Essai en un geste**   | le temps de la session                | `npm install` puis `npm start` : ouvre Firefox sur amazon.fr, extension chargée, rechargée à chaque modification             |
 
-Firefox refuse d'installer durablement une extension non signée, sauf dans
-Developer Edition ou Nightly avec `xpinstall.signatures.required` à `false`.
+Chaque release porte le `.xpi` **signé par Mozilla** (canal _unlisted_ : signé,
+mais pas publié sur le catalogue d'addons.mozilla.org). Firefox refuse
+d'installer durablement une extension non signée, sauf dans Developer Edition
+ou Nightly avec `xpinstall.signatures.required` à `false`.
+
+Une fois installée, l'extension **se met à jour seule** : son manifeste déclare
+un `update_url` qui vise le `updates.json` de la dernière release, que Firefox
+consulte une fois par jour (ou à la demande : `about:addons` → roue dentée →
+_Rechercher des mises à jour_).
 
 ### Sur Android
 
@@ -117,15 +123,27 @@ sans publier, en quelques minutes. Il faut des clés d'API
 fichier `.env` à la racine du dépôt (ignoré par git) ; sans elles, le paquet
 sort sans `.xpi` et le dit. Mozilla ne signe qu'une fois un numéro de version.
 
-**Par la CI** : pousser une étiquette `v<version>` (celle du manifeste) lance
-[`publication.yml`](.github/workflows/publication.yml), qui teste, construit le
-paquet et ouvre un **brouillon** de release GitHub où il est joint, en archive
-et fichier par fichier. Le publier reste un geste à la main. La signature y
-demande les secrets `AMO_API_KEY` et `AMO_API_SECRET` du dépôt.
+### Publier une version
 
-```bash
-git tag v1.2.1 && git push origin v1.2.1
-```
+La publication est **automatique** : monter `version` dans
+[`manifest.json`](extension/manifest.json) et `package.json` (les tests les
+gardent alignés), fusionner la PR — c'est tout.
+[`publication.yml`](.github/workflows/publication.yml), à chaque poussée sur
+`main`, regarde si la release `v<version>` existe ; sinon il teste, construit le
+paquet, le fait **signer** par Mozilla, puis publie la release, étiquette posée
+sur le commit, avec le `.xpi`, le paquet complet et `updates.json`. Les
+installations existantes la reçoivent d'elles-mêmes. Une PR qui ne change pas
+de version ne publie rien.
+
+La signature demande les secrets `AMO_API_KEY` et `AMO_API_SECRET` du dépôt ;
+sans eux, le workflow échoue plutôt que de publier une release sans fichier
+installable. Mozilla ne signe qu'**une fois** un numéro de version : si la
+release échoue après la signature, ne pas relancer — le paquet signé est en
+artefact du run.
+
+L'identifiant `mister-no-price@mister-guiiug` est figé par la première
+signature : le changer ferait de la version suivante une autre extension, sans
+ses réglages ni sa liste d'envies.
 
 ### Après une mise à jour : un « ! » sur l'icône
 

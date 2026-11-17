@@ -21,7 +21,7 @@
  * jetable : c'est le popup qu'on éprouve, pas la boîte.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import puppeteer from "puppeteer-core";
@@ -46,6 +46,13 @@ const attendre = (ms) => new Promise((r) => setTimeout(r, ms));
 const ancienne = mkdtempSync(join(tmpdir(), "sans-prix-1.0-"));
 const archive = execFileSync("git", ["archive", VERSION_1_0, "extension"], { cwd: RACINE });
 execFileSync("tar", ["-x", "-C", ancienne], { input: archive });
+// La 1.0.0 portait l'identifiant `sans-prix@mister-guiiug`, abandonné avant
+// toute publication. Sous un autre identifiant, Firefox y verrait une seconde
+// extension et non une mise à jour : on lui donne celui d'aujourd'hui.
+const manifeste10 = join(ancienne, "extension", "manifest.json");
+const ancien = JSON.parse(readFileSync(manifeste10, "utf8"));
+ancien.browser_specific_settings.gecko.id = ID;
+writeFileSync(manifeste10, JSON.stringify(ancien, null, 2));
 
 const navigateur = await puppeteer.launch({
   browser: "firefox",

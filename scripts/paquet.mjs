@@ -1,30 +1,36 @@
 #!/usr/bin/env node
 /**
- * Le paquet de déploiement manuel : tout ce qu'il faut pour installer
- * l'extension sans passer par addons.mozilla.org ni par ce dépôt.
+ * Le paquet de déploiement : tout ce qu'il faut pour installer l'extension sans
+ * passer par addons.mozilla.org ni par ce dépôt.
  *
  *   web-ext-artifacts/mister-no-price-<version>/
  *   ├── mister-no-price-<version>.zip   l'extension, non signée
  *   ├── mister-no-price-<version>.xpi   la même, signée par Mozilla (si clés)
  *   ├── INSTALLER.md                    les façons d'installer, pas à pas
  *   ├── policies.json                   imposer l'extension sur un poste
+ *   ├── updates.json                    ce que Firefox lit pour se mettre à
+ *   │                                   jour seul (avec le .xpi seulement)
  *   └── SHA256SUMS                      empreintes des deux extensions
  *
  * Signature : Firefox n'installe durablement qu'une extension signée. Avec
  * WEB_EXT_API_KEY et WEB_EXT_API_SECRET (clés d'API d'addons.mozilla.org) —
- * dans l'environnement, ou dans un fichier `.env` à la racine, que git ignore —, le
- * script la fait signer sur le canal « unlisted » : Mozilla signe sans publier,
- * en quelques minutes, sans relecture humaine. Sans les clés, le paquet sort
- * sans `.xpi`, et le dit. EXIGER_SIGNATURE=1 transforme ce manque en échec.
+ * dans l'environnement, ou dans un fichier `.env` à la racine, que git ignore —,
+ * le script la fait signer sur le canal « unlisted » : Mozilla signe sans
+ * publier, en quelques minutes, sans relecture humaine. Sans les clés, le
+ * paquet sort sans `.xpi`, et le dit. EXIGER_SIGNATURE=1 transforme ce manque en
+ * échec.
  *
  * Mozilla ne signe qu'une fois un numéro de version : relancer la signature
  * d'une version déjà signée échoue. Monter la version d'abord (manifeste et
  * package.json, que les tests gardent alignés).
+ *
+ * C'est ce script que joue publication.yml à chaque version nouvelle sur main.
  */
 import { createHash } from "node:crypto";
 import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import webExt from "web-ext";
+import { manifesteDeMiseAJour, nomXpi } from "./mises-a-jour.mjs";
 
 const racine = path.resolve(import.meta.dirname, "..");
 const source = path.join(racine, "extension");
@@ -50,6 +56,11 @@ const nom = `mister-no-price-${version}`;
 const dossier = path.join(racine, "web-ext-artifacts", nom);
 await rm(dossier, { recursive: true, force: true });
 await mkdir(dossier, { recursive: true });
+
+const empreinte = async (fichier) =>
+  createHash("sha256")
+    .update(await readFile(path.join(dossier, fichier)))
+    .digest("hex");
 
 // 1. L'extension non signée.
 await webExt.cmd.build(
@@ -81,9 +92,9 @@ if (apiKey && apiSecret) {
   if (downloadedFiles?.length !== 1) {
     throw new Error(`Mozilla devait rendre un fichier signé, pas ${downloadedFiles?.length ?? 0}`);
   }
-  await rename(path.resolve(telechargement, path.basename(downloadedFiles[0])), path.join(dossier, `${nom}.xpi`));
+  await rename(path.resolve(telechargement, path.basename(downloadedFiles[0])), path.join(dossier, nomXpi(version)));
   await rm(telechargement, { recursive: true, force: true });
-  extensions.push(`${nom}.xpi`);
+  extensions.push(nomXpi(version));
 } else if (process.env.EXIGER_SIGNATURE) {
   throw new Error("EXIGER_SIGNATURE : WEB_EXT_API_KEY et WEB_EXT_API_SECRET manquent");
 } else {
@@ -94,19 +105,24 @@ if (apiKey && apiSecret) {
 
 // 3. Le guide et la stratégie, à la version et à l'identifiant du manifeste.
 const remplir = (texte) => texte.replaceAll("{{version}}", version).replaceAll("{{id}}", id);
-for (const fichier of ["INSTALLER.md", "policies.json"]) {
+const annexes = ["INSTALLER.md", "policies.json"];
+for (const fichier of annexes) {
   const modele = await readFile(path.join(racine, "deploiement", fichier), "utf8");
   await writeFile(path.join(dossier, fichier), remplir(modele));
 }
 JSON.parse(await readFile(path.join(dossier, "policies.json"), "utf8"));
 
-// 4. Les empreintes, au format de `sha256sum -c`.
-const empreintes = [];
-for (const fichier of extensions) {
-  const contenu = await readFile(path.join(dossier, fichier));
-  empreintes.push(`${createHash("sha256").update(contenu).digest("hex")}  ${fichier}\n`);
+// 4. Le manifeste de mise à jour, qui n'a de sens qu'avec le fichier signé.
+if (extensions.includes(nomXpi(version))) {
+  const misesAJour = manifesteDeMiseAJour(manifeste, await empreinte(nomXpi(version)));
+  await writeFile(path.join(dossier, "updates.json"), `${JSON.stringify(misesAJour, null, 2)}\n`);
+  annexes.push("updates.json");
 }
+
+// 5. Les empreintes, au format de `sha256sum -c`.
+const empreintes = [];
+for (const fichier of extensions) empreintes.push(`${await empreinte(fichier)}  ${fichier}\n`);
 await writeFile(path.join(dossier, "SHA256SUMS"), empreintes.join(""));
 
 console.log(`\nPaquet ${nom} : ${path.relative(racine, dossier)}`);
-for (const fichier of [...extensions, "INSTALLER.md", "policies.json", "SHA256SUMS"]) console.log(`  ${fichier}`);
+for (const fichier of [...extensions, ...annexes, "SHA256SUMS"]) console.log(`  ${fichier}`);
