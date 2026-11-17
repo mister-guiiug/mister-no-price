@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "__MSG_extShortName__",
   "description": "__MSG_extDescription__",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "default_locale": "fr",
   "author": "GuiiuG",
   "homepage_url": "https://github.com/mister-guiiug/mister-no-prices",
@@ -28,7 +28,8 @@
   },
   "permissions": [
     "storage",
-    "alarms"
+    "alarms",
+    "scripting"
   ],
   "host_permissions": [
     "*://*.amazon.fr/*",
@@ -144,6 +145,7 @@
     "scripts": [
       "commun/reglages.js",
       "regles.js",
+      "commun/catalogue.js",
       "content/moteur.js",
       "commun/acces.js",
       "commun/code.js",
@@ -282,6 +284,7 @@
         "commun/reglages.js",
         "commun/envies.js",
         "regles.js",
+        "commun/catalogue.js",
         "content/detection.js",
         "content/moteur.js",
         "content/produit.js",
@@ -291,5 +294,8 @@
       "run_at": "document_start",
       "all_frames": true
     }
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
   ]
 }

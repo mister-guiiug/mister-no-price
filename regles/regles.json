@@ -1,0 +1,507 @@
+{
+  "format": 1,
+  "revision": "2026-11-17.1",
+  "regles": [
+    {
+      "id": "amazon",
+      "nom": "Amazon",
+      "domaines": [
+        "amazon.fr",
+        "amazon.com",
+        "amazon.it",
+        "amazon.de",
+        "amazon.co.uk",
+        "amazon.es",
+        "amazon.com.be",
+        "amazon.nl",
+        "amazon.ie",
+        "amazon.se",
+        "amazon.pl",
+        "amazon.com.tr",
+        "amazon.ca",
+        "amazon.com.mx",
+        "amazon.com.br",
+        "amazon.co.jp",
+        "amazon.in",
+        "amazon.com.au",
+        "amazon.sg",
+        "amazon.ae",
+        "amazon.sa",
+        "amazon.eg",
+        "amazon.co.za"
+      ],
+      "masquer": [
+        ".a-price",
+        ".a-price-whole",
+        ".a-price-fraction",
+        ".a-price-decimal",
+        ".a-price-symbol",
+        ".a-text-price",
+        "[class*=\"p13n-sc-price\"]",
+        "#priceblock_ourprice",
+        "#priceblock_dealprice",
+        "#priceblock_saleprice",
+        "#priceblock_pospromoprice",
+        "#price_inside_buybox",
+        "#newBuyBoxPrice",
+        "#kindle-price",
+        "#sns-base-price",
+        "#tp_price_block_total_price_ww",
+        ".twisterSwatchPrice",
+        ".vse-price-component",
+        ".sc-price",
+        ".sc-product-price",
+        "[id^=\"sc-subtotal-amount\"]"
+      ],
+      "fiche": {
+        "titre": "#productTitle, #title",
+        "prix": "#corePrice_feature_div .a-offscreen, .priceToPay .a-offscreen, .reinventPricePriceToPayMargin, #corePrice_mobile_feature_div .a-price",
+        "image": "#landingImage, #main-image, #imgTagWrapperId img"
+      }
+    },
+    {
+      "id": "dealabs",
+      "nom": "Dealabs",
+      "domaines": [
+        "dealabs.com"
+      ],
+      "masquer": [
+        ".thread-price",
+        ".threadItemCard-price"
+      ]
+    },
+    {
+      "id": "decathlon",
+      "nom": "Decathlon",
+      "domaines": [
+        "decathlon.fr",
+        "decathlon.be",
+        "decathlon.ch",
+        "decathlon.com",
+        "decathlon.co.uk",
+        "decathlon.de",
+        "decathlon.es",
+        "decathlon.it",
+        "decathlon.nl",
+        "decathlon.pl",
+        "decathlon.pt"
+      ],
+      "masquer": [
+        ".vp-price-amount",
+        ".vp-price-barred-amount",
+        ".vp-price-discount",
+        ".vp-price-helper"
+      ]
+    },
+    {
+      "id": "cdiscount",
+      "nom": "Cdiscount",
+      "domaines": [
+        "cdiscount.com"
+      ],
+      "masquer": [
+        ".price",
+        ".SecondaryPrice-price"
+      ]
+    },
+    {
+      "id": "fnac",
+      "nom": "Fnac",
+      "domaines": [
+        "fnac.com"
+      ],
+      "masquer": [
+        ".userPrice",
+        ".oldPrice",
+        ".blocPriceBorder .price",
+        ".f-faMpMoreOffers__price",
+        ".f-xTimesPaymentsSummary__creditAmount"
+      ],
+      "fiche": {
+        "titre": "h1.f-productHeader-Title, h1.f-productHeader__title",
+        "prix": ".f-faPriceBox__price.userPrice, .f-faPriceBox .userPrice",
+        "image": "meta[property=\"og:image\"]"
+      }
+    },
+    {
+      "id": "darty",
+      "nom": "Darty",
+      "domaines": [
+        "darty.com"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "boulanger",
+      "nom": "Boulanger",
+      "domaines": [
+        "boulanger.com"
+      ],
+      "masquer": [
+        ".price__amount",
+        ".price__crossed",
+        ".price__tax",
+        ".trends__price",
+        ".trends__strike",
+        ".collections__item-price",
+        ".add-to-cart-price",
+        ".installment-card__amount",
+        ".product-loyalty-simulation__amount",
+        ".card-service__price"
+      ]
+    },
+    {
+      "id": "ldlc",
+      "nom": "LDLC",
+      "domaines": [
+        "ldlc.com"
+      ],
+      "masquer": [
+        "div.price",
+        ".old-price",
+        ".new-price",
+        ".price--infos .eco",
+        ".payment-option--price",
+        ".payment-option--deposit"
+      ]
+    },
+    {
+      "id": "rueducommerce",
+      "nom": "Rue du Commerce",
+      "domaines": [
+        "rueducommerce.fr"
+      ],
+      "masquer": [
+        "div.price",
+        ".old-price",
+        ".new-price",
+        ".premium__price"
+      ],
+      "fiche": {
+        "titre": "h1.product__title",
+        "prix": ".product__price .new-price, .new-price",
+        "image": "meta[property=\"og:image\"]"
+      }
+    },
+    {
+      "id": "leclerc",
+      "nom": "E.Leclerc",
+      "domaines": [
+        "e.leclerc",
+        "leclerc.fr"
+      ],
+      "masquer": [
+        ".carousel-item__price"
+      ]
+    },
+    {
+      "id": "carrefour",
+      "nom": "Carrefour",
+      "domaines": [
+        "carrefour.fr"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "ebay",
+      "nom": "eBay",
+      "domaines": [
+        "ebay.fr",
+        "ebay.com"
+      ],
+      "masquer": [
+        ".s-card__price",
+        ".x-price-primary",
+        ".x-price-approx__price"
+      ]
+    },
+    {
+      "id": "aliexpress",
+      "nom": "AliExpress",
+      "domaines": [
+        "aliexpress.com"
+      ],
+      "masquer": [
+        "[class*=\"priceBottomItem\"]",
+        "[class*=\"price-sale\"]",
+        "[class*=\"price-default--current\"]",
+        "[class*=\"price--lastOrigin\"]",
+        "[class*=\"price--originalText\"]"
+      ]
+    },
+    {
+      "id": "zalando",
+      "nom": "Zalando",
+      "domaines": [
+        "zalando.fr"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "auchan",
+      "nom": "Auchan",
+      "domaines": [
+        "auchan.fr"
+      ],
+      "masquer": [
+        ".product-price",
+        ".product-thumbnail__more-offers .red-txt",
+        ".cartAmount"
+      ]
+    },
+    {
+      "id": "manomano",
+      "nom": "ManoMano",
+      "domaines": [
+        "manomano.fr"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "leboncoin",
+      "nom": "Leboncoin",
+      "domaines": [
+        "leboncoin.fr"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "facebook",
+      "nom": "Facebook Marketplace",
+      "domaines": [
+        "facebook.com"
+      ],
+      "chemins": [
+        "/marketplace"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "paruvendu",
+      "nom": "ParuVendu",
+      "domaines": [
+        "paruvendu.fr"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "vivastreet",
+      "nom": "Vivastreet",
+      "domaines": [
+        "vivastreet.com"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "wallapop",
+      "nom": "Wallapop",
+      "domaines": [
+        "wallapop.com"
+      ],
+      "masquer": [
+        "[class*=\"RetrievalItemCard__price\"]",
+        "[class*=\"RetrievalItemCard__currentPrice\"]"
+      ]
+    },
+    {
+      "id": "marktplaats",
+      "nom": "Marktplaats",
+      "domaines": [
+        "marktplaats.nl"
+      ],
+      "masquer": [
+        "[class*=\"ListingPrice_hz-Listing-price\"]"
+      ]
+    },
+    {
+      "id": "kleinanzeigen",
+      "nom": "Kleinanzeigen",
+      "domaines": [
+        "kleinanzeigen.de"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "subito",
+      "nom": "Subito",
+      "domaines": [
+        "subito.it"
+      ],
+      "masquer": [
+        "[class*=\"index-module_price__\"]"
+      ]
+    },
+    {
+      "id": "milanuncios",
+      "nom": "Milanuncios",
+      "domaines": [
+        "milanuncios.com"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "craigslist",
+      "nom": "Craigslist",
+      "domaines": [
+        "craigslist.org"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "vinted",
+      "nom": "Vinted",
+      "domaines": [
+        "vinted.fr",
+        "vinted.be",
+        "vinted.lu",
+        "vinted.es",
+        "vinted.it",
+        "vinted.de",
+        "vinted.at",
+        "vinted.nl",
+        "vinted.pt",
+        "vinted.pl",
+        "vinted.co.uk",
+        "vinted.com"
+      ],
+      "masquer": [
+        "[data-testid$=\"--price-text\"]",
+        "[data-testid=\"total-combined-price\"]"
+      ]
+    },
+    {
+      "id": "backmarket",
+      "nom": "Back Market",
+      "domaines": [
+        "backmarket.fr",
+        "backmarket.be",
+        "backmarket.de",
+        "backmarket.es",
+        "backmarket.it",
+        "backmarket.nl",
+        "backmarket.at",
+        "backmarket.pt",
+        "backmarket.co.uk",
+        "backmarket.com"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "cashexpress",
+      "nom": "Cash Express",
+      "domaines": [
+        "cashexpress.fr"
+      ],
+      "masquer": [
+        ".product-card__price .price",
+        ".price--product-page",
+        ".price__new"
+      ],
+      "fiche": {
+        "titre": "h1.product__name",
+        "prix": ".price--product-page .price__new",
+        "image": "img[src*=\"/uploaded/product-\"]"
+      }
+    },
+    {
+      "id": "easycash",
+      "nom": "Easy Cash",
+      "domaines": [
+        "easycash.fr"
+      ],
+      "masquer": [
+        ".productsheet-block-item--price"
+      ]
+    },
+    {
+      "id": "reverb",
+      "nom": "Reverb",
+      "domaines": [
+        "reverb.com"
+      ],
+      "masquer": [
+        ".rc-price-block__price",
+        ".rc-listing-card__price"
+      ]
+    },
+    {
+      "id": "discogs",
+      "nom": "Discogs",
+      "domaines": [
+        "discogs.com"
+      ],
+      "masquer": [
+        "span.price",
+        ".converted_price"
+      ]
+    },
+    {
+      "id": "delcampe",
+      "nom": "Delcampe",
+      "domaines": [
+        "delcampe.net"
+      ],
+      "masquer": [
+        ".item-price"
+      ]
+    },
+    {
+      "id": "catawiki",
+      "nom": "Catawiki",
+      "domaines": [
+        "catawiki.com"
+      ],
+      "masquer": [
+        ".c-lot-card__price"
+      ]
+    },
+    {
+      "id": "vestiairecollective",
+      "nom": "Vestiaire Collective",
+      "domaines": [
+        "vestiairecollective.com"
+      ],
+      "masquer": [
+        "[class*=\"productCard__text--price\"]"
+      ]
+    },
+    {
+      "id": "chrono24",
+      "nom": "Chrono24",
+      "domaines": [
+        "chrono24.fr",
+        "chrono24.com",
+        "chrono24.de",
+        "chrono24.it",
+        "chrono24.es",
+        "chrono24.co.uk",
+        "chrono24.ch",
+        "chrono24.be",
+        "chrono24.nl",
+        "chrono24.at"
+      ],
+      "masquer": []
+    },
+    {
+      "id": "google",
+      "nom": "Google",
+      "hotes": [
+        "www.google.fr",
+        "www.google.com",
+        "www.google.be",
+        "www.google.ch",
+        "www.google.ca",
+        "www.google.co.uk",
+        "www.google.de",
+        "www.google.es",
+        "www.google.it"
+      ],
+      "masquer": [
+        "[aria-label^=\"Prix actuel\"]",
+        "[aria-label^=\"Le prix actuel\"]",
+        "[aria-label^=\"L'ancien prix\"]",
+        "[aria-label*=\"Avant :\"]"
+      ]
+    }
+  ]
+}

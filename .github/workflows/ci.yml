@@ -43,6 +43,20 @@ jobs:
 
       - run: npm test
 
+      # Le catalogue distant (regles/regles.json) que les installations lisent
+      # chaque jour sur main : à jour de regles.js, et, sur une PR qui change
+      # les règles, une révision plus haute que celle de la branche visée —
+      # sans quoi aucune installation ne les adopterait.
+      - name: Catalogue des règles à jour, révision montée
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          node scripts/catalogue.mjs --verifier
+          if [ -n "$BASE" ]; then
+            git fetch --no-tags --depth=1 origin "$BASE"
+            node scripts/catalogue.mjs --revision-depuis FETCH_HEAD
+          fi
+
       - run: npm run lint -- --warnings-as-errors
 
       - run: npm run paquet

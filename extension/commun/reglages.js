@@ -10,7 +10,9 @@
  *                      prix ;
  *   - `style`        : barre grise, flou ou papier cadeau ;
  *   - `envies`       : le bouton ♥ « Ma liste » sur les fiches produit ;
- *   - `compteur`     : le nombre de prix masqués sur l'icône.
+ *   - `compteur`     : le nombre de prix masqués sur l'icône ;
+ *   - `catalogueDistant` : relire chaque jour le catalogue des règles sur le
+ *                      dépôt (une requête à GitHub, aucune donnée envoyée).
  */
 (() => {
   "use strict";
@@ -23,6 +25,7 @@
     style: "barre",
     envies: true,
     compteur: true,
+    catalogueDistant: true,
   });
   // Une pause ne dépasse pas une journée : une valeur aberrante (horloge
   // déréglée, réglage abîmé) ne doit pas éteindre le masquage pour des années.
@@ -40,6 +43,7 @@
       style: STYLES.includes(brut.style) ? brut.style : DEFAUTS.style,
       envies: brut.envies !== false,
       compteur: brut.compteur !== false,
+      catalogueDistant: brut.catalogueDistant !== false,
     };
   }
 

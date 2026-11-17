@@ -14,12 +14,17 @@
   "use strict";
 
   const { motifsDuManifeste } = globalThis.SansPrixMoteur;
-  const REGLES = globalThis.SansPrixRegles;
 
-  /** Les sites dont Firefox n'a pas accordé l'accès : { motifs, noms }. */
+  /**
+   * Les sites dont Firefox n'a pas accordé l'accès : { motifs, noms }. Ceux du
+   * catalogue appliqué — embarqué, ou distant s'il est plus récent : un site
+   * que le catalogue distant ajoute se demande comme un site qu'une mise à
+   * jour ajoute (permission optionnelle `*://*\/*` du manifeste).
+   */
   async function accesManquants() {
+    const { regles } = await globalThis.SansPrixCatalogue.lire();
     const manquantes = [];
-    for (const regle of REGLES) {
+    for (const regle of regles) {
       const motifs = motifsDuManifeste([regle]);
       if (!(await browser.permissions.contains({ origins: motifs }))) manquantes.push(regle);
     }

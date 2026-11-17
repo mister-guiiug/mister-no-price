@@ -43,7 +43,10 @@
 
   // --- 1. La feuille du site ----------------------------------------------
 
-  const regle = trouverRegle(location.hostname, globalThis.SansPrixRegles);
+  // La règle du catalogue EMBARQUÉ, lue sans attendre : la feuille est posée
+  // avant le premier affichage. Celle du catalogue distant, s'il est plus
+  // récent, la remplace quelques millisecondes plus tard (adopterCatalogue).
+  let regle = trouverRegle(location.hostname, globalThis.SansPrixRegles);
   const feuille = document.createElement("style");
   feuille.setAttribute("data-sans-prix", "");
   feuille.textContent = construireFeuille(regle?.masquer ?? []);
@@ -290,7 +293,8 @@
   // plus extérieurs seulement (« .a-price » contient « .a-price-whole »).
   // Compté au plus toutes les deux secondes, et par le cadre principal seul.
   const principal = window.top === window;
-  const selecteurSite = regle?.masquer.length ? `:is(${regle.masquer.join(",")})` : null;
+  const selecteurDe = (r) => (r?.masquer.length ? `:is(${r.masquer.join(",")})` : null);
+  let selecteurSite = selecteurDe(regle);
   let comptePrevu = false;
   let dernierCompte = -1;
 
@@ -330,10 +334,35 @@
     if (ici) parcourir(document.body ?? document.documentElement);
     majEtat();
   }
-  if (regle?.chemins) {
+  let cheminSuivi = false;
+  function suivreLesChemins() {
+    if (!regle?.chemins || cheminSuivi) return;
+    cheminSuivi = true;
     addEventListener("popstate", suivreChemin);
     setInterval(suivreChemin, 500);
   }
+  suivreLesChemins();
+
+  // --- Le catalogue distant ------------------------------------------------------
+
+  // Un catalogue plus récent que l'embarqué (regles/regles.json, lu chaque jour
+  // par l'arrière-plan) apporte une règle corrigée — ou la règle d'un site que
+  // l'embarqué ne connaît pas. On la prend dès qu'elle est lue, et à chaque
+  // nouveau catalogue, sans recharger la page.
+  function adopterCatalogue(catalogue) {
+    const nouvelle = trouverRegle(location.hostname, catalogue.regles);
+    if (JSON.stringify(nouvelle) === JSON.stringify(regle)) return;
+    regle = nouvelle;
+    feuille.textContent = construireFeuille(regle?.masquer ?? []);
+    selecteurSite = selecteurDe(regle);
+    suivreLesChemins();
+    const dedans = couvreChemin(regle, location.pathname);
+    if (dedans && !ici) parcourir(document.body ?? document.documentElement);
+    ici = dedans;
+    majEtat();
+  }
+  globalThis.SansPrixCatalogue.lire().then(adopterCatalogue, console.error);
+  globalThis.SansPrixCatalogue.suivre(adopterCatalogue);
 
   majEtat();
   lire().then(appliquer, console.error);

@@ -510,6 +510,13 @@
     },
   ];
 
+  // Le format et la révision du catalogue embarqué. MONTER `revision` à chaque
+  // changement de règle (AAAA-MM-JJ.n) : c'est elle qui fait adopter le
+  // catalogue distant (regles/regles.json, tiré de ce fichier par
+  // `npm run catalogue`) par les installations, sans nouvelle version de
+  // l'extension. Le `format` ne change qu'avec le moteur.
+  globalThis.SansPrixReglesVersion = Object.freeze({ format: 1, revision: "2026-11-17.1" });
+
   globalThis.SansPrixRegles = Object.freeze(
     REGLES.map((regle) =>
       Object.freeze({

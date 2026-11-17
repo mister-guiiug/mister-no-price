@@ -1,6 +1,6 @@
 {
   "name": "mister-no-prices",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "private": true,
   "description": "Extension Firefox qui masque les prix sur Amazon, les grandes boutiques, les sites de petites annonces et d’occasion, et Google.",
   "license": "MIT",
@@ -15,7 +15,8 @@
     "paquet": "node scripts/paquet.mjs",
     "test": "node --test",
     "verifier": "node scripts/verifier.mjs",
-    "verifier:mise-a-jour": "node scripts/verifier-mise-a-jour.mjs"
+    "verifier:mise-a-jour": "node scripts/verifier-mise-a-jour.mjs",
+    "catalogue": "node scripts/catalogue.mjs"
   },
   "devDependencies": {
     "puppeteer-core": "^25.17.0",
