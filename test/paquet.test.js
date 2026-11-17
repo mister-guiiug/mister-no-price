@@ -38,7 +38,7 @@ describe("la publication et les mises à jour", async () => {
   });
 
   it("update_url vise le updates.json de la dernière release du dépôt", () => {
-    assert.equal(depotDe(manifeste), "https://github.com/mister-guiiug/mister-no-price");
+    assert.equal(depotDe(manifeste), "https://github.com/mister-guiiug/mister-no-prices");
     assert.equal(manifeste.homepage_url, depotDe(manifeste));
   });
 
@@ -48,7 +48,7 @@ describe("la publication et les mises à jour", async () => {
     assert.equal(maj.version, manifeste.version);
     assert.equal(
       maj.update_link,
-      `https://github.com/mister-guiiug/mister-no-price/releases/download/v${manifeste.version}/${nomXpi(manifeste.version)}`,
+      `https://github.com/mister-guiiug/mister-no-prices/releases/download/v${manifeste.version}/${nomXpi(manifeste.version)}`,
     );
     assert.equal(maj.update_hash, `sha256:${EMPREINTE}`);
     assert.equal(maj.applications.gecko.strict_min_version, manifeste.browser_specific_settings.gecko.strict_min_version);

@@ -272,15 +272,6 @@
       masquer: [],
     },
     {
-      id: "rakuten",
-      nom: "Rakuten",
-      // La place de marché française (fr.shopping.rakuten.com) a fermé : la page
-      // annonce sa fin d'activité. La règle reste pour les autres sites du
-      // domaine, sur le générique seul.
-      domaines: ["rakuten.com"],
-      masquer: [],
-    },
-    {
       id: "google",
       nom: "Google",
       // Des hôtes exacts, pas le domaine : *.google.com couvrirait aussi Gmail,

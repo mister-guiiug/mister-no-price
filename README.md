@@ -69,7 +69,7 @@ Firefox 140 ou plus récent.
 
 | Façon                   | Durée                                 | Ce qu'il faut                                                                                                                |
 | ----------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **Depuis les releases** | définitive, mises à jour automatiques | ouvrir le `.xpi` de la [dernière release](https://github.com/mister-guiiug/mister-no-price/releases/latest) dans Firefox     |
+| **Depuis les releases** | définitive, mises à jour automatiques | ouvrir le `.xpi` de la [dernière release](https://github.com/mister-guiiug/mister-no-prices/releases/latest) dans Firefox     |
 | **Temporaire**          | jusqu'au redémarrage                  | `about:debugging#/runtime/this-firefox` → _Charger un module complémentaire temporaire…_ → choisir `extension/manifest.json` |
 | **Essai en un geste**   | le temps de la session                | `npm install` puis `npm start` : ouvre Firefox sur amazon.fr, extension chargée, rechargée à chaque modification             |
 
@@ -102,13 +102,13 @@ npx web-ext run --source-dir extension -t firefox-android --android-device <iden
 
 ### Déployer à la main : le paquet
 
-`npm run paquet` prépare, dans `web-ext-artifacts/mister-no-price-<version>/`,
+`npm run paquet` prépare, dans `web-ext-artifacts/mister-no-prices-<version>/`,
 de quoi installer l'extension sur un poste sans rien savoir de ce dépôt :
 
 | Fichier                          | Rôle                                                                     |
 | -------------------------------- | ------------------------------------------------------------------------ |
-| `mister-no-price-<version>.xpi`  | l'extension signée par Mozilla — seulement avec des clés d'API (ci-dessous) |
-| `mister-no-price-<version>.zip`  | l'extension non signée                                                   |
+| `mister-no-prices-<version>.xpi`  | l'extension signée par Mozilla — seulement avec des clés d'API (ci-dessous) |
+| `mister-no-prices-<version>.zip`  | l'extension non signée                                                   |
 | `INSTALLER.md`                   | les façons d'installer, pas à pas, pour qui n'est pas développeur        |
 | `policies.json`                  | stratégie Firefox qui **impose** l'extension sur un ordinateur familial  |
 | `SHA256SUMS`                     | empreintes, pour `sha256sum -c`                                          |
@@ -143,7 +143,15 @@ artefact du run.
 
 L'identifiant `mister-no-price@mister-guiiug` est figé par la première
 signature : le changer ferait de la version suivante une autre extension, sans
-ses réglages ni sa liste d'envies.
+ses réglages ni sa liste d'envies. Il garde donc le nom d'avant le renommage du
+dépôt en `mister-no-prices`.
+
+La 1.3.0 a été publiée sous l'ancien nom du dépôt : les copies qui l'ont
+installée lisent leurs mises à jour à `github.com/mister-guiiug/mister-no-price/…`,
+que GitHub redirige vers le nouveau nom. **Ne jamais recréer de dépôt
+`mister-no-price`** : il prendrait la place de la redirection, et ces copies ne
+se mettraient plus à jour. La version suivante, une fois installée, lit la
+nouvelle adresse.
 
 ### Après une mise à jour : un « ! » sur l'icône
 
@@ -177,7 +185,6 @@ Le même réglage existe site par site dans le menu des extensions de Firefox
 | **Darty**           | darty.com                            | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
 | **Carrefour**       | carrefour.fr                         | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
 | **ManoMano**        | manomano.fr                          | ✘ anti-robot ; générique seul                           | ✘                      | ✘                   |
-| **Rakuten**         | rakuten.com                          | — la place de marché française a fermé ; générique seul | —                      | —                   |
 | **Google**          | www.google.fr, .com, .be, .ch, … (9) | ◐ recherche et Images, voir ci-dessous                  | — pas de fiche produit | ✘ anti-robot        |
 
 « ✔ » : `npm run verifier` a visité une liste et une fiche produit et n'y a

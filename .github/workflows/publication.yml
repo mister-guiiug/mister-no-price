@@ -96,14 +96,14 @@ jobs:
         env:
           VERSION: ${{ steps.version.outputs.version }}
         working-directory: web-ext-artifacts
-        run: zip -r "mister-no-price-$VERSION-paquet.zip" "mister-no-price-$VERSION"
+        run: zip -r "mister-no-prices-$VERSION-paquet.zip" "mister-no-prices-$VERSION"
 
       # Avant la release : si elle échoue, le fichier signé reste récupérable.
       - uses: actions/upload-artifact@v7
         if: steps.version.outputs.a-publier == 'oui'
         with:
-          name: mister-no-price-${{ steps.version.outputs.version }}
-          path: web-ext-artifacts/mister-no-price-${{ steps.version.outputs.version }}/
+          name: mister-no-prices-${{ steps.version.outputs.version }}
+          path: web-ext-artifacts/mister-no-prices-${{ steps.version.outputs.version }}/
           if-no-files-found: error
 
       - name: Release
@@ -113,11 +113,11 @@ jobs:
           GH_REPO: ${{ github.repository }}
           VERSION: ${{ steps.version.outputs.version }}
         run: |
-          dossier="web-ext-artifacts/mister-no-price-$VERSION"
-          test -f "$dossier/mister-no-price-$VERSION.xpi" && test -f "$dossier/updates.json"
+          dossier="web-ext-artifacts/mister-no-prices-$VERSION"
+          test -f "$dossier/mister-no-prices-$VERSION.xpi" && test -f "$dossier/updates.json"
           gh release create "v$VERSION" --target "$GITHUB_SHA" --latest \
             --title "Sans prix $VERSION" \
-            --notes "Installer : ouvrir mister-no-price-$VERSION.xpi dans Firefox (140 ou plus récent). Les installations existantes se mettent à jour seules. Mode d'emploi complet : INSTALLER.md, dans mister-no-price-$VERSION-paquet.zip." \
+            --notes "Installer : ouvrir mister-no-prices-$VERSION.xpi dans Firefox (140 ou plus récent). Les installations existantes se mettent à jour seules. Mode d'emploi complet : INSTALLER.md, dans mister-no-prices-$VERSION-paquet.zip." \
             --generate-notes \
-            "web-ext-artifacts/mister-no-price-$VERSION-paquet.zip" \
+            "web-ext-artifacts/mister-no-prices-$VERSION-paquet.zip" \
             "$dossier"/*
