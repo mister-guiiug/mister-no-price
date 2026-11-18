@@ -114,6 +114,14 @@
       // Tout est écrit en clair, titres des bons plans compris : le repérage
       // dans le texte fait l'essentiel. Ces deux-là évitent le clignotement.
       masquer: [".thread-price", ".threadItemCard-price"],
+      // Une page de bon plan ne se dit pas produit (JSON-LD
+      // DiscussionForumPosting, og:type website) : sans ceci, pas de bouton ♥.
+      // Le prix est celui du bon plan, pas ceux des bons plans voisins.
+      fiche: {
+        titre: "h1.thread-title",
+        prix: '[id^="thread_details_"] .thread-price',
+        image: 'meta[property="og:image"]',
+      },
     },
     {
       id: "decathlon",
@@ -515,7 +523,7 @@
   // catalogue distant (regles/regles.json, tiré de ce fichier par
   // `npm run catalogue`) par les installations, sans nouvelle version de
   // l'extension. Le `format` ne change qu'avec le moteur.
-  globalThis.SansPrixReglesVersion = Object.freeze({ format: 1, revision: "2026-11-17.1" });
+  globalThis.SansPrixReglesVersion = Object.freeze({ format: 1, revision: "2026-11-18.1" });
 
   globalThis.SansPrixRegles = Object.freeze(
     REGLES.map((regle) =>

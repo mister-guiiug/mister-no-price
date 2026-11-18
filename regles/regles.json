@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision": "2026-11-17.1",
+  "revision": "2026-11-18.1",
   "regles": [
     {
       "id": "amazon",
@@ -68,7 +68,12 @@
       "masquer": [
         ".thread-price",
         ".threadItemCard-price"
-      ]
+      ],
+      "fiche": {
+        "titre": "h1.thread-title",
+        "prix": "[id^=\"thread_details_\"] .thread-price",
+        "image": "meta[property=\"og:image\"]"
+      }
     },
     {
       "id": "decathlon",
