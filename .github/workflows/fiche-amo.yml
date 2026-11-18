@@ -12,8 +12,7 @@ on:
     branches: [main]
     paths:
       - "amo/**"
-      - "extension/_locales/fr/messages.json"
-      - "extension/_locales/en/messages.json"
+      - "extension/_locales/*/messages.json"
       - "extension/icons/icone-128.png"
       - "scripts/fiche-amo.mjs"
       - "scripts/amo.mjs"

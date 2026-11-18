@@ -85,8 +85,8 @@ describe("la fiche d'addons.mozilla.org", async () => {
     assert.equal(fiche.version.license, JSON.parse(lire("package.json")).license);
   });
 
-  it("décrit l'extension en français et en anglais, avec le dépôt", () => {
-    for (const langue of ["fr", "en-US"]) {
+  it("décrit l'extension dans chaque langue de la fiche, avec le dépôt", () => {
+    for (const langue of Object.keys(fiche.description)) {
       assert.ok(fiche.description[langue]?.length > 200, langue);
       assert.match(fiche.description[langue], /github\.com\/mister-guiiug\/mister-no-prices/);
     }
@@ -252,6 +252,20 @@ describe("l'envoi d'une capture", async () => {
 describe("la fiche tenue par le dépôt", async () => {
   const { ficheVoulue, ecarts, iconeParDefaut } = await import("../scripts/fiche-amo.mjs");
   const voulue = await ficheVoulue();
+
+  it("couvre chaque langue de l'extension, et chaque langue de la fiche a sa description", async () => {
+    const { LANGUES_AMO } = await import("../scripts/fiche-amo.mjs");
+    const { readdirSync } = await import("node:fs");
+    const dossiers = readdirSync(new URL("../extension/_locales/", import.meta.url));
+    assert.deepEqual(Object.keys(LANGUES_AMO).sort(), dossiers.sort());
+    const premieres = Object.values(LANGUES_AMO).filter((c) => c.length > 0).map((c) => c[0]);
+    assert.deepEqual(Object.keys(JSON.parse(lire("amo/fiche.json")).description).sort(), premieres.sort());
+    // AMO ne propose ni l'arabe ni l'hindi pour le texte d'une fiche.
+    assert.deepEqual([LANGUES_AMO.ar, LANGUES_AMO.hi], [[], []]);
+    assert.equal(voulue.name.ja, "価格非表示");
+    assert.equal(voulue.description["pt-BR"], voulue.description["pt-PT"]);
+    assert.equal(voulue.summary["es-MX"], voulue.summary["es-ES"]);
+  });
 
   it("prend le nom et le résumé des messages français et anglais, la page d'accueil du manifeste", () => {
     assert.equal(voulue.name.fr, "Sans prix");
