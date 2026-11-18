@@ -164,8 +164,15 @@ describe("les captures de la fiche", async () => {
   const { chargerCaptures, planifier } = await import("../scripts/fiche-amo.mjs");
   const captures = await chargerCaptures();
 
-  it("sont des PNG de 1280 × 800, légendés en français et en anglais, sans doublon", () => {
+  it("sont des PNG de 1280 × 800, légendés dans chaque langue de la fiche et ses variantes, sans doublon", async () => {
+    const { languesDeFiche } = await import("../scripts/fiche-amo.mjs");
     assert.ok(captures.length >= 1);
+    for (const c of captures) {
+      for (const langue of languesDeFiche()) assert.ok(c.legende[langue], `${c.fichier} : ${langue}`);
+      assert.equal(c.legende["pt-BR"], c.legende["pt-PT"], c.fichier);
+      assert.equal(c.legende["es-MX"], c.legende["es-ES"], c.fichier);
+      assert.equal(c.legende["en-GB"], c.legende["en-US"], c.fichier);
+    }
     assert.deepEqual(captures.map((c) => c.position), captures.map((_, i) => i));
   });
 
@@ -182,6 +189,12 @@ describe("les captures de la fiche", async () => {
     assert.deepEqual(ajouter.map((c) => c.fichier), ["a.png"]);
     assert.deepEqual(modifier.map((c) => [c.fichier, c.id]), [["b.png", 7]]);
     assert.deepEqual(etrangeres.map((c) => c.id), [9]);
+  });
+
+  it("remet d'aplomb une capture dont une seule langue diffère", () => {
+    const enLigne = voulues.map((c, i) => ({ id: i, caption: { ...c.legende }, position: c.position }));
+    const voulue = [{ ...voulues[0], legende: { ...voulues[0].legende, ja: "新しい" } }, voulues[1]];
+    assert.deepEqual(planifier(voulue, enLigne).modifier.map((c) => c.fichier), ["a.png"]);
   });
 
   it("ne fait rien quand la fiche est à jour", () => {

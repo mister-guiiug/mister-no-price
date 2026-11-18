@@ -38,7 +38,11 @@ import { client, DebitEpuise } from "./amo.mjs";
 const racine = path.resolve(import.meta.dirname, "..");
 const lireJson = async (...chemin) => JSON.parse(await readFile(path.join(racine, ...chemin), "utf8"));
 
-/** Les captures déclarées, vérifiées : fichiers présents, PNG 1280 × 800, légendes fr et en-US. */
+/**
+ * Les captures déclarées, vérifiées : fichiers présents, PNG 1280 × 800, une
+ * légende dans chaque langue de la fiche (la première de LANGUES_AMO), copiée
+ * ensuite vers les variantes régionales.
+ */
 export async function chargerCaptures(dossier = path.join(racine, "amo")) {
   const liste = JSON.parse(await readFile(path.join(dossier, "captures.json"), "utf8"));
   if (!Array.isArray(liste) || liste.length === 0) throw new Error("captures.json : une liste non vide");
@@ -46,7 +50,10 @@ export async function chargerCaptures(dossier = path.join(racine, "amo")) {
   return Promise.all(
     liste.map(async ({ fichier, legende }, rang) => {
       if (!/^[\w-]+\.png$/.test(fichier ?? "")) throw new Error(`captures.json[${rang}] : nom de fichier « ${fichier} »`);
-      for (const langue of ["fr", "en-US"]) {
+      const attendues = languesDeFiche();
+      const inconnues = Object.keys(legende ?? {}).filter((l) => !attendues.includes(l));
+      if (inconnues.length > 0) throw new Error(`${fichier} : langue(s) inconnue(s) ${inconnues.join(", ")}`);
+      for (const langue of attendues) {
         const texte = legende?.[langue];
         if (typeof texte !== "string" || texte.trim().length === 0 || texte.length > 280) {
           throw new Error(`${fichier} : légende ${langue} manquante ou trop longue`);
@@ -59,7 +66,7 @@ export async function chargerCaptures(dossier = path.join(racine, "amo")) {
       if (image.subarray(1, 4).toString() !== "PNG") throw new Error(`${fichier} n'est pas un PNG`);
       const [largeur, hauteur] = [image.readUInt32BE(16), image.readUInt32BE(20)];
       if (largeur !== 1280 || hauteur !== 800) throw new Error(`${fichier} : ${largeur} × ${hauteur}, 1280 × 800 attendu`);
-      return { fichier, legende, image, position: rang }; // AMO compte à partir de 0
+      return { fichier, legende: etendre(legende), image, position: rang }; // AMO compte à partir de 0
     }),
   );
 }
@@ -89,6 +96,19 @@ export const LANGUES_AMO = Object.freeze({
   ar: [],
   hi: [],
 });
+
+/** Les langues sous lesquelles amo/ range ses textes : la première de chaque entrée de LANGUES_AMO. */
+export const languesDeFiche = () => Object.values(LANGUES_AMO).filter((c) => c.length > 0).map((c) => c[0]);
+
+/** Un texte par langue de la fiche, copié vers ses variantes régionales (es-ES → es-MX…). */
+export function etendre(textes) {
+  const etendu = {};
+  for (const codes of Object.values(LANGUES_AMO)) {
+    if (codes.length === 0 || textes[codes[0]] === undefined) continue;
+    for (const code of codes) etendu[code] = textes[codes[0]];
+  }
+  return etendu;
+}
 
 /** Les champs voulus sur la fiche, tirés du dépôt. */
 export async function ficheVoulue() {
@@ -200,7 +220,10 @@ export function planifier(voulues, enLigne) {
       modifier.push({ ...capture, id: aReprendre.id, reprise: true });
       aReprendre = null;
     } else if (!existante) ajouter.push(capture);
-    else if (existante.position !== capture.position || existante.caption?.["en-US"] !== capture.legende["en-US"]) {
+    else if (
+      existante.position !== capture.position ||
+      Object.entries(capture.legende).some(([langue, texte]) => existante.caption?.[langue] !== texte)
+    ) {
       modifier.push({ ...capture, id: existante.id });
     }
   }

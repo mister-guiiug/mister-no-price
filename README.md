@@ -218,7 +218,7 @@ manifeste qu'à la création de la fiche, et jamais son icône.
 | description, catégorie | [`amo/fiche.json`](amo/fiche.json), une description par langue, en Markdown limité (`**gras**`, listes en `- `, liens `[texte](adresse)`) : AMO affiche le HTML tel quel |
 | page d'accueil | `homepage_url` du manifeste |
 | icône | `extension/icons/icone-128.png` |
-| captures d'écran | [`amo/captures.json`](amo/captures.json) (ordre, légendes) et `amo/captures/` (PNG de 1280 × 800) |
+| captures d'écran | [`amo/captures.json`](amo/captures.json) (ordre, légendes dans chaque langue de la fiche) et `amo/captures/` (PNG de 1280 × 800) |
 
 La fiche parle treize des quinze langues : AMO ne propose ni l'arabe ni
 l'hindi pour le texte d'une fiche. L'espagnol, le portugais et l'anglais sont
