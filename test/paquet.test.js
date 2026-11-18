@@ -387,3 +387,28 @@ describe("la comparaison de la description, quelle que soit sa mise en forme", a
     assert.match(message, /^fr, caractère 16 : « sur Amazon » au lieu de « des boutiques »$/);
   });
 });
+
+describe("la description de la fiche, en Markdown", async () => {
+  const fiche = JSON.parse(lire("amo/fiche.json"));
+  const { texteDe } = await import("../scripts/fiche-amo.mjs");
+
+  // AMO n'interprète pas le HTML dans une description : il l'affiche tel quel
+  // (« <b>Ce qu'elle fait</b> » sur la fiche, le 18/11). Il accepte un Markdown
+  // limité : **gras**, listes en « - », liens [texte](adresse).
+  it("n'a aucune balise HTML, et met titres en gras et points en liste", () => {
+    for (const [langue, texte] of Object.entries(fiche.description)) {
+      assert.doesNotMatch(texte, /<\/?[a-z][^>]*>/i, langue);
+      assert.match(texte, /^\*\*[^*]+\*\*$/m, `${langue} : un titre en gras`);
+      assert.match(texte, /\n\n- /, `${langue} : une liste précédée d'une ligne vide`);
+      assert.doesNotMatch(texte, /•/, `${langue} : des tirets, pas des puces`);
+    }
+  });
+
+  it("compare le Markdown source à son rendu HTML", () => {
+    const source = "Intro.\n\n**Titre**\n\n- un\n- deux\n\nCode : [github.com/x/y](https://github.com/x/y)";
+    const rendu =
+      '<p>Intro.</p><p><strong>Titre</strong></p><ul><li>un</li><li>deux</li></ul><p>Code : <a href="https://outgoing.prod.mozaws.net/v1/ab12/https%3A//github.com/x/y">github.com/x/y</a></p>';
+    assert.equal(texteDe(rendu), texteDe(source));
+    assert.equal(texteDe(source), "Intro. Titre un deux Code : github.com/x/y");
+  });
+});

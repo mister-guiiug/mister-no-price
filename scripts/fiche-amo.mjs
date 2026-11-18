@@ -83,11 +83,18 @@ export async function ficheVoulue() {
  * changées en liens enveloppés (`outgoing.prod.mozaws.net/v1/…/<adresse>`) ;
  * on compare le texte, balises ôtées, liens déballés, entités décodées et
  * blancs réduits — l'API peut aussi rendre les retours à la ligne en <br>.
+ * Le Markdown de la source (gras, puces, liens) est neutralisé de même : la
+ * fiche peut le rendre en HTML.
  */
 export function texteDe(html) {
   return String(html ?? "")
     .replace(/https:\/\/outgoing\.prod\.mozaws\.net\/v1\/[0-9a-f]+\/([^"'\s<]+)/g, (_, cible) => decodeURIComponent(cible))
     .replace(/<br\s*\/?>/gi, " ")
+    // Le Markdown que la fiche accepte, rendu ou non par l'API : liens, gras,
+    // puces en début de ligne.
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/\*\*|__/g, "")
+    .replace(/^[ \t]*[-*+][ \t]+/gm, "")
     .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
     .replace(/&#([0-9]+);/g, (_, n) => String.fromCodePoint(Number(n)))
     .replace(/&nbsp;/g, " ")

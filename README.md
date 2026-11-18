@@ -215,7 +215,7 @@ manifeste qu'à la création de la fiche, et jamais son icône.
 | Sur la fiche | Vient de |
 | ------------ | -------- |
 | nom, résumé | `extName`, `extDescription` du français et de l'anglais |
-| description, catégorie | [`amo/fiche.json`](amo/fiche.json) |
+| description, catégorie | [`amo/fiche.json`](amo/fiche.json), en Markdown limité (`**gras**`, listes en `- `, liens `[texte](adresse)`) : AMO affiche le HTML tel quel |
 | page d'accueil | `homepage_url` du manifeste |
 | icône | `extension/icons/icone-128.png` |
 | captures d'écran | [`amo/captures.json`](amo/captures.json) (ordre, légendes) et `amo/captures/` (PNG de 1280 × 800) |
