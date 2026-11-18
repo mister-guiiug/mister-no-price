@@ -130,6 +130,36 @@ describe("extraireProduit — données structurées", () => {
   });
 });
 
+describe("extraireProduit — règle du site", () => {
+  const ctx = vm.createContext({ URL });
+  vm.runInContext(lire("content/produit.js"), ctx);
+  vm.runInContext(lire("regles.js"), ctx);
+  const regle = (id) => ctx.SansPrixRegles.find((r) => r.id === id);
+
+  // Dealabs ne se dit pas produit (JSON-LD DiscussionForumPosting, og:type
+  // website) : sans règle, pas de bouton ♥ sur un bon plan (signalé le 18/11).
+  it("lit un bon plan Dealabs : titre, prix du bon plan (pas des voisins), image", () => {
+    const { fiche } = regle("dealabs");
+    const elements = {
+      [fiche.titre]: [{ textContent: " Blender portable Ninja Blast - 530ml " }],
+      [fiche.prix]: [{ textContent: "27,19€" }],
+      [fiche.image]: [{ getAttribute: (a) => (a === "content" ? "https://static-pepper.dealabs.com/threads/raw/97SsJ/3460425_1/re/1024x1024/qt/60" : null) }],
+    };
+    const doc = {
+      URL: "https://www.dealabs.com/bons-plans/blender-portable-ninja-blast-3460425",
+      querySelectorAll: (s) => elements[s] ?? [],
+      querySelector: () => null,
+    };
+    const p = ctx.SansPrixProduit.extraireProduit(doc, fiche);
+    assert.equal(p.titre, "Blender portable Ninja Blast - 530ml");
+    assert.equal(p.prix, 27.19);
+    assert.equal(p.devise, "EUR");
+    assert.match(p.image, /^https:\/\/static-pepper\.dealabs\.com\/threads\//);
+    // Le prix est cherché dans le bon plan affiché, pas dans toute la page.
+    assert.match(fiche.prix, /^\[id\^="thread_details_"\] /);
+  });
+});
+
 describe("la liste d'envies", () => {
   const nouvelle = () => {
     const navigateur = fauxNavigateur();
