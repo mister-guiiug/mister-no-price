@@ -3,28 +3,72 @@
     "fichier": "1-recherche.png",
     "legende": {
       "fr": "Une recherche sur Amazon : les produits restent, les prix disparaissent, filtres compris.",
-      "en-US": "An Amazon search: the products stay, the prices disappear, filters included."
+      "en-US": "An Amazon search: the products stay, the prices disappear, filters included.",
+      "es-ES": "Una búsqueda en Amazon: los productos se quedan, los precios desaparecen, filtros incluidos.",
+      "de": "Eine Suche bei Amazon: Die Produkte bleiben, die Preise verschwinden, Filter inklusive.",
+      "it": "Una ricerca su Amazon: i prodotti restano, i prezzi spariscono, filtri compresi.",
+      "pt-PT": "Uma pesquisa na Amazon: os produtos ficam, os preços desaparecem, filtros incluídos.",
+      "nl": "Een zoekopdracht op Amazon: de producten blijven, de prijzen verdwijnen, filters inbegrepen.",
+      "pl": "Wyszukiwanie w Amazon: produkty zostają, ceny znikają, łącznie z filtrami.",
+      "zh-CN": "在 Amazon 上搜索：商品照常显示，价格消失了，筛选条件里的价格也一样。",
+      "ja": "Amazon での検索：商品はそのまま、価格は消えます。絞り込みの価格も同様です。",
+      "ko": "Amazon 검색: 상품은 그대로, 가격은 사라집니다. 필터의 가격도 마찬가지입니다.",
+      "tr": "Amazon’da bir arama: ürünler kalır, fiyatlar kaybolur, filtreler dahil.",
+      "ru": "Поиск на Amazon: товары остаются, цены исчезают, включая фильтры."
     }
   },
   {
     "fichier": "2-fiche.png",
     "legende": {
       "fr": "Une fiche produit sans prix, et le bouton ♥ « Ma liste » pour garder ce qui plaît.",
-      "en-US": "A product page without prices, and the ♥ “My list” button to keep what they like."
+      "en-US": "A product page without prices, and the ♥ “My list” button to keep what they like.",
+      "es-ES": "Una ficha de producto sin precios y el botón ♥ «Mi lista» para guardar lo que le gusta.",
+      "de": "Eine Produktseite ohne Preise und die Schaltfläche ♥ „Meine Liste“, um festzuhalten, was gefällt.",
+      "it": "Una scheda prodotto senza prezzi e il pulsante ♥ «La mia lista» per tenere ciò che piace.",
+      "pt-PT": "Uma página de produto sem preços e o botão ♥ «Minha lista» para guardar o que agrada.",
+      "nl": "Een productpagina zonder prijzen, en de knop ♥ ‘Mijn lijst’ om te bewaren wat in de smaak valt.",
+      "pl": "Strona produktu bez cen i przycisk ♥ „Moja lista”, by zachować to, co się podoba.",
+      "zh-CN": "没有价格的商品页，以及用来收藏心仪商品的 ♥“我的清单”按钮。",
+      "ja": "価格のない商品ページと、気に入ったものを残す ♥「マイリスト」ボタン。",
+      "ko": "가격이 없는 상품 페이지와, 마음에 드는 것을 담아 두는 ♥ ‘내 목록’ 버튼.",
+      "tr": "Fiyatsız bir ürün sayfası ve beğenilenleri saklamak için ♥ “Listem” düğmesi.",
+      "ru": "Страница товара без цен и кнопка ♥ «Мой список», чтобы сохранить понравившееся."
     }
   },
   {
     "fichier": "3-reglage.png",
     "legende": {
       "fr": "Le réglage : interrupteur, pause, apparence (barre grise, flou, papier cadeau), liste d'envies, code parent.",
-      "en-US": "Settings: on/off switch, pause, look (grey bar, blur, gift wrap), wish list, parent code."
+      "en-US": "Settings: on/off switch, pause, look (grey bar, blur, gift wrap), wish list, parent code.",
+      "es-ES": "Los ajustes: interruptor, pausa, aspecto (barra gris, desenfoque, papel de regalo), lista de deseos, código parental.",
+      "de": "Die Einstellungen: Schalter, Pause, Darstellung (grauer Balken, unscharf, Geschenkpapier), Wunschliste, Eltern-Code.",
+      "it": "Le impostazioni: interruttore, pausa, aspetto (barra grigia, sfocatura, carta regalo), lista dei desideri, codice genitori.",
+      "pt-PT": "As configurações: interruptor, pausa, aparência (barra cinza, desfoque, papel de embrulho), lista de desejos, código parental.",
+      "nl": "De instellingen: schakelaar, pauze, weergave (grijze balk, vervagen, cadeaupapier), verlanglijst, oudercode.",
+      "pl": "Ustawienia: przełącznik, pauza, wygląd (szary pasek, rozmycie, papier prezentowy), lista życzeń, kod rodzica.",
+      "zh-CN": "设置：开关、暂停、外观（灰色条、模糊、礼品包装）、心愿单、家长密码。",
+      "ja": "設定：オン／オフ、一時停止、表示スタイル（グレーのバー、ぼかし、ギフトラッピング）、ほしい物リスト、保護者コード。",
+      "ko": "설정: 켜기/끄기, 일시 중지, 모양(회색 막대, 흐림, 선물 포장), 위시리스트, 부모 코드.",
+      "tr": "Ayarlar: açma/kapama, duraklatma, görünüm (gri çubuk, bulanık, hediye paketi), istek listesi, ebeveyn kodu.",
+      "ru": "Настройки: переключатель, пауза, вид (серая полоса, размытие, подарочная упаковка), список желаний, родительский код."
     }
   },
   {
     "fichier": "4-liste.png",
     "legende": {
       "fr": "La liste d'envies côté parent : les prix à la demande, un prénom par article, à imprimer.",
-      "en-US": "The wish list, parent side: prices on request, a first name per item, ready to print."
+      "en-US": "The wish list, parent side: prices on request, a first name per item, ready to print.",
+      "es-ES": "La lista de deseos para los padres: precios a petición, un nombre por artículo, lista para imprimir.",
+      "de": "Die Wunschliste für die Eltern: Preise auf Wunsch, ein Vorname pro Artikel, zum Ausdrucken.",
+      "it": "La lista dei desideri lato genitore: prezzi su richiesta, un nome per articolo, da stampare.",
+      "pt-PT": "A lista de desejos do lado dos pais: preços a pedido, um nome por artigo, pronta para imprimir.",
+      "nl": "De verlanglijst voor de ouder: prijzen op verzoek, een voornaam per artikel, klaar om af te drukken.",
+      "pl": "Lista życzeń dla rodzica: ceny na żądanie, imię przy każdym produkcie, gotowa do druku.",
+      "zh-CN": "家长视角的心愿单：按需显示价格，每件商品可标注名字，可打印。",
+      "ja": "保護者向けのほしい物リスト：価格は必要なときだけ表示、商品ごとに名前、印刷もできます。",
+      "ko": "부모용 위시리스트: 필요할 때만 가격 표시, 상품마다 이름, 인쇄 가능.",
+      "tr": "Ebeveyn tarafında istek listesi: istendiğinde fiyatlar, her ürün için bir ad, yazdırmaya hazır.",
+      "ru": "Список желаний для родителей: цены по запросу, имя у каждого товара, можно распечатать."
     }
   }
 ]
