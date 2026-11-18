@@ -214,11 +214,17 @@ manifeste qu'à la création de la fiche, et jamais son icône.
 
 | Sur la fiche | Vient de |
 | ------------ | -------- |
-| nom, résumé | `extName`, `extDescription` du français et de l'anglais |
-| description, catégorie | [`amo/fiche.json`](amo/fiche.json), en Markdown limité (`**gras**`, listes en `- `, liens `[texte](adresse)`) : AMO affiche le HTML tel quel |
+| nom, résumé | `extName`, `extDescription` de chaque langue de l'extension que la fiche propose |
+| description, catégorie | [`amo/fiche.json`](amo/fiche.json), une description par langue, en Markdown limité (`**gras**`, listes en `- `, liens `[texte](adresse)`) : AMO affiche le HTML tel quel |
 | page d'accueil | `homepage_url` du manifeste |
 | icône | `extension/icons/icone-128.png` |
 | captures d'écran | [`amo/captures.json`](amo/captures.json) (ordre, légendes) et `amo/captures/` (PNG de 1280 × 800) |
+
+La fiche parle treize des quinze langues : AMO ne propose ni l'arabe ni
+l'hindi pour le texte d'une fiche. L'espagnol, le portugais et l'anglais sont
+recopiés vers leurs variantes régionales (`es-MX`, `pt-BR`, `en-GB`…), sans quoi
+leurs visiteurs verraient le français, langue par défaut de la fiche. La
+correspondance est `LANGUES_AMO`, dans [`scripts/fiche-amo.mjs`](scripts/fiche-amo.mjs).
 
 Une capture est reconnue par sa légende française : relancer ne double rien,
 et une capture ajoutée à la main sur la fiche n'est jamais supprimée. AMO

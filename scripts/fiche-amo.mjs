@@ -5,9 +5,10 @@
  * script les remet d'aplomb, avec la description, la catégorie, la page
  * d'accueil et les captures d'écran.
  *
- *   - nom et résumé : `extName` et `extDescription` du français et de
- *     l'anglais (extension/_locales) ;
- *   - description et catégories : amo/fiche.json ;
+ *   - nom et résumé : `extName` et `extDescription` de chaque langue de
+ *     l'extension que la fiche propose (LANGUES_AMO) ;
+ *   - description : amo/fiche.json, une par langue, copiée vers les
+ *     variantes régionales ; catégories : amo/fiche.json ;
  *   - page d'accueil : `homepage_url` du manifeste ;
  *   - icône : extension/icons/icone-128.png, envoyée si la fiche montre
  *     l'icône par défaut ;
@@ -63,19 +64,50 @@ export async function chargerCaptures(dossier = path.join(racine, "amo")) {
   );
 }
 
+/**
+ * Les langues de l'extension (dossiers de _locales) et celles de la fiche
+ * addons.mozilla.org qui les reçoivent. La première est celle sous laquelle
+ * amo/fiche.json range la description ; les suivantes en reçoivent une copie
+ * (variantes régionales), sans quoi leurs visiteurs verraient le français,
+ * langue par défaut de la fiche. AMO ne propose ni l'arabe ni l'hindi pour le
+ * texte d'une fiche (relevé le 18/11 dans l'espace développeur).
+ */
+export const LANGUES_AMO = Object.freeze({
+  fr: ["fr"],
+  en: ["en-US", "en-GB", "en-CA"],
+  es: ["es-ES", "es-MX", "es-AR", "es-CL"],
+  de: ["de"],
+  it: ["it"],
+  pt: ["pt-PT", "pt-BR"],
+  nl: ["nl"],
+  pl: ["pl"],
+  zh_CN: ["zh-CN"],
+  ja: ["ja"],
+  ko: ["ko"],
+  tr: ["tr"],
+  ru: ["ru"],
+  ar: [],
+  hi: [],
+});
+
 /** Les champs voulus sur la fiche, tirés du dépôt. */
 export async function ficheVoulue() {
   const manifeste = await lireJson("extension", "manifest.json");
   const fiche = await lireJson("amo", "fiche.json");
-  const fr = await lireJson("extension", "_locales", "fr", "messages.json");
-  const en = await lireJson("extension", "_locales", "en", "messages.json");
-  return {
-    name: { fr: fr.extName.message, "en-US": en.extName.message },
-    summary: { fr: fr.extDescription.message, "en-US": en.extDescription.message },
-    description: fiche.description,
-    homepage: { fr: manifeste.homepage_url, "en-US": manifeste.homepage_url },
-    categories: fiche.categories,
-  };
+  const voulue = { name: {}, summary: {}, description: {}, homepage: {}, categories: fiche.categories };
+  for (const [dossier, codes] of Object.entries(LANGUES_AMO)) {
+    if (codes.length === 0) continue;
+    const messages = await lireJson("extension", "_locales", dossier, "messages.json");
+    const description = fiche.description[codes[0]];
+    if (!description) throw new Error(`amo/fiche.json : description « ${codes[0]} » manquante`);
+    for (const code of codes) {
+      voulue.name[code] = messages.extName.message;
+      voulue.summary[code] = messages.extDescription.message;
+      voulue.description[code] = description;
+      voulue.homepage[code] = manifeste.homepage_url;
+    }
+  }
+  return voulue;
 }
 
 /**
