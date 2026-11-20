@@ -19,7 +19,7 @@
     "catalogue": "node scripts/catalogue.mjs"
   },
   "devDependencies": {
-    "puppeteer-core": "^25.17.0",
+    "puppeteer-core": "^25.18.1",
     "web-ext": "^10.8.0"
   }
 }
