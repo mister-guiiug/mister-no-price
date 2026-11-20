@@ -25,6 +25,8 @@
   · <a href="README.fr.md">Lire en français</a>
 </p>
 
+<p align="center"><sub>As featured in <a href="https://lnkd.in/p/eXi7Z3_8">this LinkedIn article</a></sub></p>
+
 <table>
   <tr>
     <td><img src="amo/captures/1-recherche.png" alt="An Amazon search with every price hidden, price filters included"></td>

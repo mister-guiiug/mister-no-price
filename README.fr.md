@@ -25,6 +25,8 @@
   · <a href="README.md">Read in English</a>
 </p>
 
+<p align="center"><sub>On nous cite : <a href="https://lnkd.in/p/eXi7Z3_8">l’article sur LinkedIn</a></sub></p>
+
 <table>
   <tr>
     <td><img src="amo/captures/1-recherche.png" alt="Une recherche sur Amazon, tous les prix masqués, filtres de prix compris"></td>
