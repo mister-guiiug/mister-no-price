@@ -81,7 +81,7 @@ jobs:
       - uses: actions/setup-node@v7
         if: steps.version.outputs.a-publier == 'oui'
         with:
-          node-version: 24
+          node-version: 24.22.3
           cache: npm
 
       - if: steps.version.outputs.a-publier == 'oui'
